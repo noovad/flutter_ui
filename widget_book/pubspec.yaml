@@ -1,0 +1,25 @@
+name: widget_book
+description: 'A new Flutter project.'
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  widgetbook_annotation: ^3.3.0
+  widgetbook: ^3.11.0
+  flutter_ui:
+    path: ../flutter_ui
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner:
+  widgetbook_generator: ^3.10.0
+
+flutter:
+  uses-material-design: true
