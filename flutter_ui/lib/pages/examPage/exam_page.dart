@@ -1,4 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/pages/examPage/banner_image.dart';
@@ -30,7 +29,6 @@ class _ExamPageState extends State<ExamPage> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {
-              // Fungsi pencarian
             },
           ),
         ],
@@ -58,19 +56,19 @@ class _ExamPageState extends State<ExamPage> {
       body: SingleChildScrollView(
         child: Column(
           children: const [
-            BannerImage(), // Widget Banner
+            BannerImage(),
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("Categories",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            CategoryGrid(), // Grid Kategori
+            CategoryGrid(),
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text("Popular Products",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
-            ProductList(), // List Produk
+            ProductList(),
           ],
         ),
       ),

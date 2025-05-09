@@ -12,6 +12,7 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
+      initialRoute: '?path=desktop-pages/todo-page',
       directories: [
         WidgetbookComponent(
           name: 'Desktop Pages',
@@ -39,6 +40,7 @@ class WidgetbookApp extends StatelessWidget {
         ),
         DeviceFrameAddon(
           devices: [
+            Devices.linux.laptop,
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone13,
           ],
