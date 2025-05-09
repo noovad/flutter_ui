@@ -1,7 +1,6 @@
 name: flutter_ui
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
 
 environment:
   sdk: ^3.6.1
@@ -13,6 +12,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
   google_fonts: ^6.2.1
+  shadcn_ui: ^0.25.1
 
 dev_dependencies:
   flutter_test:
@@ -23,7 +23,7 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+# flutter: 
 
   # To add assets to your package, add an assets section, like this:
   # assets:

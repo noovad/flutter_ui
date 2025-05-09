@@ -1,3 +1,5 @@
-import 'package:widget_book/pages/exam_page.dart';
+import 'package:widget_book/desktopPages/todo_page.dart';
+import 'package:widget_book/widgets/exam.dart';
 
-final pages = [examPage];
+final desktopPages = [todo];
+final widgets = [exam];

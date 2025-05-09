@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widget_book/pages.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'widgets.dart';
 
 void main() {
   runApp(const WidgetbookApp());
@@ -14,13 +13,13 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       directories: [
+        WidgetbookComponent(
+          name: 'Desktop Pages',
+          useCases: desktopPages,
+        ),
         WidgetbookCategory(
           name: 'Widgets',
           children: widgets,
-        ),
-        WidgetbookCategory(
-          name: 'Pages',
-          children: pages,
         ),
       ],
       addons: [
@@ -28,7 +27,9 @@ class WidgetbookApp extends StatelessWidget {
           themes: [
             WidgetbookTheme(
               name: 'Light',
-              data: ThemeData.light(),
+              data: ThemeData.light().copyWith(
+                scaffoldBackgroundColor: Colors.white,
+              ),
             ),
             WidgetbookTheme(
               name: 'Dark',
@@ -41,7 +42,6 @@ class WidgetbookApp extends StatelessWidget {
             Devices.ios.iPhoneSE,
             Devices.ios.iPhone13,
           ],
-          initialDevice: Devices.ios.iPhone13,
         ),
       ],
     );

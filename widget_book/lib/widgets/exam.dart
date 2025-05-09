@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/widgets/exam%20button/exam_button.dart';
 import 'package:widgetbook/widgetbook.dart';
 
-final exam2 = WidgetbookComponent(
-  name: 'Exam 2',
+final exam = WidgetbookComponent(
+  name: 'Exam ',
   useCases: [
     WidgetbookUseCase(
       name: 'Default',
