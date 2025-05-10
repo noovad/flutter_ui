@@ -8,7 +8,7 @@ final List<TodoCardData> todoCards = [
   ),
   TodoCardData(
     isDone: true,
-    title: 'Morning Exercise',
+    title: 'Morning Exercise Morning Exercise',
     category: 'Health',
     categoryIcon: Icons.fitness_center,
   ),

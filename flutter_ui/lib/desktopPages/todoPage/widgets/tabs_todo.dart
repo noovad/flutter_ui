@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/card_todo.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/content_tabs.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoTabs extends StatelessWidget {
@@ -27,11 +28,7 @@ class TodoTabs extends StatelessWidget {
           content: Column(
             children: todoCardData.map((data) {
               return TodoCard(
-                isDone: data.isDone,
-                title: data.title,
-                time: data.time,
-                category: data.category,
-                categoryIcon: data.categoryIcon,
+                data: data,
                 onEdit: () {},
                 onDelete: () {},
               );
@@ -44,71 +41,13 @@ class TodoTabs extends StatelessWidget {
           content: Column(
             children: todoCardData.map((data) {
               return TodoCard(
-                isDone: data.isDone,
-                title: data.title,
-                time: data.time,
-                category: data.category,
-                categoryIcon: data.categoryIcon,
+                data: data,
                 onEdit: () {},
                 onDelete: () {},
               );
             }).toList(),
           ),
           child: const Text('History'),
-        ),
-      ],
-    );
-  }
-}
-
-class ContentTabs extends StatelessWidget {
-  const ContentTabs({
-    super.key,
-    required this.todoCardData,
-  });
-
-  final List<TodoCardData> todoCardData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      spacing: 32,
-      children: [
-        Expanded(
-          child: Column(
-            spacing: 12,
-            children: todoCardData
-                .sublist(0, (todoCardData.length / 2).ceil())
-                .map((data) {
-              return TodoCard(
-                isDone: data.isDone,
-                title: data.title,
-                time: data.time,
-                category: data.category,
-                categoryIcon: data.categoryIcon,
-                onEdit: () {},
-                onDelete: () {},
-              );
-            }).toList(),
-          ),
-        ),
-        Expanded(
-          child: Column(
-            spacing: 12,
-            children: todoCardData
-                .sublist((todoCardData.length / 2).ceil())
-                .map((data) {
-              return TodoCard(
-                isDone: data.isDone,
-                title: data.title,
-                time: data.time,
-                category: data.category,
-                categoryIcon: data.categoryIcon,
-                onEdit: () {},
-                onDelete: () {},
-              );
-            }).toList(),
-          ),
         ),
       ],
     );
