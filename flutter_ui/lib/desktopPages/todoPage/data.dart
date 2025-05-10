@@ -1,57 +1,287 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 
-final List<TodoCardData> todoCards = [
+class TodoCategory {
+  final String name;
+  final IconData icon;
+
+  const TodoCategory(this.name, this.icon);
+}
+
+final TodoData todoData = TodoData(productivity: todoCardP, daily: todoDaily);
+
+final List<TodoCardData> todoDaily = [
   TodoCardData(
+    title: 'Morning Exercise',
     isDone: false,
-    title: 'Buy Groceries',
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 6, 0),
+    note: '30 minutes of jogging and stretching',
   ),
   TodoCardData(
+    title: 'Team Standup',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 9, 30),
+    note: 'Discuss sprint progress',
+  ),
+  TodoCardData(
+    title: 'Check Emails',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 0),
+  ),
+  TodoCardData(
+    title: 'Lunch Break',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 30),
+  ),
+  TodoCardData(
+    title: 'Review Pull Requests',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 14, 0),
+  ),
+  TodoCardData(
+    title: 'Water Plants',
+    isDone: false,
+    date: DateTime.now().add(Duration(days: 1)),
+  ),
+  TodoCardData(
+    title: 'Take Vitamins',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 0),
+    note: 'With breakfast',
+  ),
+  TodoCardData(
+    title: 'Check Budget',
+    isDone: false,
+    date: DateTime.now().add(Duration(days: 2)),
+  ),
+  TodoCardData(
+    title: 'Evening Walk',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 18, 30),
+    note: '20 minutes around the park',
+  ),
+  TodoCardData(
+    title: 'Meditate',
+    isDone: false,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 22, 0),
+    note: '10 minutes before sleep',
+  ),
+  TodoCardData(
+    title: 'Breakfast',
     isDone: true,
-    title: 'Morning Exercise Morning Exercise',
-    category: 'Health',
-    categoryIcon: Icons.fitness_center,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 7, 30),
+    note: 'Oatmeal and fruits',
   ),
   TodoCardData(
+    title: 'Take Medication',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 0),
+  ),
+  TodoCardData(
+    title: 'Check News',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 8, 30),
+  ),
+  TodoCardData(
+    title: 'Coffee Break',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 10, 45),
+  ),
+  TodoCardData(
+    title: 'Check Social Media',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 12, 0),
+    note: 'Limit to 15 minutes',
+  ),
+  TodoCardData(
+    title: 'Charge Phone',
+    isDone: true,
+    date: DateTime.now().subtract(Duration(days: 1)),
+  ),
+  TodoCardData(
+    title: 'Fill Water Bottle',
+    isDone: true,
+    date: DateTime.now(),
+  ),
+  TodoCardData(
+    title: 'Clean Glasses',
+    isDone: true,
+    date: DateTime.now(),
+  ),
+  TodoCardData(
+    title: 'Check Calendar',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 9, 0),
+    note: 'Review upcoming meetings',
+  ),
+  TodoCardData(
+    title: 'Set Alarm',
+    isDone: true,
+    date: DateTime.now(),
+    time: DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day, 22, 30),
+  ),
+];
+
+final List<TodoCardData> todoCardP = [
+  TodoCardData(
+    title: 'Complete Project Proposal',
     isDone: false,
-    title: 'Team Meeting',
-    time: '09:00',
+    date: DateTime.now().add(Duration(days: 3)),
     category: 'Work',
-    categoryIcon: Icons.work,
+    time: DateTime(DateTime.now().year, DateTime.now().month,
+        DateTime.now().day + 3, 17, 0),
+    note: 'Include budget estimates and timeline',
   ),
   TodoCardData(
+    title: 'Research New Framework',
     isDone: false,
-    title: 'Doctor Appointment',
-    time: '14:00',
-    category: 'Health',
-    categoryIcon: Icons.local_hospital,
-  ),
-  TodoCardData(
-    isDone: true,
-    title: 'Read a Book',
-    time: '20:00',
-    category: 'Personal',
-    categoryIcon: Icons.book,
-  ),
-  TodoCardData(
-    isDone: false,
-    title: 'Prepare Presentation',
-    time: '16:00',
     category: 'Work',
-    categoryIcon: Icons.present_to_all,
+    date: DateTime.now().add(Duration(days: 5)),
+    note: 'Compare React vs Vue performance',
   ),
   TodoCardData(
-    isDone: true,
-    title: 'Call Parents',
-    time: '19:00',
-    category: 'Personal',
-    categoryIcon: Icons.call,
-  ),
-  TodoCardData(
+    title: 'Update Portfolio Website',
     isDone: false,
-    title: 'Plan Weekend Trip',
-    time: '21:00',
-    category: 'Leisure',
-    categoryIcon: Icons.beach_access,
+    category: 'Personal',
+    date: DateTime.now().add(Duration(days: 7)),
+  ),
+  TodoCardData(
+    title: 'Learn Flutter Animation',
+    isDone: false,
+    category: 'Personal',
+    date: DateTime.now().add(Duration(days: 2)),
+    note: 'Complete tutorial series',
+  ),
+  TodoCardData(
+    title: 'Quarterly Tax Planning',
+    isDone: false,
+    category: 'Finance',
+    date: DateTime.now().add(Duration(days: 10)),
+  ),
+  TodoCardData(
+    title: 'Plan Family Vacation',
+    isDone: false,
+    category: 'Personal',
+    note: 'Research destinations and accommodations',
+    date: DateTime.now().add(Duration(days: 8)),
+  ),
+  TodoCardData(
+    title: 'Home Office Reorganization',
+    isDone: false,
+    category: 'Home',
+    date: DateTime.now().add(Duration(days: 4)),
+  ),
+  TodoCardData(
+    title: 'Prepare Workshop Materials',
+    isDone: false,
+    category: 'Work',
+    date: DateTime.now().add(Duration(days: 6)),
+    note: 'Create slide deck and exercises',
+  ),
+  TodoCardData(
+    title: 'Review Investment Portfolio',
+    isDone: false,
+    category: 'Finance',
+    date: DateTime.now().add(Duration(days: 8)),
+  ),
+  TodoCardData(
+    title: 'Build Side Project MVP',
+    isDone: false,
+    category: 'Personal',
+    note: 'Focus on core functionality only',
+    date: DateTime.now().add(Duration(days: 8)),
+  ),
+  TodoCardData(
+    title: 'Update Resume',
+    isDone: true,
+    category: 'Personal',
+    date: DateTime.now().subtract(Duration(days: 5)),
+  ),
+  TodoCardData(
+    title: 'Weekly Team Report',
+    isDone: true,
+    category: 'Work',
+    date: DateTime.now().subtract(Duration(days: 3)),
+    note: 'Include sprint metrics',
+  ),
+  TodoCardData(
+    title: 'Organize Digital Files',
+    isDone: true,
+    category: 'Personal',
+    date: DateTime.now().subtract(Duration(days: 7)),
+  ),
+  TodoCardData(
+    title: 'Read Technical Article',
+    isDone: true,
+    category: 'Work',
+    date: DateTime.now().subtract(Duration(days: 2)),
+    note: 'About microservices architecture',
+  ),
+  TodoCardData(
+    title: 'Pay Monthly Bills',
+    isDone: true,
+    category: 'Finance',
+    date: DateTime.now().subtract(Duration(days: 1)),
+  ),
+  TodoCardData(
+    title: 'Backup Computer',
+    isDone: true,
+    category: 'Personal',
+    date: DateTime.now().subtract(Duration(days: 10)),
+  ),
+  TodoCardData(
+    title: 'Update Software Dependencies',
+    isDone: true,
+    category: 'Work',
+    date: DateTime.now().subtract(Duration(days: 4)),
+  ),
+  TodoCardData(
+    title: 'Review Monthly Budget',
+    isDone: true,
+    category: 'Finance',
+    date: DateTime.now().subtract(Duration(days: 6)),
+    note: 'Identify areas to optimize spending',
+  ),
+  TodoCardData(
+    title: 'Clean Email Inbox',
+    isDone: true,
+    category: 'Work',
+    date: DateTime.now().subtract(Duration(days: 2)),
+  ),
+  TodoCardData(
+    title: 'Set Quarterly Goals',
+    isDone: true,
+    category: 'Personal',
+    date: DateTime.now().subtract(Duration(days: 15)),
+    note: 'Focus on career, health, and personal growth',
   ),
 ];

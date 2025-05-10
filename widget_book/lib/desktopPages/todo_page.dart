@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/desktopPages/todoPage/data.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo_page.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -9,14 +10,25 @@ final todo = WidgetbookUseCase(
   ),
 );
 
+const List<String> listCategory = [
+  'Work',
+  'Personal',
+  'Shopping',
+  'Health',
+  'Fitness',
+];
+
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
-      child: TodoPage(),
+      color: Color(0xFF222222),
+      child: TodoPage(
+        data: todoData,
+        listCategory: listCategory,
+      ),
     );
   }
 }

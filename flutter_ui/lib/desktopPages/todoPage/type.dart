@@ -1,19 +1,27 @@
-import 'package:flutter/material.dart';
-
 class TodoCardData {
   final String title;
-  final String? time;
-  final String? category;
-  final String? note;
-  final IconData? categoryIcon;
   final bool isDone;
+  final DateTime date;
+  final String? category;
+  final DateTime? time;
+  final String? note;
 
   TodoCardData({
     required this.title,
     required this.isDone,
-    this.time,
+    required this.date,
     this.category,
-    this.categoryIcon,
+    this.time,
     this.note,
+  });
+}
+
+class TodoData {
+  final List<TodoCardData> productivity;
+  final List<TodoCardData> daily;
+
+  TodoData({
+    required this.productivity,
+    required this.daily,
   });
 }

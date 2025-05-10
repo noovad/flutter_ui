@@ -8,6 +8,7 @@ class ExamPage extends StatefulWidget {
   const ExamPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ExamPageState createState() => _ExamPageState();
 }
 
