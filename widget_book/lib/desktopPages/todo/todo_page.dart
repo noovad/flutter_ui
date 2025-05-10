@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/data.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo_page.dart';
+import 'package:widget_book/desktopPages/todo/data.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 final todo = WidgetbookUseCase(
@@ -29,6 +29,7 @@ class MyWidget extends StatelessWidget {
         data: todoData,
         listCategory: listCategory,
         todoHistory: todoData.daily,
+        notes: sampleNotes,
       ),
     );
   }

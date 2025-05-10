@@ -106,8 +106,7 @@ class _AppCardState extends State<TodoCard> {
                       if (data.category != null || data.time != null)
                         Row(
                           children: [
-                            if (data.category != null &&
-                                data.category != null) ...[
+                            if (data.category != null) ...[
                               Icon(LucideIcons.tag,
                                   size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
@@ -120,9 +119,7 @@ class _AppCardState extends State<TodoCard> {
                                   size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
                               Text(
-                                data.time != null
-                                    ? '${data.time!.hour.toString().padLeft(2, '0')}:${data.time!.minute.toString().padLeft(2, '0')}'
-                                    : '',
+                                '${data.time!.hour.toString().padLeft(2, '0')}:${data.time!.minute.toString().padLeft(2, '0')}',
                                 style: TextStyle(
                                   color: Colors.grey[700],
                                 ),

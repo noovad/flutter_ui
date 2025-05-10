@@ -285,3 +285,59 @@ final List<TodoCardData> todoCardP = [
     note: 'Focus on career, health, and personal growth',
   ),
 ];
+final List<Note> sampleNotes = [
+  Note(
+    title: 'Grocery List',
+    content:
+        'Milk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, Cheese',
+    // category: 'Personal',
+    isPinned: true,
+  ),
+  Note(
+    title: 'Meeting Notes',
+    content: 'Discuss project milestones and deadlines.',
+    category: 'Work',
+  ),
+  Note(
+    title: 'Book Recommendations',
+    content: 'Atomic Habits, Clean Code, The Pragmatic Programmer',
+    category: 'Personal',
+  ),
+  Note(
+    title: 'Workout Plan',
+    content: 'Monday: Cardio, Wednesday: Strength, Friday: Yoga',
+    category: 'Health',
+    isPinned: true,
+  ),
+  Note(
+    title: 'Vacation Ideas',
+    content: 'Visit Bali, explore local beaches, and try snorkeling.',
+    category: 'Travel',
+  ),
+  Note(
+    title: 'Weekly Goals',
+    content: 'Complete project tasks, exercise 3 times, read 2 chapters.',
+    category: 'Personal',
+  ),
+  Note(
+    title: 'Recipe Ideas',
+    content: 'Pasta Carbonara, Chicken Curry, Veggie Stir-fry',
+    category: 'Cooking',
+  ),
+  Note(
+    title: 'Budget Plan',
+    content:
+        'Allocate 20% for savings, 30% for essentials, 50% for other expenses.',
+    category: 'Finance',
+  ),
+  Note(
+    title: 'Learning Topics',
+    content: 'Flutter animations, Dart streams, State management',
+    category: 'Work',
+  ),
+  Note(
+    title: 'Gift Ideas',
+    content: 'Books, Gadgets, Personalized items',
+    category: 'Personal',
+  ),
+];

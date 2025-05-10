@@ -25,3 +25,17 @@ class TodoData {
     required this.daily,
   });
 }
+
+class Note {
+  final String title;
+  final String content;
+  final String? category;
+  final bool isPinned;
+
+  Note({
+    required this.title,
+    required this.content,
+    this.category,
+    this.isPinned = false,
+  });
+}
