@@ -77,7 +77,7 @@ class _AppCardState extends State<TodoCard> {
                   onTap: () => showShadSheet(
                     side: ShadSheetSide.right,
                     context: context,
-                    builder: (context) => TodoSheet.update(
+                    builder: (context) => TodoSheet.detail(
                       side: ShadSheetSide.right,
                       todoData: data,
                       listCategory: widget.listCategory,
@@ -140,7 +140,7 @@ class _AppCardState extends State<TodoCard> {
                     icon: const Icon(LucideIcons.trash),
                     onPressed: widget.onDelete,
                   ),
-                )
+                ),
             ],
           ),
         ),

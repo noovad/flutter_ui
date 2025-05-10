@@ -24,24 +24,33 @@ class ListData extends StatelessWidget {
       child: Column(
         spacing: 12,
         children: [
-          TodoCard.createTodo(
-            onSave: () => {},
-            tabsType: type,
-            taskType: taskType,
-            listCategory: listCategory ?? [],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: TodoCard.createTodo(
+              onSave: () => {},
+              tabsType: type,
+              taskType: taskType,
+              listCategory: listCategory ?? [],
+            ),
           ),
-          SingleChildScrollView(
+          Container(
+            height: MediaQuery.of(context).size.height - 166,
+            alignment: Alignment.topCenter,
+            width: MediaQuery.of(context).size.width,
             child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: todoCardData.length,
-              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return TodoCard.todo(
-                  listCategory: listCategory ?? [],
-                  taskType: TaskType.productivity,
-                  data: todoCardData[index],
-                  onEdit: () {},
-                  onDelete: () {},
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TodoCard.todo(
+                    listCategory: listCategory ?? [],
+                    taskType: TaskType.productivity,
+                    data: todoCardData[index],
+                    onEdit: () {},
+                    onDelete: () {},
+                  ),
                 );
               },
             ),

@@ -18,6 +18,12 @@
       "text": "sheet todo - create",
       "priority": 1,
       "created": "2025-05-09T14:40:18.324Z"
+    },
+    {
+      "id": 18822,
+      "text": "update (status, if done disable",
+      "priority": 1,
+      "created": "2025-05-10T11:06:48.329Z"
     }
   ]
 }

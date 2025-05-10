@@ -3,7 +3,7 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_content.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-enum TodoSheetType { create, update }
+enum TodoSheetType { create, detail }
 
 enum TaskType { daily, productivity }
 
@@ -26,14 +26,14 @@ class TodoSheet extends StatelessWidget {
   })  : type = TodoSheetType.create,
         todoData = null;
 
-  const TodoSheet.update({
+  const TodoSheet.detail({
     super.key,
     required this.side,
     required this.todoData,
     required this.taskType,
     required this.listCategory,
     this.onSave,
-  })  : type = TodoSheetType.update,
+  })  : type = TodoSheetType.detail,
         tabsType = null;
 
   @override
@@ -43,8 +43,8 @@ class TodoSheet extends StatelessWidget {
     switch (type) {
       case TodoSheetType.create:
         return _createSheet(context, theme);
-      case TodoSheetType.update:
-        return _updateSheet(context, theme);
+      case TodoSheetType.detail:
+        return _detailSheet(context, theme);
     }
   }
 
@@ -70,6 +70,7 @@ class TodoSheet extends StatelessWidget {
       child: _TodoForm(
         listCategory: listCategory,
         taskType: taskType,
+        isDone: false,
         initialTitle: '',
         initialCategory: 'None',
         initialNotes: '',
@@ -81,28 +82,35 @@ class TodoSheet extends StatelessWidget {
     );
   }
 
-  ShadSheet _updateSheet(BuildContext context, ShadThemeData theme) {
+  ShadSheet _detailSheet(BuildContext context, ShadThemeData theme) {
     return ShadSheet(
       constraints: _getSheetConstraints(),
       title: taskType == TaskType.daily
-          ? Text('Update Todo Daily')
-          : Text('Update Todo Productivity'),
+          ? Text('Detail Todo Daily')
+          : Text('Detail Todo Productivity'),
       actions: [
-        ShadButton(
-          child: const Text('Cancel'),
-          onPressed: () => Navigator.of(context).pop(),
+        Visibility(
+          visible: !(todoData?.isDone ?? false),
+          child: ShadButton(
+            child: const Text('Cancel'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
-        ShadButton(
-          child: const Text('Update'),
-          onPressed: () {
-            if (onSave != null) onSave!();
-            Navigator.of(context).pop();
-          },
+        Visibility(
+          visible: !(todoData?.isDone ?? false),
+          child: ShadButton(
+            child: const Text('Detail'),
+            onPressed: () {
+              if (onSave != null) onSave!();
+              Navigator.of(context).pop();
+            },
+          ),
         ),
       ],
       child: _TodoForm(
           listCategory: listCategory,
           taskType: taskType,
+          isDone: todoData!.isDone,
           initialTitle: todoData!.title,
           initialCategory: todoData!.category ?? 'None',
           initialNotes: todoData!.note ?? '',
@@ -121,6 +129,7 @@ class TodoSheet extends StatelessWidget {
 class _TodoForm extends StatelessWidget {
   final List<String>? listCategory;
   final TaskType? taskType;
+  final bool isDone;
   final String initialTitle;
   final String initialCategory;
   final DateTime initialDate;
@@ -130,6 +139,7 @@ class _TodoForm extends StatelessWidget {
   const _TodoForm({
     required this.taskType,
     required this.initialTitle,
+    required this.isDone,
     required this.initialCategory,
     required this.initialDate,
     required this.initialNotes,
@@ -150,7 +160,10 @@ class _TodoForm extends StatelessWidget {
           _buildFormRow(
             label: 'Title',
             theme: theme,
-            child: ShadInput(initialValue: initialTitle),
+            child: ShadInput(
+              initialValue: initialTitle,
+              enabled: !isDone,
+            ),
           ),
           Visibility(
             visible: taskType == TaskType.productivity,
@@ -163,6 +176,7 @@ class _TodoForm extends StatelessWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(minWidth: 180),
                     child: ShadSelect<String>(
+                      enabled: !isDone,
                       options: [
                         ...listCategory!.map((category) => ShadOption(
                               value: category,
@@ -172,7 +186,7 @@ class _TodoForm extends StatelessWidget {
                       closeOnSelect: false,
                       initialValue: initialCategory,
                       selectedOptionBuilder: (context, value) => Text(value),
-                      onChanged: (value) {},
+                      onChanged: !isDone ? (value) {} : null,
                     ),
                   ),
                 ),
@@ -185,6 +199,7 @@ class _TodoForm extends StatelessWidget {
             theme: theme,
             child: ShadDatePicker(
               selected: initialDate,
+              enabled: !isDone,
             ),
           ),
           const SizedBox(height: 16),
@@ -195,7 +210,7 @@ class _TodoForm extends StatelessWidget {
               initialValue: initialTime != null
                   ? ShadTimeOfDay.fromDateTime(initialTime!)
                   : null,
-              onChanged: (time) => debugPrint(time.toString()),
+              onChanged: !isDone ? (time) => debugPrint(time.toString()) : null,
               validator: (v) => v == null ? 'A time is required' : null,
               hourLabel: const SizedBox.shrink(),
               minuteLabel: const SizedBox.shrink(),
@@ -213,8 +228,9 @@ class _TodoForm extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 400),
               child: ShadTextarea(
                 initialValue: initialNotes,
-                onChanged: (value) {},
+                onChanged: !isDone ? (value) {} : null,
                 minHeight: 150,
+                enabled: !isDone,
               ),
             ),
           ),

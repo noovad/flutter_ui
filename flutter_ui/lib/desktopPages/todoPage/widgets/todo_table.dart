@@ -1,50 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/desktopPages/todoPage/data.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-
-const invoices = [
-  (
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: r"$250.00",
-    paymentMethod: "Credit Card",
-  ),
-  (
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: r"$150.00",
-    paymentMethod: "PayPal",
-  ),
-  (
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: r"$350.00",
-    paymentMethod: "Bank Transfer",
-  ),
-  (
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: r"$450.00",
-    paymentMethod: "Credit Card",
-  ),
-  (
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: r"$550.00",
-    paymentMethod: "PayPal",
-  ),
-  (
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: r"$200.00",
-    paymentMethod: "Bank Transfer",
-  ),
-  (
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: r"$300.00",
-    paymentMethod: "Credit Card",
-  ),
-];
 
 class TablePage extends StatelessWidget {
   const TablePage({
@@ -55,54 +12,65 @@ class TablePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 400,
+      height: MediaQuery.of(context).size.height - 104,
       child: ShadTable.list(
         header: const [
-          ShadTableCell.header(child: Text('Invoice')),
-          ShadTableCell.header(child: Text('Status')),
-          ShadTableCell.header(child: Text('Method')),
-          ShadTableCell.header(
-            alignment: Alignment.centerRight,
-            child: Text('Amount'),
-          ),
-        ],
-        footer: const [
-          ShadTableCell.footer(child: Text('Total')),
-          ShadTableCell.footer(child: Text('')),
-          ShadTableCell.footer(child: Text('')),
-          ShadTableCell.footer(
-            alignment: Alignment.centerRight,
-            child: Text(r'$2500.00'),
-          ),
+          ShadTableCell.header(child: Text('Title')),
+          ShadTableCell.header(child: Text('Date')),
+          ShadTableCell.header(child: Text('Category')),
+          ShadTableCell.header(child: Text('Time')),
+          ShadTableCell.header(child: Text('Note')),
         ],
         columnSpanExtent: (index) {
-          if (index == 2) return const FixedTableSpanExtent(130);
-          if (index == 3) {
+          if (index == 0) {
+            return const FixedTableSpanExtent(200);
+          }
+          if (index == 4) {
             return const MaxTableSpanExtent(
-              FixedTableSpanExtent(120),
+              FixedTableSpanExtent(150),
               RemainingTableSpanExtent(),
             );
           }
-          // uses the default value
           return null;
         },
-        children: invoices.map(
-          (invoice) => [
+        onRowTap: (row) {
+          final todo = todoCardP[row - 1];
+          debugPrint('Tapped todo: ${todo.title}');
+          showShadSheet(
+            side: ShadSheetSide.right,
+            context: context,
+            builder: (context) => TodoSheet.detail(
+              side: ShadSheetSide.right,
+              todoData: todo,
+              listCategory: [],
+              taskType: null,
+            ),
+          );
+        },
+        children: todoCardP.map(
+          (todo) => [
             ShadTableCell(
               child: Text(
-                invoice.invoice,
+                todo.title,
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            ShadTableCell(child: Text(invoice.paymentStatus)),
-            ShadTableCell(child: Text(invoice.paymentMethod)),
+            ShadTableCell(
+              child: Text(DateFormat('dd MMM yyyy').format(todo.date)),
+            ),
+            ShadTableCell(
+              child: Text(todo.category ?? 'N/A'),
+            ),
+            ShadTableCell(
+              child: Text(todo.time != null
+                  ? DateFormat('HH:mm').format(todo.time!)
+                  : ''),
+            ),
             ShadTableCell(
               alignment: Alignment.centerRight,
-              child: Text(
-                invoice.totalAmount,
-              ),
+              child: Text(todo.note ?? ''),
             ),
           ],
         ),
