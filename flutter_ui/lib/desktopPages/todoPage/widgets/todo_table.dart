@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/data.dart';
+import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TablePage extends StatelessWidget {
+  final List<TodoCardData> data;
   const TablePage({
     super.key,
+    required this.data,
   });
 
   @override
@@ -34,7 +36,7 @@ class TablePage extends StatelessWidget {
           return null;
         },
         onRowTap: (row) {
-          final todo = todoCardP[row - 1];
+          final todo = data[row - 1];
           debugPrint('Tapped todo: ${todo.title}');
           showShadSheet(
             side: ShadSheetSide.right,
@@ -47,7 +49,7 @@ class TablePage extends StatelessWidget {
             ),
           );
         },
-        children: todoCardP.map(
+        children: data.map(
           (todo) => [
             ShadTableCell(
               child: Text(
@@ -69,7 +71,7 @@ class TablePage extends StatelessWidget {
                   : ''),
             ),
             ShadTableCell(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.centerLeft,
               child: Text(todo.note ?? ''),
             ),
           ],

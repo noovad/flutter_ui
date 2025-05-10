@@ -6,11 +6,13 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoTabs extends StatelessWidget {
   final TodoData todoCardData;
+  final List<TodoCardData> todoHistory;
   final List<String> listCategory;
 
   const TodoTabs({
     super.key,
     required this.todoCardData,
+    required this.todoHistory,
     required this.listCategory,
   });
   @override
@@ -49,7 +51,9 @@ class TodoTabs extends StatelessWidget {
         ),
         ShadTab(
           value: 'History',
-          content: TablePage(),
+          content: TablePage(
+            data: todoHistory,
+          ),
           child: const Text('History'),
         ),
       ],
