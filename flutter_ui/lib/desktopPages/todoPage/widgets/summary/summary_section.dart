@@ -25,7 +25,7 @@ class SummarySection extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Text(
-                'Maret / 2024',
+                'Maret | 2024',
                 style: ShadTheme.of(context).textTheme.p,
               ),
               const SizedBox(width: 12),

@@ -26,6 +26,16 @@ class TodoData {
   });
 }
 
+class TodoCategories {
+  final List<String> productivity;
+  final List<String> daily;
+
+  TodoCategories({
+    required this.productivity,
+    required this.daily,
+  });
+}
+
 class Note {
   final String title;
   final String content;

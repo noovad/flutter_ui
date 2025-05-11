@@ -88,6 +88,7 @@ class TodoSheet extends StatelessWidget {
               ),
             ],
       child: TodoForm(
+        tabsType: tabsType,
         listCategory: listCategory,
         taskType: taskType,
         isDone: isCreate ? false : todoData!.isDone,

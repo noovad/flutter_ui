@@ -51,6 +51,9 @@ class TablePage extends StatelessWidget {
                 if (index == 0) {
                   return const FixedTableSpanExtent(200);
                 }
+                if (index == 1) {
+                  return const FixedTableSpanExtent(120);
+                }
                 if (index == 4) {
                   return const MaxTableSpanExtent(
                     FixedTableSpanExtent(150),
@@ -81,22 +84,35 @@ class TablePage extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   ShadTableCell(
-                    child: Text(DateFormat('dd MMM yyyy').format(todo.date)),
+                    child: Text(
+                      DateFormat('dd MMM yyyy').format(todo.date),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   ShadTableCell(
-                    child: Text(todo.category ?? ''),
+                    child: Text(
+                      todo.category ?? '',
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   ShadTableCell(
-                    child: Text(todo.time != null
-                        ? DateFormat('HH:mm').format(todo.time!)
-                        : ''),
+                    child: Text(
+                      todo.time != null
+                          ? DateFormat('HH:mm').format(todo.time!)
+                          : '',
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   ShadTableCell(
                     alignment: Alignment.centerLeft,
-                    child: Text(todo.note ?? ''),
+                    child: Text(
+                      todo.note ?? '',
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),

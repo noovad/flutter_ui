@@ -8,7 +8,7 @@ enum TabsType { today, upcoming, history, auto }
 class TodoSection extends StatelessWidget {
   final TabsType tabsType;
   final TodoData todoCardData;
-  final List<String> listCategory;
+  final TodoCategories todoCategories;
   final VoidCallback? onSave;
   final bool leading;
 
@@ -16,7 +16,7 @@ class TodoSection extends StatelessWidget {
     super.key,
     required this.tabsType,
     required this.todoCardData,
-    required this.listCategory,
+    required this.todoCategories,
     required this.onSave,
     this.leading = true,
   });
@@ -29,7 +29,7 @@ class TodoSection extends StatelessWidget {
       children: [
         TodoListData(
           tabsType: tabsType,
-          listCategory: listCategory,
+          listCategory: todoCategories.productivity,
           todoCardData: todoCardData.productivity,
           taskType: TaskType.productivity,
           onSave: onSave,
@@ -37,7 +37,7 @@ class TodoSection extends StatelessWidget {
         ),
         TodoListData(
           tabsType: tabsType,
-          listCategory: listCategory,
+          listCategory: todoCategories.daily,
           todoCardData: todoCardData.daily,
           taskType: TaskType.daily,
           onSave: onSave,

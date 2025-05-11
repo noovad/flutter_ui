@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/build_form_row.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoForm extends StatelessWidget {
+  final TabsType? tabsType;
   final List<String>? listCategory;
   final TaskType? taskType;
   final bool isDone;
@@ -17,6 +19,7 @@ class TodoForm extends StatelessWidget {
   const TodoForm({
     super.key,
     required this.taskType,
+    required this.tabsType,
     required this.initialTitle,
     required this.isDone,
     required this.initialCategory,
@@ -61,12 +64,14 @@ class TodoForm extends StatelessWidget {
             selectedOptionBuilder: (context, value) => Text(value),
           ),
         ),
-        buildFormRow(
-          label: 'Date',
-          theme: theme,
-          child: ShadDatePicker(
-            selected: initialDate,
-            enabled: !isDone,
+        Visibility(
+          child: buildFormRow(
+            label: 'Date',
+            theme: theme,
+            child: ShadDatePicker(
+              selected: initialDate,
+              enabled: !isDone,
+            ),
           ),
         ),
         buildFormRow(

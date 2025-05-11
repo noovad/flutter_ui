@@ -7,14 +7,16 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoPage extends StatelessWidget {
   final TodoData data;
-  final List<String> listCategory;
+  final TodoCategories todoCategories;
+  final List<String> noteCategories;
   final List<TodoCardData> todoHistory;
   final List<Note> notes;
 
   const TodoPage({
     super.key,
     required this.data,
-    required this.listCategory,
+    required this.todoCategories,
+    required this.noteCategories,
     required this.todoHistory,
     required this.notes,
   });
@@ -36,7 +38,7 @@ class TodoPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: TodoTabs(
                   todoCardData: data,
-                  listCategory: listCategory,
+                  todoCategories: todoCategories,
                   todoHistory: todoHistory,
                 ),
               ),
@@ -50,7 +52,7 @@ class TodoPage extends StatelessWidget {
                   flex: 5,
                   child: NoteSection(
                     notes: notes,
-                    categories: listCategory,
+                    categories: noteCategories,
                   ),
                 ),
                 Expanded(

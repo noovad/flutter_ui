@@ -10,14 +10,6 @@ final todo = WidgetbookUseCase(
   ),
 );
 
-const List<String> listCategory = [
-  'Work',
-  'Personal',
-  'Shopping',
-  'Health',
-  'Fitness',
-];
-
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
 
@@ -26,9 +18,10 @@ class MyWidget extends StatelessWidget {
     return Container(
       color: Color(0xFF222222),
       child: TodoPage(
+        noteCategories: noteCategories,
+        todoCategories: todoCategories,
         data: todoData,
-        listCategory: listCategory,
-        todoHistory: todoData.daily,
+        todoHistory: todoHistory,
         notes: sampleNotes,
       ),
     );

@@ -7,13 +7,13 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 class TodoTabs extends StatelessWidget {
   final TodoData todoCardData;
   final List<TodoCardData> todoHistory;
-  final List<String> listCategory;
+  final TodoCategories todoCategories;
 
   const TodoTabs({
     super.key,
     required this.todoCardData,
     required this.todoHistory,
-    required this.listCategory,
+    required this.todoCategories,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class TodoTabs extends StatelessWidget {
           content: TodoSection(
             todoCardData: todoCardData,
             tabsType: TabsType.today,
-            listCategory: listCategory,
+            todoCategories: todoCategories,
             onSave: () {},
           ),
           child: const Text('Today'),
@@ -37,7 +37,7 @@ class TodoTabs extends StatelessWidget {
           content: TodoSection(
             todoCardData: todoCardData,
             tabsType: TabsType.upcoming,
-            listCategory: listCategory,
+            todoCategories: todoCategories,
             onSave: () {},
           ),
           child: const Text('Upcoming'),
@@ -47,7 +47,7 @@ class TodoTabs extends StatelessWidget {
           content: TodoSection(
             todoCardData: todoCardData,
             tabsType: TabsType.auto,
-            listCategory: listCategory,
+            todoCategories: todoCategories,
             onSave: () {},
             leading: false,
           ),
