@@ -9,11 +9,13 @@ class NoteCard extends StatefulWidget {
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
   final List<String> categories;
+  final ValueChanged<Note>? onSave;
 
   const NoteCard({
     super.key,
     required this.note,
     required this.categories,
+    required this.onSave,
     this.onDelete,
     this.onEdit,
   });
@@ -80,6 +82,7 @@ class _NoteCardState extends State<NoteCard> {
                       side: ShadSheetSide.left,
                       note: widget.note,
                       categories: widget.categories,
+                      onSave: widget.onSave,
                     ),
                   ),
                   splashColor: Colors.transparent,

@@ -8,12 +8,14 @@ class TodoTabs extends StatelessWidget {
   final TodoData todoCardData;
   final List<TodoCardData> todoHistory;
   final TodoCategories todoCategories;
+  final VoidCallback? onSave;
 
   const TodoTabs({
     super.key,
     required this.todoCardData,
     required this.todoHistory,
     required this.todoCategories,
+    required this.onSave,
   });
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class TodoTabs extends StatelessWidget {
             todoCardData: todoCardData,
             tabsType: TabsType.today,
             todoCategories: todoCategories,
-            onSave: () {},
+            onSave: onSave,
           ),
           child: const Text('Today'),
         ),
@@ -38,7 +40,7 @@ class TodoTabs extends StatelessWidget {
             todoCardData: todoCardData,
             tabsType: TabsType.upcoming,
             todoCategories: todoCategories,
-            onSave: () {},
+            onSave: onSave,
           ),
           child: const Text('Upcoming'),
         ),

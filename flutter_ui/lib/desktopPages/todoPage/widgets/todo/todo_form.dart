@@ -84,7 +84,6 @@ class TodoForm extends StatelessWidget {
             initialValue: initialTime != null
                 ? ShadTimeOfDay.fromDateTime(initialTime!)
                 : null,
-            onChanged: !isDone ? (time) => debugPrint(time.toString()) : null,
             validator: (v) => v == null ? 'A time is required' : null,
             hourLabel: const SizedBox.shrink(),
             minuteLabel: const SizedBox.shrink(),

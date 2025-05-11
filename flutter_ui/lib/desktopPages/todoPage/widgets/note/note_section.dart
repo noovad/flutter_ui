@@ -8,10 +8,13 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 class NoteSection extends StatelessWidget {
   final List<Note> notes;
   final List<String> categories;
+  final ValueChanged<Note> onSave;
+
   const NoteSection({
     super.key,
     required this.notes,
     required this.categories,
+    required this.onSave,
   });
 
   @override
@@ -35,6 +38,9 @@ class NoteSection extends StatelessWidget {
             categories: categories,
             onEdit: null,
             onDelete: null,
+            onSave: (note) {
+              onSave(note);
+            },
           );
         },
       ),
@@ -50,9 +56,12 @@ class NoteSection extends StatelessWidget {
         onTap: () => showShadSheet(
           side: ShadSheetSide.left,
           context: context,
-          builder: (context) => NoteSheet.create(
+          builder: (_) => NoteSheet.create(
             side: ShadSheetSide.left,
             categories: categories,
+            onSave: (note) {
+              onSave(note);
+            },
           ),
         ),
         splashColor: Colors.transparent,

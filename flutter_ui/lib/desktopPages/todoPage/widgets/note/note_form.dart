@@ -4,18 +4,20 @@ import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class NoteForm extends StatelessWidget {
-  final String title;
-  final String content;
-  final String category;
+  final TextEditingController titleController;
+  final TextEditingController contentController;
+  final String selectedCategory;
   final List<String> categories;
+  final ValueChanged<String> onCategoryChanged;
   final ShadThemeData theme;
 
   const NoteForm({
     super.key,
-    required this.title,
-    required this.content,
-    required this.category,
+    required this.titleController,
+    required this.contentController,
+    required this.selectedCategory,
     required this.categories,
+    required this.onCategoryChanged,
     required this.theme,
   });
 
@@ -28,8 +30,11 @@ class NoteForm extends StatelessWidget {
           label: 'Title',
           theme: theme,
           child: ShadInput(
-            initialValue: title,
+            initialValue: titleController.text,
             enabled: true,
+            onChanged: (value) {
+              titleController.text = value;
+            },
           ),
         ),
         buildFormRow(
@@ -45,18 +50,26 @@ class NoteForm extends StatelessWidget {
               ),
             ],
             closeOnSelect: false,
-            initialValue: category,
+            initialValue: selectedCategory,
+            onChanged: (value) {
+              if (value != null) {
+                onCategoryChanged(value);
+              }
+            },
             selectedOptionBuilder: (context, value) => Text(value),
           ),
         ),
         buildFormRow(
-          label: 'Notes',
+          label: 'Content',
           theme: theme,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
             child: ShadTextarea(
-              initialValue: content,
+              initialValue: contentController.text,
               minHeight: 400,
+              onChanged: (value) {
+                contentController.text = value;
+              },
             ),
           ),
         ),

@@ -12,6 +12,9 @@ class TodoPage extends StatelessWidget {
   final List<TodoCardData> todoHistory;
   final List<Note> notes;
   final List<DailyActivity> dailyActivities;
+  // final ValueChanged<Note>? onSaveTodo;
+  final VoidCallback? onSaveTodo;
+  final ValueChanged<Note> onSaveNote;
 
   const TodoPage({
     super.key,
@@ -21,6 +24,8 @@ class TodoPage extends StatelessWidget {
     required this.todoHistory,
     required this.notes,
     required this.dailyActivities,
+    required this.onSaveTodo,
+    required this.onSaveNote,
   });
 
   @override
@@ -33,7 +38,7 @@ class TodoPage extends StatelessWidget {
       home: Row(
         children: [
           Expanded(
-            flex: 5,
+            flex: 6,
             child: Center(
               child: Container(
                 alignment: Alignment.topCenter,
@@ -42,25 +47,23 @@ class TodoPage extends StatelessWidget {
                   todoCardData: data,
                   todoCategories: todoCategories,
                   todoHistory: todoHistory,
+                  onSave: onSaveTodo,
                 ),
               ),
             ),
           ),
           Expanded(
-            flex: 5,
+            flex: 4,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SummarySection(dailyActivities: dailyActivities),
+                const SizedBox(height: 16),
                 Expanded(
-                  flex: 5,
                   child: NoteSection(
                     notes: notes,
                     categories: noteCategories,
-                  ),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: SummarySection(
-                    dailyActivities: dailyActivities
+                    onSave: onSaveNote,
                   ),
                 ),
               ],

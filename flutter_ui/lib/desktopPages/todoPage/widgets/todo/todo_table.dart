@@ -101,7 +101,6 @@ class _TablePageState extends State<TablePage> {
               },
               onRowTap: (row) {
                 final todo = widget.data[row - 1];
-                debugPrint('Tapped todo: ${todo.title}');
                 showShadSheet(
                   side: ShadSheetSide.right,
                   context: context,
