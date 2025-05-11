@@ -8,10 +8,12 @@ class NoteCard extends StatefulWidget {
   final Note note;
   final VoidCallback? onDelete;
   final VoidCallback? onEdit;
+  final List<String> categories;
 
   const NoteCard({
     super.key,
     required this.note,
+    required this.categories,
     this.onDelete,
     this.onEdit,
   });
@@ -74,14 +76,13 @@ class _NoteCardState extends State<NoteCard> {
                   onTap: () => showShadSheet(
                     side: ShadSheetSide.left,
                     context: context,
-                    builder: (context) => EditProfileSheet(
+                    builder: (context) => NoteSheet(
                       side: ShadSheetSide.left,
                       note: widget.note,
-                      categories: [],
+                      categories: widget.categories,
                     ),
                   ),
                   hoverColor: Colors.transparent,
-                  splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   child: Text(
                     widget.note.content,

@@ -50,6 +50,7 @@ class TodoPage extends StatelessWidget {
                   flex: 5,
                   child: NoteSection(
                     notes: notes,
+                    categories: listCategory,
                   ),
                 ),
                 Expanded(

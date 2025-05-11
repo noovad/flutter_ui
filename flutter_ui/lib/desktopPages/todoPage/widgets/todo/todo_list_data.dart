@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/Card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoListData extends StatelessWidget {
-  final TabsType type;
-  final List<String>? listCategory;
+  final TabsType tabsType;
+  final List<String> listCategory;
   final List<TodoCardData> todoCardData;
   final TaskType taskType;
+  final VoidCallback? onSave;
+  final bool leading;
 
   const TodoListData({
     super.key,
-    required this.type,
+    required this.tabsType,
     required this.taskType,
     required this.todoCardData,
-    this.listCategory,
+    required this.onSave,
+    required this.listCategory,
+    this.leading = true,
   });
 
   @override
@@ -26,11 +32,31 @@ class TodoListData extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: TodoCard.createTodo(
-              onSave: () => {},
-              tabsType: type,
-              taskType: taskType,
-              listCategory: listCategory ?? [],
+            child: AppCard(
+              height: 50,
+              color: Color(0xFF27272A),
+              child: InkWell(
+                onTap: () => showShadSheet(
+                  side: ShadSheetSide.right,
+                  context: context,
+                  builder: (context) => TodoSheet.create(
+                    taskType: taskType,
+                    side: ShadSheetSide.right,
+                    onSave: onSave,
+                    tabsType: tabsType,
+                    listCategory: listCategory,
+                  ),
+                ),
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(
+                    Icons.add,
+                    size: 24,
+                  ),
+                ),
+              ),
             ),
           ),
           Container(
@@ -44,12 +70,13 @@ class TodoListData extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: TodoCard.todo(
-                    listCategory: listCategory ?? [],
+                  child: TodoCard(
+                    listCategory: listCategory,
                     taskType: TaskType.productivity,
                     data: todoCardData[index],
                     onEdit: () {},
                     onDelete: () {},
+                    leading: leading,
                   ),
                 );
               },

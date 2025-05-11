@@ -26,8 +26,9 @@ class TodoTabs extends StatelessWidget {
           value: 'Today',
           content: TodoSection(
             todoCardData: todoCardData,
-            type: TabsType.today,
+            tabsType: TabsType.today,
             listCategory: listCategory,
+            onSave: () {},
           ),
           child: const Text('Today'),
         ),
@@ -35,8 +36,9 @@ class TodoTabs extends StatelessWidget {
           value: 'Upcoming',
           content: TodoSection(
             todoCardData: todoCardData,
-            type: TabsType.upcoming,
+            tabsType: TabsType.upcoming,
             listCategory: listCategory,
+            onSave: () {},
           ),
           child: const Text('Upcoming'),
         ),
@@ -44,8 +46,10 @@ class TodoTabs extends StatelessWidget {
           value: 'Auto',
           content: TodoSection(
             todoCardData: todoCardData,
-            type: TabsType.auto,
+            tabsType: TabsType.auto,
             listCategory: listCategory,
+            onSave: () {},
+            leading: false,
           ),
           child: const Text('Auto'),
         ),

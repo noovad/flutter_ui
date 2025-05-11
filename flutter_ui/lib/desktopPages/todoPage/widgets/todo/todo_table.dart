@@ -65,7 +65,7 @@ class TablePage extends StatelessWidget {
                 showShadSheet(
                   side: ShadSheetSide.right,
                   context: context,
-                  builder: (context) => TodoSheet.detail(
+                  builder: (context) => TodoSheet(
                     side: ShadSheetSide.right,
                     todoData: todo,
                     listCategory: [],

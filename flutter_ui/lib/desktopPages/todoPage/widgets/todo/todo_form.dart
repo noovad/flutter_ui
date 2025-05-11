@@ -94,7 +94,7 @@ class TodoForm extends StatelessWidget {
             child: ShadTextarea(
               initialValue: initialNotes,
               onChanged: !isDone ? (value) {} : null,
-              minHeight: 150,
+              minHeight: 400,
               enabled: !isDone,
             ),
           ),

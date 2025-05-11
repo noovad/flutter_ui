@@ -6,15 +6,19 @@ import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 enum TabsType { today, upcoming, history, auto }
 
 class TodoSection extends StatelessWidget {
-  final TabsType type;
+  final TabsType tabsType;
   final TodoData todoCardData;
   final List<String> listCategory;
+  final VoidCallback? onSave;
+  final bool leading;
 
   const TodoSection({
     super.key,
-    required this.type,
+    required this.tabsType,
     required this.todoCardData,
     required this.listCategory,
+    required this.onSave,
+    this.leading = true,
   });
 
   @override
@@ -24,15 +28,20 @@ class TodoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TodoListData(
-          type: type,
+          tabsType: tabsType,
           listCategory: listCategory,
           todoCardData: todoCardData.productivity,
           taskType: TaskType.productivity,
+          onSave: onSave,
+          leading: leading,
         ),
         TodoListData(
-          type: type,
+          tabsType: tabsType,
+          listCategory: listCategory,
           todoCardData: todoCardData.daily,
           taskType: TaskType.daily,
+          onSave: onSave,
+          leading: leading,
         ),
       ],
     );
