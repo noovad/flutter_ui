@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_content.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 enum AppCardType { todo, createTodo }
@@ -131,7 +131,7 @@ class _AppCardState extends State<TodoCard> {
                   ),
                 ),
               ),
-              if (_isHovered)
+              if (_isHovered && (widget.data?.isDone == false))
                 Center(
                   child: ShadIconButton.ghost(
                     icon: const Icon(LucideIcons.trash),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_content.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_table.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_table.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoTabs extends StatelessWidget {
@@ -24,7 +24,7 @@ class TodoTabs extends StatelessWidget {
       tabs: [
         ShadTab(
           value: 'Today',
-          content: TodoContent(
+          content: TodoSection(
             todoCardData: todoCardData,
             type: TabsType.today,
             listCategory: listCategory,
@@ -33,7 +33,7 @@ class TodoTabs extends StatelessWidget {
         ),
         ShadTab(
           value: 'Upcoming',
-          content: TodoContent(
+          content: TodoSection(
             todoCardData: todoCardData,
             type: TabsType.upcoming,
             listCategory: listCategory,
@@ -42,7 +42,7 @@ class TodoTabs extends StatelessWidget {
         ),
         ShadTab(
           value: 'Auto',
-          content: TodoContent(
+          content: TodoSection(
             todoCardData: todoCardData,
             type: TabsType.auto,
             listCategory: listCategory,

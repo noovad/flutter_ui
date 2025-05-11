@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/list_data.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_list_data.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 
 enum TabsType { today, upcoming, history, auto }
 
-class TodoContent extends StatelessWidget {
+class TodoSection extends StatelessWidget {
   final TabsType type;
   final TodoData todoCardData;
   final List<String> listCategory;
 
-  const TodoContent({
+  const TodoSection({
     super.key,
     required this.type,
     required this.todoCardData,
@@ -23,13 +23,13 @@ class TodoContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ListData(
+        TodoListData(
           type: type,
           listCategory: listCategory,
           todoCardData: todoCardData.productivity,
           taskType: TaskType.productivity,
         ),
-        ListData(
+        TodoListData(
           type: type,
           todoCardData: todoCardData.daily,
           taskType: TaskType.daily,

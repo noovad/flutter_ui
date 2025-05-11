@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_content.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_form.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 enum TodoSheetType { create, detail }
@@ -51,7 +51,10 @@ class TodoSheet extends StatelessWidget {
 
   ShadSheet _createSheet(BuildContext context, ShadThemeData theme) {
     return ShadSheet(
-      constraints: _getSheetConstraints(),
+      constraints: BoxConstraints(
+        minWidth: 520,
+        maxWidth: MediaQuery.of(context).size.width / 2,
+      ),
       title: taskType == TaskType.daily
           ? Text('Create Todo Daily')
           : Text('Create Todo Productivity'),
@@ -85,7 +88,10 @@ class TodoSheet extends StatelessWidget {
 
   ShadSheet _detailSheet(BuildContext context, ShadThemeData theme) {
     return ShadSheet(
-      constraints: _getSheetConstraints(),
+      constraints: BoxConstraints(
+        minWidth: 520,
+        maxWidth: MediaQuery.of(context).size.width / 2,
+      ),
       title: taskType == TaskType.daily
           ? Text('Detail Todo Daily')
           : Text('Detail Todo Productivity'),
@@ -119,11 +125,5 @@ class TodoSheet extends StatelessWidget {
         initialTime: todoData!.time,
       ),
     );
-  }
-
-  BoxConstraints? _getSheetConstraints() {
-    return side == ShadSheetSide.left || side == ShadSheetSide.right
-        ? const BoxConstraints(maxWidth: 512)
-        : null;
   }
 }

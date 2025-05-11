@@ -287,7 +287,7 @@ final List<TodoCardData> todoCardP = [
 ];
 final List<Note> sampleNotes = [
   Note(
-    title: 'Grocery List',
+    title: 'Grocery List dan dan dan dan dan dan',
     content:
         'Milk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, CheeseMilk, Eggs, Bread, Butter, Cheese',
     // category: 'Personal',

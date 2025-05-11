@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/note_content.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_tabs.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/summary_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_tabs.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoPage extends StatelessWidget {
@@ -47,13 +48,13 @@ class TodoPage extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
-                  child: NoteContent(
+                  child: NoteSection(
                     notes: notes,
                   ),
                 ),
                 Expanded(
                   flex: 5,
-                  child: Align(child: Text('Three')),
+                  child: SummarySection(),
                 ),
               ],
             ),

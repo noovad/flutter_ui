@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/note_card.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_card.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
-class NoteContent extends StatelessWidget {
+class NoteSection extends StatelessWidget {
   final List<Note> notes;
-  const NoteContent({
+  const NoteSection({
     super.key,
     required this.notes,
   });
@@ -13,7 +13,7 @@ class NoteContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: AppPadding.padding16,
+      padding: AppPadding.all16,
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,

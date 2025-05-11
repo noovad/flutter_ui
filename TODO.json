@@ -1,5 +1,12 @@
 {
-  "todo": [],
+  "todo": [
+    {
+      "id": 13632,
+      "text": "Card Note Create",
+      "priority": 1,
+      "created": "2025-05-11T02:24:17.174Z"
+    }
+  ],
   "completed": [
     {
       "id": 14036,
@@ -24,6 +31,24 @@
       "text": "update (status, if done disable",
       "priority": 1,
       "created": "2025-05-10T11:06:48.329Z"
+    },
+    {
+      "id": 18561,
+      "text": "When can pit (3)",
+      "priority": 1,
+      "created": "2025-05-11T00:26:52.791Z"
+    },
+    {
+      "id": 12233,
+      "text": "Sheet Note",
+      "priority": 1,
+      "created": "2025-05-10T16:09:07.860Z"
+    },
+    {
+      "id": 11430,
+      "text": "prop, icon dan event",
+      "priority": 1,
+      "created": "2025-05-10T15:15:06.198Z"
     }
   ]
 }

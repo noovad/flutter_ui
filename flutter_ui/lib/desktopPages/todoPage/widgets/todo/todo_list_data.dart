@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_card.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_content.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_card.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 
-class ListData extends StatelessWidget {
+class TodoListData extends StatelessWidget {
   final TabsType type;
   final List<String>? listCategory;
   final List<TodoCardData> todoCardData;
   final TaskType taskType;
 
-  const ListData({
+  const TodoListData({
     super.key,
     required this.type,
     required this.taskType,
