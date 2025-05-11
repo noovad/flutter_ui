@@ -46,22 +46,25 @@ class TodoForm extends StatelessWidget {
             enabled: !isDone,
           ),
         ),
-        buildFormRow(
-          label: 'Category',
-          theme: theme,
-          child: ShadSelect<String>(
-            enabled: !isDone,
-            options: [
-              ...listCategory!.map(
-                (category) => ShadOption(
-                  value: category,
-                  child: Text(category),
+        Visibility(
+          visible: tabsType != TabsType.auto,
+          child: buildFormRow(
+            label: 'Category',
+            theme: theme,
+            child: ShadSelect<String>(
+              enabled: !isDone,
+              options: [
+                ...listCategory!.map(
+                  (category) => ShadOption(
+                    value: category,
+                    child: Text(category),
+                  ),
                 ),
-              ),
-            ],
-            closeOnSelect: false,
-            initialValue: initialCategory,
-            selectedOptionBuilder: (context, value) => Text(value),
+              ],
+              closeOnSelect: false,
+              initialValue: initialCategory,
+              selectedOptionBuilder: (context, value) => Text(value),
+            ),
           ),
         ),
         Visibility(

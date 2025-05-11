@@ -39,10 +39,12 @@ class NoteSheet extends StatelessWidget {
       actions: isCreate
           ? [
               ShadButton(
+                size: ShadButtonSize.sm,
                 child: const Text('Cancel'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               ShadButton(
+                size: ShadButtonSize.sm,
                 child: const Text('Create'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -58,6 +60,7 @@ class NoteSheet extends StatelessWidget {
                 },
               ),
               ShadButton(
+                size: ShadButtonSize.sm,
                 child: const Text('Update'),
                 onPressed: () {
                   Navigator.of(context).pop();

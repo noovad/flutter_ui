@@ -82,6 +82,7 @@ class _NoteCardState extends State<NoteCard> {
                       categories: widget.categories,
                     ),
                   ),
+                  splashColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   child: Text(

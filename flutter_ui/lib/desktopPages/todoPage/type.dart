@@ -49,3 +49,21 @@ class Note {
     this.isPinned = false,
   });
 }
+
+class DailyActivity {
+  final DateTime date;
+  final int sholat;
+  final bool gym;
+  final bool cardio;
+  final bool coding;
+  final int amount;
+
+  DailyActivity({
+    required this.date,
+    required this.sholat,
+    required this.gym,
+    required this.cardio,
+    required this.coding,
+    required this.amount,
+  });
+}

@@ -18,6 +18,7 @@ class MyWidget extends StatelessWidget {
     return Container(
       color: Color(0xFF222222),
       child: TodoPage(
+        dailyActivities: dailyActivities,
         noteCategories: noteCategories,
         todoCategories: todoCategories,
         data: todoData,

@@ -78,3 +78,15 @@ final List<String> noteCategories = [
   'Cooking',
   'Finance',
 ];
+
+final List<DailyActivity> dailyActivities = List.generate(31, (index) {
+  final date = DateTime(DateTime.now().year, 5, index + 1);
+  return DailyActivity(
+    date: date,
+    sholat: (index % 6), // Randomized between 0 to 5
+    gym: index % 2 == 0, // Alternating days
+    cardio: index % 3 == 0, // Every third day
+    coding: index % 2 != 0, // Alternating days
+    amount: (index + 1) * 100, // Incremental amount
+  );
+});

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/card.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoCard extends StatefulWidget {
+  final TabsType tabsType;
   final TaskType taskType;
   final TodoCardData data;
   final VoidCallback onEdit;
@@ -14,6 +16,7 @@ class TodoCard extends StatefulWidget {
 
   const TodoCard({
     super.key,
+    required this.tabsType,
     required this.data,
     required this.onEdit,
     required this.onDelete,
@@ -58,12 +61,14 @@ class _AppCardState extends State<TodoCard> {
                     side: ShadSheetSide.right,
                     context: context,
                     builder: (context) => TodoSheet(
+                      tabsType: widget.tabsType,
                       side: ShadSheetSide.right,
                       todoData: widget.data,
                       listCategory: widget.listCategory,
                       taskType: widget.taskType,
                     ),
                   ),
+                  splashColor: Colors.transparent,
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   child: Column(

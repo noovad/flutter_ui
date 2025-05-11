@@ -33,9 +33,9 @@ class TodoSheet extends StatelessWidget {
     required this.todoData,
     required this.taskType,
     required this.listCategory,
-    this.onSave,
+    required this.tabsType,
   })  : type = null,
-        tabsType = null;
+        onSave = null;
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +54,12 @@ class TodoSheet extends StatelessWidget {
       actions: isCreate
           ? [
               ShadButton(
+                size: ShadButtonSize.sm,
                 child: const Text('Cancel'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               ShadButton(
+                size: ShadButtonSize.sm,
                 child: const Text('Create'),
                 onPressed: () {
                   if (onSave != null) onSave!();
@@ -79,6 +81,7 @@ class TodoSheet extends StatelessWidget {
               Visibility(
                 visible: !(todoData?.isDone ?? false),
                 child: ShadButton(
+                  size: ShadButtonSize.sm,
                   child: const Text('Update'),
                   onPressed: () {
                     if (onSave != null) onSave!();

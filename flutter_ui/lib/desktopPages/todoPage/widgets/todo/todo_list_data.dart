@@ -47,6 +47,7 @@ class TodoListData extends StatelessWidget {
                     listCategory: listCategory,
                   ),
                 ),
+                splashColor: Colors.transparent,
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 child: const Padding(
@@ -71,6 +72,7 @@ class TodoListData extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: TodoCard(
+                    tabsType: tabsType,
                     listCategory: listCategory,
                     taskType: TaskType.productivity,
                     data: todoCardData[index],

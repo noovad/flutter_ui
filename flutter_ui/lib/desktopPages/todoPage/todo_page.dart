@@ -11,6 +11,7 @@ class TodoPage extends StatelessWidget {
   final List<String> noteCategories;
   final List<TodoCardData> todoHistory;
   final List<Note> notes;
+  final List<DailyActivity> dailyActivities;
 
   const TodoPage({
     super.key,
@@ -19,6 +20,7 @@ class TodoPage extends StatelessWidget {
     required this.noteCategories,
     required this.todoHistory,
     required this.notes,
+    required this.dailyActivities,
   });
 
   @override
@@ -57,7 +59,9 @@ class TodoPage extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 5,
-                  child: SummarySection(),
+                  child: SummarySection(
+                    dailyActivities: dailyActivities
+                  ),
                 ),
               ],
             ),

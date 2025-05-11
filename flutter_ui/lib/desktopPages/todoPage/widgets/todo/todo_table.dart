@@ -3,12 +3,49 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-class TablePage extends StatelessWidget {
+class TablePage extends StatefulWidget {
   final List<TodoCardData> data;
   const TablePage({
     super.key,
     required this.data,
   });
+
+  @override
+  State<TablePage> createState() => _TablePageState();
+}
+
+class _TablePageState extends State<TablePage> {
+  late DateTime _currentDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentDate = DateTime.now();
+  }
+
+  void _nextMonth() {
+    setState(() {
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month + 1,
+        1,
+      );
+    });
+  }
+
+  void _previousMonth() {
+    setState(() {
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month - 1,
+        1,
+      );
+    });
+  }
+
+  String _formatCurrentMonth() {
+    return DateFormat('MMMM / yyyy').format(_currentDate);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +59,19 @@ class TablePage extends StatelessWidget {
             children: [
               ShadButton.secondary(
                 size: ShadButtonSize.sm,
+                onPressed: _previousMonth,
                 child: const Icon(LucideIcons.chevronLeft),
-                onPressed: () {},
               ),
               const SizedBox(width: 12),
               Text(
-                'Maret / 2024',
+                _formatCurrentMonth(),
                 style: ShadTheme.of(context).textTheme.p,
               ),
               const SizedBox(width: 12),
               ShadButton.secondary(
                 size: ShadButtonSize.sm,
+                onPressed: _nextMonth,
                 child: const Icon(LucideIcons.chevronRight),
-                onPressed: () {},
               ),
             ],
           ),
@@ -63,12 +100,13 @@ class TablePage extends StatelessWidget {
                 return null;
               },
               onRowTap: (row) {
-                final todo = data[row - 1];
+                final todo = widget.data[row - 1];
                 debugPrint('Tapped todo: ${todo.title}');
                 showShadSheet(
                   side: ShadSheetSide.right,
                   context: context,
                   builder: (context) => TodoSheet(
+                    tabsType: null,
                     side: ShadSheetSide.right,
                     todoData: todo,
                     listCategory: [],
@@ -76,7 +114,7 @@ class TablePage extends StatelessWidget {
                   ),
                 );
               },
-              children: data.map(
+              children: widget.data.map(
                 (todo) => [
                   ShadTableCell(
                     child: Text(

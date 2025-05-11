@@ -55,6 +55,7 @@ class NoteSection extends StatelessWidget {
             categories: categories,
           ),
         ),
+        splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: Padding(
