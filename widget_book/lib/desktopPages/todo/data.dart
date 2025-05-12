@@ -50,6 +50,7 @@ final List<TodoCardData> todoCardP = List.generate(10, (index) {
 
 final List<Note> sampleNotes = List.generate(10, (index) {
   return Note(
+    id: index.toString(),
     title: 'Note ${index + 1}',
     content: 'Content for note ${index + 1}',
     category: [

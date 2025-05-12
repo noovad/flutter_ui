@@ -40,14 +40,9 @@ class _SummarySectionState extends State<SummarySection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CalenderHeader(
-                  displayedDate: displayedDate, context: context, date: date),
+              CalenderHeader(displayedDate: displayedDate, context: context, date: date),
               const SizedBox(height: 12),
-              Calender(
-                  daysInMonth: daysInMonth,
-                  startDay: startDay,
-                  widget: widget,
-                  date: date),
+              Calender(daysInMonth: daysInMonth, startDay: startDay, widget: widget, date: date),
             ],
           ),
         );

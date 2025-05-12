@@ -80,29 +80,23 @@ class _AppCardState extends State<TodoCard> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          decoration: widget.data.isDone
-                              ? TextDecoration.lineThrough
-                              : null,
+                          decoration: widget.data.isDone ? TextDecoration.lineThrough : null,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
-                      if (widget.data.category != null ||
-                          widget.data.time != null)
+                      if (widget.data.category != null || widget.data.time != null)
                         Row(
                           children: [
                             if (widget.data.category != null) ...[
-                              Icon(LucideIcons.tag,
-                                  size: 16, color: Colors.grey[600]),
+                              Icon(LucideIcons.tag, size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
-                              Text(widget.data.category!,
-                                  style: TextStyle(color: Colors.grey[700])),
+                              Text(widget.data.category!, style: TextStyle(color: Colors.grey[700])),
                               const SizedBox(width: 16),
                             ],
                             if (widget.data.time != null) ...[
-                              Icon(Icons.access_time,
-                                  size: 16, color: Colors.grey[600]),
+                              Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
                               Text(
                                 '${widget.data.time!.hour.toString().padLeft(2, '0')}:${widget.data.time!.minute.toString().padLeft(2, '0')}',

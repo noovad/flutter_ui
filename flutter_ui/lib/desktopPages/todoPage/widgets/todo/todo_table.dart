@@ -138,9 +138,7 @@ class _TablePageState extends State<TablePage> {
                   ),
                   ShadTableCell(
                     child: Text(
-                      todo.time != null
-                          ? DateFormat('HH:mm').format(todo.time!)
-                          : '',
+                      todo.time != null ? DateFormat('HH:mm').format(todo.time!) : '',
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

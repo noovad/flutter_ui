@@ -78,7 +78,7 @@ class _NoteCardState extends State<NoteCard> {
                   onTap: () => showShadSheet(
                     side: ShadSheetSide.left,
                     context: context,
-                    builder: (context) => NoteSheet(
+                    builder: (context) => NoteSheet.update(
                       side: ShadSheetSide.left,
                       note: widget.note,
                       categories: widget.categories,

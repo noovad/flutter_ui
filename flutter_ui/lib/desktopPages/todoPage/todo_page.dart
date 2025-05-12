@@ -3,6 +3,8 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/summary_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_tabs.dart';
+import 'package:flutter_ui/shared/sizes/app_padding.dart';
+import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoPage extends StatelessWidget {
@@ -38,27 +40,23 @@ class TodoPage extends StatelessWidget {
       home: Row(
         children: [
           Expanded(
-            flex: 6,
-            child: Center(
-              child: Container(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.all(16),
-                child: TodoTabs(
-                  todoCardData: data,
-                  todoCategories: todoCategories,
-                  todoHistory: todoHistory,
-                  onSave: onSaveTodo,
-                ),
+            child: Padding(
+              padding: AppPadding.all16,
+              child: TodoTabs(
+                todoCardData: data,
+                todoCategories: todoCategories,
+                todoHistory: todoHistory,
+                onSave: onSaveTodo,
               ),
             ),
           ),
-          Expanded(
-            flex: 4,
+          SizedBox(
+            width: 700,
             child: Column(
+              spacing: AppSizes.dimen16,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SummarySection(dailyActivities: dailyActivities),
-                const SizedBox(height: 16),
                 Expanded(
                   child: NoteSection(
                     notes: notes,

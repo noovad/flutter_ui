@@ -3,7 +3,7 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_form.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-enum TodoSheetType { create }
+enum TodoSheetType { create, update }
 
 class NoteSheet extends StatefulWidget {
   final TodoSheetType? type;
@@ -20,7 +20,7 @@ class NoteSheet extends StatefulWidget {
   })  : type = TodoSheetType.create,
         note = null;
 
-  const NoteSheet({
+  const NoteSheet.update({
     super.key,
     required this.side,
     required this.note,
@@ -57,6 +57,7 @@ class _NoteSheetState extends State<NoteSheet> {
 
   void _handleSave() {
     final note = Note(
+      id: isCreate ? null : widget.note?.id,
       title: _titleController.text.trim(),
       content: _contentController.text.trim(),
       category: _selectedCategory,

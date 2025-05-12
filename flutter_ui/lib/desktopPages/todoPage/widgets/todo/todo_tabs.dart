@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_table.dart';
+import 'package:flutter_ui/shared/sizes/app_padding.dart';
+import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoTabs extends StatelessWidget {
@@ -21,8 +23,8 @@ class TodoTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShadTabs<String>(
       value: 'Today',
-      padding: const EdgeInsets.all(4),
-      gap: 16,
+      padding: AppPadding.all4,
+      gap: AppSizes.dimen16,
       tabs: [
         ShadTab(
           value: 'Today',

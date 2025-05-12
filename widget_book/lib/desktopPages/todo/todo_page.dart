@@ -28,6 +28,7 @@ class MyWidget extends StatelessWidget {
         onSaveNote: (note) {
           debugPrint(
             '🏠 Parent got note → '
+            'id: ${note.id}, '
             'title: ${note.title}, '
             'content: ${note.content}, '
             'category: ${note.category}',

@@ -39,11 +39,13 @@ class TodoCategories {
 class Note {
   final String title;
   final String content;
-  final String? category;
   final bool isPinned;
+  final String? category;
+  final String? id;
 
   Note({
     required this.title,
+    this.id,
     required this.content,
     this.category,
     this.isPinned = false,
