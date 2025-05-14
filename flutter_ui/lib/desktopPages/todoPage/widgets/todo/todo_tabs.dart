@@ -11,6 +11,7 @@ class TodoTabs extends StatelessWidget {
   final List<TodoCardData> todoHistory;
   final TodoCategories todoCategories;
   final ValueChanged<TodoCardData> onSaveTodo;
+  final ValueChanged<TodoCardData> onUpdateStatus;
 
   const TodoTabs({
     super.key,
@@ -18,6 +19,7 @@ class TodoTabs extends StatelessWidget {
     required this.todoHistory,
     required this.todoCategories,
     required this.onSaveTodo,
+    required this.onUpdateStatus,
   });
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class TodoTabs extends StatelessWidget {
             tabsType: TabsType.today,
             todoCategories: todoCategories,
             onSave: onSaveTodo,
+            onUpdateStatus: onUpdateStatus,
           ),
           child: const Text('Today'),
         ),
@@ -43,6 +46,7 @@ class TodoTabs extends StatelessWidget {
             tabsType: TabsType.upcoming,
             todoCategories: todoCategories,
             onSave: onSaveTodo,
+            onUpdateStatus: onUpdateStatus,
           ),
           child: const Text('Upcoming'),
         ),

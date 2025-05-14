@@ -44,6 +44,9 @@ class MyWidget extends StatelessWidget {
             'category: ${note.category}',
           );
         },
+        onUpdateStatus: (status) {
+          debugPrint('🏠 Parent got status → ${status.id}');
+        },
       ),
     );
   }

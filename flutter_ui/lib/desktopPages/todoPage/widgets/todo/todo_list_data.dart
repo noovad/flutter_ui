@@ -13,6 +13,7 @@ class TodoListData extends StatelessWidget {
   final List<TodoCardData> todoCardData;
   final TaskType taskType;
   final ValueChanged<TodoCardData> onSave;
+  final ValueChanged<TodoCardData>? onUpdateStatus;
   final bool leading;
 
   const TodoListData({
@@ -22,6 +23,7 @@ class TodoListData extends StatelessWidget {
     required this.todoCardData,
     required this.onSave,
     required this.listCategory,
+    required this.onUpdateStatus,
     this.leading = true,
   });
 
@@ -78,7 +80,7 @@ class TodoListData extends StatelessWidget {
                     taskType: TaskType.productivity,
                     data: todoCardData[index],
                     onSave: onSave,
-                   
+                    onUpdateStatus: onUpdateStatus,
                     onDelete: () {},
                     leading: leading,
                   ),

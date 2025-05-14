@@ -1,54 +1,17 @@
 {
   "todo": [
     {
-      "id": 13632,
-      "text": "Card Note Create",
+      "id": 11524,
+      "text": "handle update status",
       "priority": 1,
-      "created": "2025-05-11T02:24:17.174Z"
+      "created": "2025-05-14T07:09:49.336Z"
+    },
+    {
+      "id": 18429,
+      "text": "disable button create and update",
+      "priority": 1,
+      "created": "2025-05-14T07:09:39.159Z"
     }
   ],
-  "completed": [
-    {
-      "id": 14036,
-      "text": "Sheet Create Todo",
-      "priority": 1,
-      "created": "2025-05-09T14:40:39.521Z"
-    },
-    {
-      "id": 10114,
-      "text": "card todo - delete position",
-      "priority": 1,
-      "created": "2025-05-09T14:40:31.810Z"
-    },
-    {
-      "id": 10242,
-      "text": "sheet todo - create",
-      "priority": 1,
-      "created": "2025-05-09T14:40:18.324Z"
-    },
-    {
-      "id": 18822,
-      "text": "update (status, if done disable",
-      "priority": 1,
-      "created": "2025-05-10T11:06:48.329Z"
-    },
-    {
-      "id": 18561,
-      "text": "When can pit (3)",
-      "priority": 1,
-      "created": "2025-05-11T00:26:52.791Z"
-    },
-    {
-      "id": 12233,
-      "text": "Sheet Note",
-      "priority": 1,
-      "created": "2025-05-10T16:09:07.860Z"
-    },
-    {
-      "id": 11430,
-      "text": "prop, icon dan event",
-      "priority": 1,
-      "created": "2025-05-10T15:15:06.198Z"
-    }
-  ]
+  "completed": []
 }

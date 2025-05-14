@@ -118,7 +118,7 @@ class _TablePageState extends State<TablePage> {
                 (todo) => [
                   ShadTableCell(
                     child: Text(
-                      todo.title,
+                      todo.title!,
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                       ),
@@ -127,7 +127,7 @@ class _TablePageState extends State<TablePage> {
                   ),
                   ShadTableCell(
                     child: Text(
-                      DateFormat('dd MMM yyyy').format(todo.date),
+                      DateFormat('dd MMM yyyy').format(todo.date!),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

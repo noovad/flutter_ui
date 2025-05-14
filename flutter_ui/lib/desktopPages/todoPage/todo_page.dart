@@ -16,6 +16,7 @@ class TodoPage extends StatelessWidget {
   final List<DailyActivity> dailyActivities;
   final ValueChanged<TodoCardData> onSaveTodo;
   final ValueChanged<Note> onSaveNote;
+  final ValueChanged<TodoCardData> onUpdateStatus;
 
   const TodoPage({
     super.key,
@@ -27,6 +28,7 @@ class TodoPage extends StatelessWidget {
     required this.dailyActivities,
     required this.onSaveTodo,
     required this.onSaveNote,
+    required this.onUpdateStatus,
   });
 
   @override
@@ -46,6 +48,7 @@ class TodoPage extends StatelessWidget {
                 todoCategories: todoCategories,
                 todoHistory: todoHistory,
                 onSaveTodo: onSaveTodo,
+                onUpdateStatus: onUpdateStatus,
               ),
             ),
           ),

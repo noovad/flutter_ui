@@ -12,6 +12,7 @@ class TodoCard extends StatefulWidget {
   final ValueChanged<TodoCardData> onSave;
   final VoidCallback onDelete;
   final List<String> listCategory;
+  final ValueChanged<TodoCardData>? onUpdateStatus;
   final bool leading;
 
   const TodoCard({
@@ -22,6 +23,7 @@ class TodoCard extends StatefulWidget {
     required this.onDelete,
     required this.taskType,
     required this.listCategory,
+    required this.onUpdateStatus,
     this.leading = true,
   });
 
@@ -31,6 +33,11 @@ class TodoCard extends StatefulWidget {
 
 class _AppCardState extends State<TodoCard> {
   bool _isHovered = false;
+
+  void _updateStatus(bool status) {
+    final todo = TodoCardData(id: widget.data.id, isDone: status);
+    widget.onUpdateStatus!(todo);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,7 @@ class _AppCardState extends State<TodoCard> {
                 visible: widget.leading,
                 child: Checkbox(
                   value: widget.data.isDone,
-                  onChanged: (_) {},
+                  onChanged: (value) => _updateStatus(value!),
                   shape: const CircleBorder(),
                   activeColor: Colors.red,
                 ),
@@ -77,11 +84,11 @@ class _AppCardState extends State<TodoCard> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.data.title,
+                        widget.data.title!,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          decoration: widget.data.isDone ? TextDecoration.lineThrough : null,
+                          decoration: widget.data.isDone! ? TextDecoration.lineThrough : null,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

@@ -11,6 +11,8 @@ class TodoSection extends StatelessWidget {
   final TodoCategories todoCategories;
   final ValueChanged<TodoCardData> onSave;
   final bool leading;
+  final ValueChanged<TodoCardData>? onUpdateStatus;
+
 
   const TodoSection({
     super.key,
@@ -18,6 +20,7 @@ class TodoSection extends StatelessWidget {
     required this.todoCardData,
     required this.todoCategories,
     required this.onSave,
+    this.onUpdateStatus,
     this.leading = true,
   });
 
@@ -34,6 +37,7 @@ class TodoSection extends StatelessWidget {
           taskType: TaskType.productivity,
           onSave: onSave,
           leading: leading,
+          onUpdateStatus: onUpdateStatus,
         ),
         TodoListData(
           tabsType: tabsType,
@@ -42,6 +46,7 @@ class TodoSection extends StatelessWidget {
           taskType: TaskType.daily,
           onSave: onSave,
           leading: leading,
+          onUpdateStatus: onUpdateStatus,
         ),
       ],
     );
