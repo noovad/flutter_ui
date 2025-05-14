@@ -9,7 +9,7 @@ class TodoCard extends StatefulWidget {
   final TabsType tabsType;
   final TaskType taskType;
   final TodoCardData data;
-  final VoidCallback onEdit;
+  final ValueChanged<TodoCardData> onSave;
   final VoidCallback onDelete;
   final List<String> listCategory;
   final bool leading;
@@ -18,7 +18,7 @@ class TodoCard extends StatefulWidget {
     super.key,
     required this.tabsType,
     required this.data,
-    required this.onEdit,
+    required this.onSave,
     required this.onDelete,
     required this.taskType,
     required this.listCategory,
@@ -60,12 +60,13 @@ class _AppCardState extends State<TodoCard> {
                   onTap: () => showShadSheet(
                     side: ShadSheetSide.right,
                     context: context,
-                    builder: (context) => TodoSheet(
+                    builder: (context) => TodoSheet.update(
                       tabsType: widget.tabsType,
                       side: ShadSheetSide.right,
                       todoData: widget.data,
                       listCategory: widget.listCategory,
                       taskType: widget.taskType,
+                      onSave: widget.onSave,
                     ),
                   ),
                   splashColor: Colors.transparent,
@@ -99,11 +100,11 @@ class _AppCardState extends State<TodoCard> {
                               Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
                               Text(
-                                '${widget.data.time!.hour.toString().padLeft(2, '0')}:${widget.data.time!.minute.toString().padLeft(2, '0')}',
+                                widget.data.time!,
                                 style: TextStyle(
                                   color: Colors.grey[700],
                                 ),
-                              ),
+                              )
                             ],
                           ],
                         ),

@@ -4,11 +4,11 @@ import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart'
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-enum TodoSheetType { create }
+enum TodoSheetType { create, update }
 
 enum TaskType { daily, productivity }
 
-class TodoSheet extends StatelessWidget {
+class TodoSheet extends StatefulWidget {
   final TodoSheetType? type;
   final TabsType? tabsType;
   final TaskType? taskType;
@@ -27,26 +27,73 @@ class TodoSheet extends StatelessWidget {
   })  : type = TodoSheetType.create,
         todoData = null;
 
-  const TodoSheet({
+  const TodoSheet.update({
     super.key,
     required this.side,
     required this.todoData,
     required this.taskType,
     required this.listCategory,
     required this.tabsType,
-  })  : type = null,
-        onSave = null;
+    required this.onSave,
+  }) : type = null;
+
+  @override
+  State<TodoSheet> createState() => _TodoSheetState();
+}
+
+class _TodoSheetState extends State<TodoSheet> {
+  late final TextEditingController _titleController;
+  late final TextEditingController _noteController;
+  late final TextEditingController _dateController;
+  late final TextEditingController _timeController;
+  late String _selectedCategory;
+  late bool _status;
+
+  bool get isCreate => widget.type == TodoSheetType.create;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = widget.todoData?.title != null ? TextEditingController(text: widget.todoData!.title) : TextEditingController();
+    _noteController = widget.todoData?.note != null ? TextEditingController(text: widget.todoData!.note) : TextEditingController();
+    _dateController =
+        widget.todoData?.date != null ? TextEditingController(text: widget.todoData!.date.toString()) : TextEditingController();
+    _timeController = widget.todoData?.time != null ? TextEditingController(text: widget.todoData!.time) : TextEditingController();
+    _selectedCategory = widget.todoData?.category ?? 'None';
+    _status = widget.todoData?.isDone ?? false;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleController.dispose();
+    _noteController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+  }
+
+  void _onSave() {
+    final todo = TodoCardData(
+      id: widget.todoData?.id,
+      title: _titleController.text,
+      isDone: false,
+      date: DateTime.parse(_dateController.text),
+      category: _selectedCategory,
+      time: _timeController.text,
+      note: _noteController.text,
+    );
+
+    widget.onSave?.call(todo);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final isCreate = type == TodoSheetType.create;
-
     return ShadSheet(
       constraints: BoxConstraints(
         minWidth: 520,
         maxWidth: MediaQuery.of(context).size.width / 2,
       ),
-      title: taskType == TaskType.daily
+      title: widget.taskType == TaskType.daily
           ? Text(isCreate ? 'Create Todo Daily' : 'Detail Todo Daily')
           : Text(isCreate ? 'Create Todo Productivity' : 'Detail Todo Productivity'),
       actions: isCreate
@@ -58,41 +105,42 @@ class TodoSheet extends StatelessWidget {
               ),
               ShadButton(
                 size: ShadButtonSize.sm,
+                onPressed: _onSave,
                 child: const Text('Create'),
-                onPressed: () {},
               ),
             ]
           : [
               Visibility(
-                visible: !(todoData?.isDone ?? false),
+                visible: !(widget.todoData?.isDone ?? false),
                 child: ShadButton(
                   size: ShadButtonSize.sm,
                   child: const Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
               ),
               Visibility(
-                visible: !(todoData?.isDone ?? false),
+                visible: !(widget.todoData?.isDone ?? false),
                 child: ShadButton(
                   size: ShadButtonSize.sm,
+                  onPressed: () {
+                    debugPrint('Update button pressed');
+                    _onSave();
+                  },
                   child: const Text('Update'),
-                  onPressed: () {},
                 ),
               ),
             ],
       child: TodoForm(
-        tabsType: tabsType,
-        listCategory: listCategory,
-        taskType: taskType,
-        isDone: isCreate ? false : todoData!.isDone,
-        initialTitle: isCreate ? '' : todoData!.title,
-        initialCategory: isCreate ? 'None' : (todoData!.category ?? 'None'),
-        initialNotes: isCreate ? '' : (todoData!.note ?? ''),
-        initialDate:
-            isCreate ? (tabsType == TabsType.upcoming ? DateTime.now().add(const Duration(days: 1)) : DateTime.now()) : todoData!.date,
-        initialTime: isCreate ? null : todoData!.time,
+        tabsType: widget.tabsType,
+        listCategory: widget.listCategory,
+        taskType: widget.taskType,
+        status: _status,
+        selectedCategory: _selectedCategory,
+        onCategoryChanged: (c) => setState(() => _selectedCategory = c),
+        titleController: _titleController,
+        noteController: _noteController,
+        dateController: _dateController,
+        timeController: _timeController,
       ),
     );
   }

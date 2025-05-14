@@ -1,12 +1,14 @@
 class TodoCardData {
+  final String? id;
   final String title;
   final bool isDone;
   final DateTime date;
   final String? category;
-  final DateTime? time;
+  final String? time;
   final String? note;
 
   TodoCardData({
+    this.id,
     required this.title,
     required this.isDone,
     required this.date,

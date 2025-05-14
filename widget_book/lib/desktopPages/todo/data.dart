@@ -13,10 +13,11 @@ final TodoData todoData = TodoData(productivity: todoCardP, daily: todoDaily);
 final List<TodoCardData> todoDaily = List.generate(10, (index) {
   final now = DateTime.now();
   return TodoCardData(
+    id: index.toString(),
     title: 'Task ${index + 1}',
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index % 3)),
-    time: DateTime(now.year, 12, now.day, 6 + index, 0),
+    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
     note: index % 2 == 0
         ? 'Note for task Note for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for task ${index + 1}'
         : null,
@@ -26,10 +27,11 @@ final List<TodoCardData> todoDaily = List.generate(10, (index) {
 final List<TodoCardData> todoHistory = List.generate(10, (index) {
   final now = DateTime.now();
   return TodoCardData(
+    id: index.toString(),
     title: 'Task ${index + 1}',
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index % 3)).copyWith(month: 11),
-    time: DateTime(now.year, now.month, now.day, 6 + index, 0),
+    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
     note: index % 2 == 0
         ? 'Note for task Note for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for task ${index + 1}'
         : null,
@@ -39,11 +41,12 @@ final List<TodoCardData> todoHistory = List.generate(10, (index) {
 final List<TodoCardData> todoCardP = List.generate(10, (index) {
   final now = DateTime.now();
   return TodoCardData(
+    id: index.toString(),
     title: 'Project Task ${index + 1}',
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index + 1)),
     category: ['Work', 'Personal', 'Finance', 'Home'][index % 4],
-    time: DateTime(now.year, now.month, now.day + index, 9 + index, 0),
+    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
     note: index % 3 == 0 ? 'Details for project task ${index + 1}' : null,
   );
 });

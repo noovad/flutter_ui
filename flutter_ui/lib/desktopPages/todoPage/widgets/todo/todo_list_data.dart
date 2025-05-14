@@ -77,7 +77,8 @@ class TodoListData extends StatelessWidget {
                     listCategory: listCategory,
                     taskType: TaskType.productivity,
                     data: todoCardData[index],
-                    onEdit: () {},
+                    onSave: onSave,
+                   
                     onDelete: () {},
                     leading: leading,
                   ),

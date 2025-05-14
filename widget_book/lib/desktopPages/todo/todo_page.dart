@@ -24,7 +24,17 @@ class MyWidget extends StatelessWidget {
         data: todoData,
         todoHistory: todoHistory,
         notes: sampleNotes,
-        onSaveTodo: (todoCardData) {},
+        onSaveTodo: (todo) {
+          debugPrint(
+            '🏠 Parent got todo → '
+            'id: ${todo.id}, '
+            'title: ${todo.title}, '
+            'date: ${todo.date}, '
+            'time: ${todo.time}, '
+            'note: ${todo.note}, '
+            'category: ${todo.category}',
+          );
+        },
         onSaveNote: (note) {
           debugPrint(
             '🏠 Parent got note → '

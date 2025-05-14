@@ -9,24 +9,26 @@ class TodoForm extends StatelessWidget {
   final TabsType? tabsType;
   final List<String>? listCategory;
   final TaskType? taskType;
-  final bool isDone;
-  final String initialTitle;
-  final String initialCategory;
-  final DateTime initialDate;
-  final String initialNotes;
-  final DateTime? initialTime;
+  final String selectedCategory;
+  final ValueChanged<String> onCategoryChanged;
+  final bool status;
+  final TextEditingController titleController;
+  final TextEditingController noteController;
+  final TextEditingController dateController;
+  final TextEditingController timeController;
 
   const TodoForm({
     super.key,
     required this.taskType,
     required this.tabsType,
-    required this.initialTitle,
-    required this.isDone,
-    required this.initialCategory,
-    required this.initialDate,
-    required this.initialNotes,
+    required this.status,
+    required this.selectedCategory,
+    required this.onCategoryChanged,
+    required this.titleController,
+    required this.noteController,
+    required this.dateController,
+    required this.timeController,
     this.listCategory,
-    this.initialTime,
   });
 
   @override
@@ -42,8 +44,11 @@ class TodoForm extends StatelessWidget {
           label: 'Title',
           theme: theme,
           child: ShadInput(
-            initialValue: initialTitle,
-            enabled: !isDone,
+            initialValue: titleController.text,
+            enabled: !status,
+            onChanged: (value) {
+              titleController.text = value;
+            },
           ),
         ),
         Visibility(
@@ -52,7 +57,7 @@ class TodoForm extends StatelessWidget {
             label: 'Category',
             theme: theme,
             child: ShadSelect<String>(
-              enabled: !isDone,
+              enabled: !status,
               options: [
                 ...listCategory!.map(
                   (category) => ShadOption(
@@ -62,8 +67,13 @@ class TodoForm extends StatelessWidget {
                 ),
               ],
               closeOnSelect: false,
-              initialValue: initialCategory,
+              initialValue: selectedCategory,
               selectedOptionBuilder: (context, value) => Text(value),
+              onChanged: (value) {
+                if (value != null) {
+                  onCategoryChanged(value);
+                }
+              },
             ),
           ),
         ),
@@ -72,8 +82,13 @@ class TodoForm extends StatelessWidget {
             label: 'Date',
             theme: theme,
             child: ShadDatePicker(
-              selected: initialDate,
-              enabled: !isDone,
+              selected: dateController.text.isNotEmpty ? DateTime.tryParse(dateController.text) : null,
+              enabled: !status,
+              onChanged: (value) {
+                if (value != null) {
+                  dateController.text = value.toString();
+                }
+              },
             ),
           ),
         ),
@@ -81,10 +96,17 @@ class TodoForm extends StatelessWidget {
           label: 'Time',
           theme: theme,
           child: ShadTimePickerFormField(
-            initialValue: initialTime != null
-                ? ShadTimeOfDay.fromDateTime(initialTime!)
+            initialValue: timeController.text.isNotEmpty
+                ? ShadTimeOfDay.fromDateTime(
+                    DateTime.parse('1970-01-01T${timeController.text}'),
+                  )
                 : null,
-            validator: (v) => v == null ? 'A time is required' : null,
+            onChanged: (value) {
+              if (value != null) {
+                final formattedTime = '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
+                timeController.text = formattedTime;
+              }
+            },
             hourLabel: const SizedBox.shrink(),
             minuteLabel: const SizedBox.shrink(),
             secondLabel: const SizedBox.shrink(),
@@ -99,10 +121,12 @@ class TodoForm extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 400),
             child: ShadTextarea(
-              initialValue: initialNotes,
-              onChanged: !isDone ? (value) {} : null,
+              initialValue: noteController.text,
+              onChanged: (value) {
+                noteController.text = value;
+              },
               minHeight: 400,
-              enabled: !isDone,
+              enabled: !status,
             ),
           ),
         ),

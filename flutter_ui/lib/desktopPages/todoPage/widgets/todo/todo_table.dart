@@ -104,12 +104,13 @@ class _TablePageState extends State<TablePage> {
                 showShadSheet(
                   side: ShadSheetSide.right,
                   context: context,
-                  builder: (context) => TodoSheet(
+                  builder: (context) => TodoSheet.update(
                     tabsType: null,
                     side: ShadSheetSide.right,
                     todoData: todo,
                     listCategory: [],
                     taskType: null,
+                    onSave: null,
                   ),
                 );
               },
@@ -138,7 +139,9 @@ class _TablePageState extends State<TablePage> {
                   ),
                   ShadTableCell(
                     child: Text(
-                      todo.time != null ? DateFormat('HH:mm').format(todo.time!) : '',
+                      (todo.time is DateTime && todo.time != null)
+                          ? DateFormat('HH:mm').format(todo.time as DateTime)
+                          : (todo.time?.toString() ?? ''),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
