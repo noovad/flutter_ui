@@ -9,6 +9,7 @@ class CalenderCard extends StatelessWidget {
   final bool hasGym;
   final bool hasCardio;
   final bool isSunday;
+  final bool calorieControlled;
 
   const CalenderCard({
     super.key,
@@ -18,6 +19,7 @@ class CalenderCard extends StatelessWidget {
     required this.hasGym,
     required this.hasCardio,
     required this.isSunday,
+    required this.calorieControlled,
   });
 
   @override
@@ -33,28 +35,26 @@ class CalenderCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                sholatCount.toString(),
-                style: ShadTheme.of(context).textTheme.table,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  sholatCount.toString(),
+                  style: ShadTheme.of(context).textTheme.table,
+                ),
+                if (hasCoding) const Icon(LucideIcons.code, color: Colors.red, size: 18),
+              ],
             ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (hasCoding)
-                  const Icon(LucideIcons.code, color: Colors.red, size: 18),
-                if (hasCoding && hasGym) const SizedBox(width: 4),
-                if (hasGym)
-                  const Icon(LucideIcons.bicepsFlexed,
-                      color: Colors.blue, size: 18),
-                if ((hasCoding || hasGym) && hasCardio)
-                  const SizedBox(width: 4),
-                if (hasCardio)
-                  const Icon(LucideIcons.heartPlus,
-                      color: Colors.white, size: 18),
+                if (hasGym) const Icon(LucideIcons.bicepsFlexed, color: Colors.red, size: 18),
+                if (hasGym && hasCardio) const SizedBox(width: 4),
+                if (calorieControlled) const Icon(LucideIcons.utensilsCrossed, color: Colors.blue, size: 18),
+                if (hasCardio && calorieControlled) const SizedBox(width: 4),
+                if (hasCardio) const Icon(LucideIcons.heartPlus, color: Colors.white, size: 18),
               ],
             ),
             if (amount != null)
@@ -71,6 +71,5 @@ class CalenderCard extends StatelessWidget {
     );
   }
 
-  Color _getDayCardColor(bool isSunday) =>
-      isSunday ? const Color(0xFF222222) : Colors.black;
+  Color _getDayCardColor(bool isSunday) => isSunday ? const Color(0xFF222222) : Colors.black;
 }

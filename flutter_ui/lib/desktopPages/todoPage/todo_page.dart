@@ -14,8 +14,7 @@ class TodoPage extends StatelessWidget {
   final List<TodoCardData> todoHistory;
   final List<Note> notes;
   final List<DailyActivity> dailyActivities;
-  // final ValueChanged<Note>? onSaveTodo;
-  final VoidCallback? onSaveTodo;
+  final ValueChanged<TodoCardData> onSaveTodo;
   final ValueChanged<Note> onSaveNote;
 
   const TodoPage({
@@ -46,7 +45,7 @@ class TodoPage extends StatelessWidget {
                 todoCardData: data,
                 todoCategories: todoCategories,
                 todoHistory: todoHistory,
-                onSave: onSaveTodo,
+                onSaveTodo: onSaveTodo,
               ),
             ),
           ),

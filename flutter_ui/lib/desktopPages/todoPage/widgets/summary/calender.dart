@@ -29,30 +29,22 @@ class Calender extends StatelessWidget {
       ),
       itemCount: daysInMonth + startDay,
       itemBuilder: (context, index) {
-        final isValidDay =
-            index >= startDay && (index - startDay + 1) <= daysInMonth;
+        final isValidDay = index >= startDay && (index - startDay + 1) <= daysInMonth;
 
         if (!isValidDay) return const SizedBox.shrink();
 
         final dayNumber = index - startDay + 1;
         final isSunday = ((index + 1) % 7) == 0;
 
-        final currentDayActivities = widget.dailyActivities
-            .where((a) =>
-                a.date.day == dayNumber &&
-                a.date.month == date.month &&
-                a.date.year == date.year)
-            .toList();
+        final currentDayActivities =
+            widget.dailyActivities.where((a) => a.date.day == dayNumber && a.date.month == date.month && a.date.year == date.year).toList();
 
         final hasCoding = currentDayActivities.any((a) => a.coding);
         final hasGym = currentDayActivities.any((a) => a.gym);
         final hasCardio = currentDayActivities.any((a) => a.cardio);
-        final amount = currentDayActivities.isNotEmpty
-            ? currentDayActivities.first.amount
-            : null;
-        final sholatCount = currentDayActivities.isNotEmpty
-            ? currentDayActivities.first.sholat.toString()
-            : "";
+        final amount = currentDayActivities.isNotEmpty ? currentDayActivities.first.amount : null;
+        final sholatCount = currentDayActivities.isNotEmpty ? currentDayActivities.first.sholat.toString() : "";
+        final hasCalorieControlled = currentDayActivities.any((a) => a.calorieControlled);
 
         return CalenderCard(
           sholatCount: sholatCount,
@@ -60,6 +52,7 @@ class Calender extends StatelessWidget {
           hasCoding: hasCoding,
           hasGym: hasGym,
           hasCardio: hasCardio,
+          calorieControlled: hasCalorieControlled,
           isSunday: isSunday,
         );
       },

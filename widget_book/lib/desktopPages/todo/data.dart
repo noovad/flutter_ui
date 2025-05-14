@@ -53,14 +53,7 @@ final List<Note> sampleNotes = List.generate(10, (index) {
     id: index.toString(),
     title: 'Note ${index + 1}',
     content: 'Content for note ${index + 1}',
-    category: [
-      'Personal',
-      'Work',
-      'Health',
-      'Travel',
-      'Cooking',
-      'Finance'
-    ][index % 6],
+    category: ['Personal', 'Work', 'Health', 'Travel', 'Cooking', 'Finance'][index % 6],
     isPinned: index % 2 == 0,
   );
 });
@@ -85,9 +78,10 @@ final List<DailyActivity> dailyActivities = List.generate(31, (index) {
   return DailyActivity(
     date: date,
     sholat: (index % 6), // Randomized between 0 to 5
-    gym: index % 2 == 0, // Alternating days
-    cardio: index % 3 == 0, // Every third day
-    coding: index % 2 != 0, // Alternating days
-    amount: (index + 1) * 100, // Incremental amount
+    gym: true, // Alternating days
+    cardio: true, // Every third day
+    coding: true, // Alternating days
+    amount: 23222, // Incremental amount
+    calorieControlled: index % 2 == 0, // Alternating days
   );
 });

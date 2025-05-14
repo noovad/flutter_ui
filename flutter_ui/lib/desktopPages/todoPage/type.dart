@@ -59,6 +59,7 @@ class DailyActivity {
   final bool cardio;
   final bool coding;
   final int amount;
+  final bool calorieControlled;
 
   DailyActivity({
     required this.date,
@@ -67,5 +68,6 @@ class DailyActivity {
     required this.cardio,
     required this.coding,
     required this.amount,
+    required this.calorieControlled,
   });
 }

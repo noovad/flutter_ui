@@ -14,7 +14,7 @@ class TodoSheet extends StatelessWidget {
   final TaskType? taskType;
   final ShadSheetSide side;
   final TodoCardData? todoData;
-  final VoidCallback? onSave;
+  final ValueChanged<TodoCardData>? onSave;
   final List<String> listCategory;
 
   const TodoSheet.create({
@@ -48,9 +48,7 @@ class TodoSheet extends StatelessWidget {
       ),
       title: taskType == TaskType.daily
           ? Text(isCreate ? 'Create Todo Daily' : 'Detail Todo Daily')
-          : Text(isCreate
-              ? 'Create Todo Productivity'
-              : 'Detail Todo Productivity'),
+          : Text(isCreate ? 'Create Todo Productivity' : 'Detail Todo Productivity'),
       actions: isCreate
           ? [
               ShadButton(
@@ -61,10 +59,7 @@ class TodoSheet extends StatelessWidget {
               ShadButton(
                 size: ShadButtonSize.sm,
                 child: const Text('Create'),
-                onPressed: () {
-                  if (onSave != null) onSave!();
-                  Navigator.of(context).pop();
-                },
+                onPressed: () {},
               ),
             ]
           : [
@@ -83,10 +78,7 @@ class TodoSheet extends StatelessWidget {
                 child: ShadButton(
                   size: ShadButtonSize.sm,
                   child: const Text('Update'),
-                  onPressed: () {
-                    if (onSave != null) onSave!();
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () {},
                 ),
               ),
             ],
@@ -98,11 +90,8 @@ class TodoSheet extends StatelessWidget {
         initialTitle: isCreate ? '' : todoData!.title,
         initialCategory: isCreate ? 'None' : (todoData!.category ?? 'None'),
         initialNotes: isCreate ? '' : (todoData!.note ?? ''),
-        initialDate: isCreate
-            ? (tabsType == TabsType.upcoming
-                ? DateTime.now().add(const Duration(days: 1))
-                : DateTime.now())
-            : todoData!.date,
+        initialDate:
+            isCreate ? (tabsType == TabsType.upcoming ? DateTime.now().add(const Duration(days: 1)) : DateTime.now()) : todoData!.date,
         initialTime: isCreate ? null : todoData!.time,
       ),
     );

@@ -9,7 +9,7 @@ class TodoSection extends StatelessWidget {
   final TabsType tabsType;
   final TodoData todoCardData;
   final TodoCategories todoCategories;
-  final VoidCallback? onSave;
+  final ValueChanged<TodoCardData> onSave;
   final bool leading;
 
   const TodoSection({

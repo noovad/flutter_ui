@@ -12,7 +12,7 @@ class TodoListData extends StatelessWidget {
   final List<String> listCategory;
   final List<TodoCardData> todoCardData;
   final TaskType taskType;
-  final VoidCallback? onSave;
+  final ValueChanged<TodoCardData> onSave;
   final bool leading;
 
   const TodoListData({
