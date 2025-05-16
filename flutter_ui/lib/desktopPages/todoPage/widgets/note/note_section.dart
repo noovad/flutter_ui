@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class NoteSection extends StatelessWidget {
   final List<Note> notes;
   final List<String> categories;
   final ValueChanged<Note> onSave;
+  final ValueChanged<Note> onDelete;
 
   const NoteSection({
     super.key,
     required this.notes,
     required this.categories,
     required this.onSave,
+    required this.onDelete,
   });
 
   @override
@@ -36,11 +38,8 @@ class NoteSection extends StatelessWidget {
           return NoteCard(
             note: note,
             categories: categories,
-            onEdit: null,
-            onDelete: null,
-            onSave: (note) {
-              onSave(note);
-            },
+            onDelete: onDelete,
+            onSave: onSave,
           );
         },
       ),
@@ -50,23 +49,16 @@ class NoteSection extends StatelessWidget {
   Card createNote(BuildContext context) {
     return Card(
       elevation: 4,
-      color: Color(0xFF27272A),
       shadowColor: Colors.grey,
       child: InkWell(
-        onTap: () => showShadSheet(
-          side: ShadSheetSide.left,
+        onTap: () => showSheet(
+          side: SheetSide.left,
           context: context,
           builder: (_) => NoteSheet.create(
-            side: ShadSheetSide.left,
             categories: categories,
-            onSave: (note) {
-              onSave(note);
-            },
+            onSave: onSave,
           ),
         ),
-        splashColor: Colors.transparent,
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
         child: Padding(
           padding: AppPadding.all12,
           child: Center(

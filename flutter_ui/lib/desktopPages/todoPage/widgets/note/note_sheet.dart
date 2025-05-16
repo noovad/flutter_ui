@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_form.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 enum TodoSheetType { create, update }
 
 class NoteSheet extends StatefulWidget {
   final TodoSheetType? type;
-  final ShadSheetSide side;
   final Note? note;
   final List<String> categories;
   final ValueChanged<Note>? onSave;
 
   const NoteSheet.create({
     super.key,
-    required this.side,
     required this.categories,
     required this.onSave,
   })  : type = TodoSheetType.create,
@@ -22,7 +19,6 @@ class NoteSheet extends StatefulWidget {
 
   const NoteSheet.update({
     super.key,
-    required this.side,
     required this.note,
     required this.categories,
     required this.onSave,
@@ -43,8 +39,7 @@ class _NoteSheetState extends State<NoteSheet> {
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.note?.title ?? '');
-    _contentController =
-        TextEditingController(text: widget.note?.content ?? '');
+    _contentController = TextEditingController(text: widget.note?.content ?? '');
     _selectedCategory = widget.note?.category ?? 'None';
   }
 
@@ -68,34 +63,58 @@ class _NoteSheetState extends State<NoteSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ShadTheme.of(context);
     final isCreate = widget.type == TodoSheetType.create;
 
-    return ShadSheet(
-      constraints: BoxConstraints(
-        minWidth: 520,
-        maxWidth: MediaQuery.of(context).size.width / 2,
-      ),
-      title: Text(isCreate ? 'Create Note' : 'Details Note'),
-      actions: [
-        ShadButton.secondary(
-          size: ShadButtonSize.sm,
-          child: const Text('Cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        ShadButton(
-          size: ShadButtonSize.sm,
-          onPressed: _handleSave,
-          child: Text(isCreate ? 'Create' : 'Update'),
-        ),
-      ],
-      child: NoteForm(
-        titleController: _titleController,
-        contentController: _contentController,
-        selectedCategory: _selectedCategory,
-        onCategoryChanged: (c) => setState(() => _selectedCategory = c),
-        categories: widget.categories,
-        theme: theme,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: SingleChildScrollView(
+              child: NoteForm(
+                titleController: _titleController,
+                contentController: _contentController,
+                selectedCategory: _selectedCategory,
+                onCategoryChanged: (c) => setState(() => _selectedCategory = c),
+                categories: widget.categories,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: isCreate
+                  ? [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: _handleSave,
+                        child: const Text('Create'),
+                      ),
+                    ]
+                  : [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          debugPrint('Update note pressed');
+                          _handleSave();
+                        },
+                        child: const Text('Update'),
+                      ),
+                    ],
+            ),
+          ),
+        ],
       ),
     );
   }

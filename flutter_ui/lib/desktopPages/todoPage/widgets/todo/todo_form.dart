@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/build_form_row.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_dropdown.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_text_field.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:intl/intl.dart';
 
-class TodoForm extends StatelessWidget {
-  final TabsType? tabsType;
-  final List<String>? listCategory;
-  final TaskType? taskType;
+class TodoForm extends StatefulWidget {
+  final TabsType tabsType;
+  final List<String> listCategory;
+  final TaskType taskType;
   final String selectedCategory;
   final ValueChanged<String> onCategoryChanged;
   final bool status;
@@ -22,115 +23,170 @@ class TodoForm extends StatelessWidget {
     required this.taskType,
     required this.tabsType,
     required this.status,
-    required this.selectedCategory,
     required this.onCategoryChanged,
     required this.titleController,
     required this.noteController,
     required this.dateController,
     required this.timeController,
-    this.listCategory,
+    required this.selectedCategory,
+    required this.listCategory,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final theme = ShadTheme.of(context);
+  State<TodoForm> createState() => _TodoFormState();
+}
 
-    return Column(
-      spacing: AppSizes.dimen16,
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        buildFormRow(
-          label: 'Title',
-          theme: theme,
-          child: ShadInput(
-            initialValue: titleController.text,
-            enabled: !status,
-            onChanged: (value) {
-              titleController.text = value;
-            },
+class _TodoFormState extends State<TodoForm> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late String? currentCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    currentCategory = widget.selectedCategory;
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: widget.dateController.text.isNotEmpty ? DateTime.tryParse(widget.dateController.text) ?? DateTime.now() : DateTime.now(),
+      firstDate: DateTime(DateTime.now().year - 1),
+      lastDate: DateTime(DateTime.now().year + 1),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme,
           ),
-        ),
-        Visibility(
-          visible: tabsType != TabsType.auto,
-          child: buildFormRow(
-            label: 'Category',
-            theme: theme,
-            child: ShadSelect<String>(
-              enabled: !status,
-              options: [
-                ...listCategory!.map(
-                  (category) => ShadOption(
-                    value: category,
-                    child: Text(category),
-                  ),
-                ),
-              ],
-              closeOnSelect: false,
-              initialValue: selectedCategory,
-              selectedOptionBuilder: (context, value) => Text(value),
-              onChanged: (value) {
-                if (value != null) {
-                  onCategoryChanged(value);
-                }
-              },
-            ),
-          ),
-        ),
-        Visibility(
-          child: buildFormRow(
-            label: 'Date',
-            theme: theme,
-            child: ShadDatePicker(
-              selected: dateController.text.isNotEmpty ? DateTime.tryParse(dateController.text) : null,
-              enabled: !status,
-              onChanged: (value) {
-                if (value != null) {
-                  dateController.text = value.toString();
-                }
-              },
-            ),
-          ),
-        ),
-        buildFormRow(
-          label: 'Time',
-          theme: theme,
-          child: ShadTimePickerFormField(
-            initialValue: timeController.text.isNotEmpty
-                ? ShadTimeOfDay.fromDateTime(
-                    DateTime.parse('1970-01-01T${timeController.text}'),
-                  )
-                : null,
-            onChanged: (value) {
-              if (value != null) {
-                final formattedTime = '${value.hour.toString().padLeft(2, '0')}:${value.minute.toString().padLeft(2, '0')}';
-                timeController.text = formattedTime;
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        widget.dateController.text = picked.toString();
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final initialTime = widget.timeController.text.isNotEmpty
+        ? TimeOfDay.fromDateTime(DateFormat('HH:mm').parse(widget.timeController.text))
+        : TimeOfDay.now();
+
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: initialTime,
+      builder: (context, child) => Theme(
+        data: Theme.of(context),
+        child: child!,
+      ),
+    );
+
+    if (picked != null) {
+      setState(() {
+        widget.timeController.text = picked.format(context);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.titleController.dispose();
+    widget.noteController.dispose();
+    widget.dateController.dispose();
+    widget.timeController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        spacing: AppSizes.dimen24,
+        children: [
+          AppTextField(
+            controller: widget.titleController,
+            label: "Title",
+            hint: "Enter title",
+            enabled: !widget.status,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Title is required';
               }
+              return null;
             },
-            hourLabel: const SizedBox.shrink(),
-            minuteLabel: const SizedBox.shrink(),
-            secondLabel: const SizedBox.shrink(),
-            hourPlaceholder: const Text('23'),
-            minutePlaceholder: const Text('59'),
-            secondPlaceholder: const Text('00'),
           ),
-        ),
-        buildFormRow(
-          label: 'Notes',
-          theme: theme,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 400),
-            child: ShadTextarea(
-              initialValue: noteController.text,
-              onChanged: (value) {
-                noteController.text = value;
-              },
-              minHeight: 400,
-              enabled: !status,
+          Visibility(
+            visible: widget.tabsType != TabsType.auto,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppDropdown(
+                  items: widget.listCategory,
+                  selectedItem: widget.selectedCategory,
+                  onChanged: (value) {
+                    setState(() {
+                      currentCategory = value ?? '';
+                    });
+                    widget.onCategoryChanged(value ?? '');
+                  },
+                  label: 'Category',
+                ),
+                const SizedBox(height: AppSizes.dimen16),
+              ],
             ),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: !widget.status ? () => _selectDate(context) : null,
+            child: InputDecorator(
+              decoration: InputDecoration(
+                labelText: 'Date',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                enabled: !widget.status,
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              child: Text(
+                widget.dateController.text.isNotEmpty
+                    ? DateFormat('yyyy-MM-dd').format(
+                        DateTime.parse(widget.dateController.text),
+                      )
+                    : 'Select date',
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: !widget.status ? () => _selectTime(context) : null,
+            child: InputDecorator(
+              decoration: InputDecoration(
+                labelText: 'Time',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                enabled: !widget.status,
+                suffixIcon: Icon(Icons.access_time),
+              ),
+              child: Text(
+                widget.timeController.text.isNotEmpty ? widget.timeController.text : 'Select time',
+              ),
+            ),
+          ),
+          AppTextField(
+            controller: widget.noteController,
+            label: "Notes",
+            hint: "Enter notes",
+            maxLines: 5,
+            minLines: 3,
+            enabled: !widget.status,
+          ),
+        ],
+      ),
     );
   }
 }

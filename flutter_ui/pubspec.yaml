@@ -12,7 +12,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
   google_fonts: ^6.2.1
-  shadcn_ui: ^0.25.1
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

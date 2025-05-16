@@ -3,14 +3,14 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_table.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
-import 'package:flutter_ui/shared/sizes/app_sizes.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
 class TodoTabs extends StatelessWidget {
   final TodoData todoCardData;
   final List<TodoCardData> todoHistory;
   final TodoCategories todoCategories;
   final ValueChanged<TodoCardData> onSaveTodo;
+  final ValueChanged<TodoCardData> onDeleteTodo;
   final ValueChanged<TodoCardData> onUpdateStatus;
 
   const TodoTabs({
@@ -19,56 +19,70 @@ class TodoTabs extends StatelessWidget {
     required this.todoHistory,
     required this.todoCategories,
     required this.onSaveTodo,
+    required this.onDeleteTodo,
     required this.onUpdateStatus,
   });
   @override
   Widget build(BuildContext context) {
-    return ShadTabs<String>(
-      value: 'Today',
-      padding: AppPadding.all4,
-      gap: AppSizes.dimen16,
-      tabs: [
-        ShadTab(
-          value: 'Today',
-          content: TodoSection(
-            todoCardData: todoCardData,
-            tabsType: TabsType.today,
-            todoCategories: todoCategories,
-            onSave: onSaveTodo,
-            onUpdateStatus: onUpdateStatus,
+    return DefaultTabController(
+      length: 4,
+      child: Column(
+        children: [
+          Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(8),
+            child: TabBar(
+              dividerHeight: 0,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
+              padding: AppPadding.all8,
+              tabs: const [
+                Tab(text: 'Today'),
+                Tab(text: 'Upcoming'),
+                Tab(text: 'History'),
+                Tab(
+                  icon: Icon(Icons.more_horiz),
+                )
+              ],
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight: 0,
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-          child: const Text('Today'),
-        ),
-        ShadTab(
-          value: 'Upcoming',
-          content: TodoSection(
-            todoCardData: todoCardData,
-            tabsType: TabsType.upcoming,
-            todoCategories: todoCategories,
-            onSave: onSaveTodo,
-            onUpdateStatus: onUpdateStatus,
+          AppSpaces.h16,
+          Expanded(
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              clipBehavior: Clip.none,
+              children: [
+                TodoSection(
+                  todoCardData: todoCardData,
+                  tabsType: TabsType.today,
+                  todoCategories: todoCategories,
+                  onSave: onSaveTodo,
+                  onDelete: onDeleteTodo,
+                  onUpdateStatus: onUpdateStatus,
+                ),
+                TodoSection(
+                  todoCardData: todoCardData,
+                  tabsType: TabsType.upcoming,
+                  todoCategories: todoCategories,
+                  onSave: onSaveTodo,
+                  onDelete: onDeleteTodo,
+                  onUpdateStatus: onUpdateStatus,
+                ),
+                TablePage(
+                  data: todoHistory,
+                ),
+              ],
+            ),
           ),
-          child: const Text('Upcoming'),
-        ),
-        ShadTab(
-          value: 'Auto',
-          content: TodoSection(
-            todoCardData: todoCardData,
-            tabsType: TabsType.auto,
-            todoCategories: todoCategories,
-            onSave: onSaveTodo,
-            leading: false,
-          ),
-          child: const Text('Auto'),
-        ),
-        ShadTab(
-          value: 'History',
-          content: TablePage(
-            data: todoHistory,
-          ),
-          child: const Text('History'),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

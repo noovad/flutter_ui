@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/calender.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/calender_header.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/month_nav.dart';
 
 class SummarySection extends StatefulWidget {
   final List<DailyActivity> dailyActivities;
@@ -40,7 +40,9 @@ class _SummarySectionState extends State<SummarySection> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CalenderHeader(displayedDate: displayedDate, context: context, date: date),
+              MonthNav(
+                displayedDate: displayedDate,
+              ),
               const SizedBox(height: 12),
               Calender(daysInMonth: daysInMonth, startDay: startDay, widget: widget, date: date),
             ],

@@ -10,6 +10,8 @@ class TodoSection extends StatelessWidget {
   final TodoData todoCardData;
   final TodoCategories todoCategories;
   final ValueChanged<TodoCardData> onSave;
+  final ValueChanged<TodoCardData> onDelete;
+
   final bool leading;
   final ValueChanged<TodoCardData>? onUpdateStatus;
 
@@ -20,6 +22,7 @@ class TodoSection extends StatelessWidget {
     required this.todoCardData,
     required this.todoCategories,
     required this.onSave,
+    required this.onDelete,
     this.onUpdateStatus,
     this.leading = true,
   });
@@ -38,6 +41,7 @@ class TodoSection extends StatelessWidget {
           onSave: onSave,
           leading: leading,
           onUpdateStatus: onUpdateStatus,
+          onDelete: onDelete,
         ),
         TodoListData(
           tabsType: tabsType,
@@ -47,6 +51,7 @@ class TodoSection extends StatelessWidget {
           onSave: onSave,
           leading: leading,
           onUpdateStatus: onUpdateStatus,
+          onDelete: onDelete,
         ),
       ],
     );

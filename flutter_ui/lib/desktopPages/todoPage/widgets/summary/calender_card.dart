@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/themes/app_text_style.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class CalenderCard extends StatelessWidget {
   final String sholatCount;
@@ -27,7 +26,8 @@ class CalenderCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shadowColor: Colors.grey,
-      color: _getDayCardColor(isSunday),
+      // todo: add color to the card
+      // color: _getDayCardColor(isSunday),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -39,30 +39,54 @@ class CalenderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  sholatCount.toString(),
-                  style: ShadTheme.of(context).textTheme.table,
+                Tooltip(
+                  message: 'Sholat Count',
+                  child: Text(
+                    sholatCount.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
-                if (hasCoding) const Icon(LucideIcons.code, color: Colors.red, size: 18),
+                if (hasCoding)
+                  const Tooltip(
+                    message: 'Coding',
+                    child: Icon(Icons.code, color: Colors.red, size: 18),
+                  ),
               ],
             ),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (hasGym) const Icon(LucideIcons.bicepsFlexed, color: Colors.red, size: 18),
+                if (hasGym)
+                  const Tooltip(
+                    message: 'Gym',
+                    child: Icon(Icons.fitness_center, size: 18),
+                  ),
                 if (hasGym && hasCardio) const SizedBox(width: 4),
-                if (calorieControlled) const Icon(LucideIcons.utensilsCrossed, color: Colors.blue, size: 18),
+                if (calorieControlled)
+                  const Tooltip(
+                    message: 'Calorie Controlled',
+                    child: Icon(Icons.restaurant, size: 18),
+                  ),
                 if (hasCardio && calorieControlled) const SizedBox(width: 4),
-                if (hasCardio) const Icon(LucideIcons.heartPlus, color: Colors.white, size: 18),
+                if (hasCardio)
+                  const Tooltip(
+                    message: 'Cardio',
+                    child: Icon(Icons.favorite, size: 18),
+                  ),
               ],
             ),
             if (amount != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  amount.toString(),
-                  style: AppTextStyle.bodySmall,
+              Tooltip(
+                message: 'Expenses (K)',
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    amount.toString(),
+                    style: AppTextStyle.bodySmall,
+                  ),
                 ),
               ),
           ],
@@ -71,5 +95,5 @@ class CalenderCard extends StatelessWidget {
     );
   }
 
-  Color _getDayCardColor(bool isSunday) => isSunday ? const Color(0xFF222222) : Colors.black;
+  // Color _getDayCardColor(bool isSunday) => isSunday ? const Color(0xFF222222) : null;
 }

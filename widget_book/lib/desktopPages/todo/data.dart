@@ -10,28 +10,28 @@ class TodoCategory {
 
 final TodoData todoData = TodoData(productivity: todoCardP, daily: todoDaily);
 
-final List<TodoCardData> todoDaily = List.generate(10, (index) {
+final List<TodoCardData> todoDaily = List.generate(60, (index) {
   final now = DateTime.now();
   return TodoCardData(
     id: index.toString(),
     title: 'Task ${index + 1}',
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index % 3)),
-    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
+    time: '${(9 + index).toString().padLeft(2, '0')}:00',
     note: index % 2 == 0
         ? 'Note for task Note for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for task ${index + 1}'
         : null,
   );
 });
 
-final List<TodoCardData> todoHistory = List.generate(10, (index) {
+final List<TodoCardData> todoHistory = List.generate(60, (index) {
   final now = DateTime.now();
   return TodoCardData(
     id: index.toString(),
     title: 'Task ${index + 1}',
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index % 3)).copyWith(month: 11),
-    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
+    time: '${(9 + index).toString().padLeft(2, '0')}:00',
     note: index % 2 == 0
         ? 'Note for task Note for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for taskNote for task ${index + 1}'
         : null,
@@ -46,7 +46,7 @@ final List<TodoCardData> todoCardP = List.generate(10, (index) {
     isDone: index % 2 == 0,
     date: now.add(Duration(days: index + 1)),
     category: ['Work', 'Personal', 'Finance', 'Home'][index % 4],
-    time: '${(9 + index).toString().padLeft(2, '0')}:00:00',
+    time: '${(9 + index).toString().padLeft(2, '0')}:00',
     note: index % 3 == 0 ? 'Details for project task ${index + 1}' : null,
   );
 });
@@ -80,11 +80,11 @@ final List<DailyActivity> dailyActivities = List.generate(31, (index) {
   final date = DateTime(DateTime.now().year, 5, index + 1);
   return DailyActivity(
     date: date,
-    sholat: (index % 6), // Randomized between 0 to 5
-    gym: true, // Alternating days
-    cardio: true, // Every third day
-    coding: true, // Alternating days
-    amount: 23222, // Incremental amount
-    calorieControlled: index % 2 == 0, // Alternating days
+    sholat: (index % 6),
+    gym: true,
+    cardio: true,
+    coding: true,
+    amount: 23222,
+    calorieControlled: index % 2 == 0,
   );
 });

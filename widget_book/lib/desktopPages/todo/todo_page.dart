@@ -16,7 +16,7 @@ class MyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF222222),
+      color: Colors.white,
       child: TodoPage(
         dailyActivities: dailyActivities,
         noteCategories: noteCategories,
@@ -45,7 +45,13 @@ class MyWidget extends StatelessWidget {
           );
         },
         onUpdateStatus: (status) {
-          debugPrint('🏠 Parent got status → ${status.id}');
+          debugPrint('🏠 Parent got status → ${status.isDone}');
+        },
+        onDeleteTodo: (todo) {
+          debugPrint('🏠 Parent got todo to delete → ${todo.id}');
+        },
+        onDeleteNote: (note) {
+          debugPrint('🏠 Parent got note to delete → ${note.id}');
         },
       ),
     );

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoListData extends StatelessWidget {
   final TabsType tabsType;
@@ -14,6 +14,7 @@ class TodoListData extends StatelessWidget {
   final TaskType taskType;
   final ValueChanged<TodoCardData> onSave;
   final ValueChanged<TodoCardData>? onUpdateStatus;
+  final ValueChanged<TodoCardData> onDelete;
   final bool leading;
 
   const TodoListData({
@@ -24,6 +25,7 @@ class TodoListData extends StatelessWidget {
     required this.onSave,
     required this.listCategory,
     required this.onUpdateStatus,
+    required this.onDelete,
     this.leading = true,
   });
 
@@ -37,22 +39,17 @@ class TodoListData extends StatelessWidget {
             padding: AppPadding.h12,
             child: AppCard(
               height: 50,
-              color: Color(0xFF27272A),
               child: InkWell(
-                onTap: () => showShadSheet(
-                  side: ShadSheetSide.right,
+                onTap: () => showSheet(
+                  side: SheetSide.right,
                   context: context,
                   builder: (context) => TodoSheet.create(
                     taskType: taskType,
-                    side: ShadSheetSide.right,
                     onSave: onSave,
                     tabsType: tabsType,
                     listCategory: listCategory,
                   ),
                 ),
-                splashColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
                 child: const Padding(
                   padding: AppPadding.h8,
                   child: Icon(
@@ -64,7 +61,7 @@ class TodoListData extends StatelessWidget {
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height - 166,
+            height: MediaQuery.of(context).size.height - 172,
             alignment: Alignment.topCenter,
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
@@ -81,7 +78,7 @@ class TodoListData extends StatelessWidget {
                     data: todoCardData[index],
                     onSave: onSave,
                     onUpdateStatus: onUpdateStatus,
-                    onDelete: () {},
+                    onDelete: onDelete,
                     leading: leading,
                   ),
                 );

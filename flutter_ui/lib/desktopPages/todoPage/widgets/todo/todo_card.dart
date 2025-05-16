@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class TodoCard extends StatefulWidget {
   final TabsType tabsType;
   final TaskType taskType;
   final TodoCardData data;
   final ValueChanged<TodoCardData> onSave;
-  final VoidCallback onDelete;
+  final ValueChanged<TodoCardData> onDelete;
   final List<String> listCategory;
   final ValueChanged<TodoCardData>? onUpdateStatus;
   final bool leading;
@@ -39,46 +39,45 @@ class _AppCardState extends State<TodoCard> {
     widget.onUpdateStatus!(todo);
   }
 
+  void _openTodoSheet() {
+    showSheet(
+      context: context,
+      side: SheetSide.right,
+      builder: (context) => TodoSheet.update(
+        tabsType: widget.tabsType,
+        todoData: widget.data,
+        listCategory: widget.listCategory,
+        taskType: widget.taskType,
+        onSave: widget.onSave,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: AppCard(
-        color: Colors.black,
-        height: 80,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: widget.leading,
-                child: Checkbox(
-                  value: widget.data.isDone,
-                  onChanged: (value) => _updateStatus(value!),
-                  shape: const CircleBorder(),
-                  activeColor: Colors.red,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: InkWell(
-                  onTap: () => showShadSheet(
-                    side: ShadSheetSide.right,
-                    context: context,
-                    builder: (context) => TodoSheet.update(
-                      tabsType: widget.tabsType,
-                      side: ShadSheetSide.right,
-                      todoData: widget.data,
-                      listCategory: widget.listCategory,
-                      taskType: widget.taskType,
-                      onSave: widget.onSave,
-                    ),
+      child: InkWell(
+        onTap: _openTodoSheet,
+        child: AppCard(
+          height: 80,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: widget.leading,
+                  child: Checkbox(
+                    value: widget.data.isDone,
+                    onChanged: (value) => _updateStatus(value!),
+                    shape: const CircleBorder(),
+                    activeColor: Colors.red,
                   ),
-                  splashColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
+                ),
+                const SizedBox(width: 12),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +97,7 @@ class _AppCardState extends State<TodoCard> {
                         Row(
                           children: [
                             if (widget.data.category != null) ...[
-                              Icon(LucideIcons.tag, size: 16, color: Colors.grey[600]),
+                              Icon(Icons.label_outline, size: 16, color: Colors.grey[600]),
                               const SizedBox(width: 4),
                               Text(widget.data.category!, style: TextStyle(color: Colors.grey[700])),
                               const SizedBox(width: 16),
@@ -118,15 +117,15 @@ class _AppCardState extends State<TodoCard> {
                     ],
                   ),
                 ),
-              ),
-              if (_isHovered && (widget.data.isDone == false))
-                Center(
-                  child: ShadIconButton.ghost(
-                    icon: const Icon(LucideIcons.trash),
-                    onPressed: widget.onDelete,
+                if (_isHovered && (widget.data.isDone == false))
+                  Center(
+                    child: IconButton(
+                      onPressed: () => widget.onDelete(widget.data),
+                      icon: const Icon(Icons.delete),
+                    ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

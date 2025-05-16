@@ -5,7 +5,7 @@ import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/summary_section
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_tabs.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 
 class TodoPage extends StatelessWidget {
   final TodoData data;
@@ -15,7 +15,9 @@ class TodoPage extends StatelessWidget {
   final List<Note> notes;
   final List<DailyActivity> dailyActivities;
   final ValueChanged<TodoCardData> onSaveTodo;
+  final ValueChanged<TodoCardData> onDeleteTodo;
   final ValueChanged<Note> onSaveNote;
+  final ValueChanged<Note> onDeleteNote;
   final ValueChanged<TodoCardData> onUpdateStatus;
 
   const TodoPage({
@@ -27,17 +29,16 @@ class TodoPage extends StatelessWidget {
     required this.notes,
     required this.dailyActivities,
     required this.onSaveTodo,
+    required this.onDeleteTodo,
     required this.onSaveNote,
+    required this.onDeleteNote,
     required this.onUpdateStatus,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ShadApp.material(
-      theme: ShadThemeData(
-        brightness: Brightness.dark,
-        colorScheme: ShadZincColorScheme.dark(),
-      ),
+    return MaterialApp(
+      theme: appThemeData(),
       home: Row(
         children: [
           Expanded(
@@ -48,6 +49,7 @@ class TodoPage extends StatelessWidget {
                 todoCategories: todoCategories,
                 todoHistory: todoHistory,
                 onSaveTodo: onSaveTodo,
+                onDeleteTodo: onDeleteTodo,
                 onUpdateStatus: onUpdateStatus,
               ),
             ),
@@ -60,11 +62,7 @@ class TodoPage extends StatelessWidget {
               children: [
                 SummarySection(dailyActivities: dailyActivities),
                 Expanded(
-                  child: NoteSection(
-                    notes: notes,
-                    categories: noteCategories,
-                    onSave: onSaveNote,
-                  ),
+                  child: NoteSection(notes: notes, categories: noteCategories, onSave: onSaveNote, onDelete: onDeleteNote),
                 ),
               ],
             ),

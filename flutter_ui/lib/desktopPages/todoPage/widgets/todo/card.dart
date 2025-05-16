@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class AppCard extends StatelessWidget {
   final Widget child;
-  final Color color;
+  final Color? color;
   final double? height;
   const AppCard({
     super.key,
     required this.child,
-    this.color = const Color(0xFF27272A),
+    this.color,
     this.height,
   });
 

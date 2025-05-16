@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 enum TodoSheetType { create, update }
 
@@ -12,14 +11,12 @@ class TodoSheet extends StatefulWidget {
   final TodoSheetType? type;
   final TabsType? tabsType;
   final TaskType? taskType;
-  final ShadSheetSide side;
   final TodoCardData? todoData;
   final ValueChanged<TodoCardData>? onSave;
   final List<String> listCategory;
 
   const TodoSheet.create({
     super.key,
-    required this.side,
     required this.onSave,
     required this.tabsType,
     required this.taskType,
@@ -29,7 +26,6 @@ class TodoSheet extends StatefulWidget {
 
   const TodoSheet.update({
     super.key,
-    required this.side,
     required this.todoData,
     required this.taskType,
     required this.listCategory,
@@ -46,7 +42,7 @@ class _TodoSheetState extends State<TodoSheet> {
   late final TextEditingController _noteController;
   late final TextEditingController _dateController;
   late final TextEditingController _timeController;
-  late String _selectedCategory;
+  late String? _selectedCategory;
   late bool _status;
 
   bool get isCreate => widget.type == TodoSheetType.create;
@@ -59,7 +55,7 @@ class _TodoSheetState extends State<TodoSheet> {
     _dateController =
         widget.todoData?.date != null ? TextEditingController(text: widget.todoData!.date.toString()) : TextEditingController();
     _timeController = widget.todoData?.time != null ? TextEditingController(text: widget.todoData!.time) : TextEditingController();
-    _selectedCategory = widget.todoData?.category ?? 'None';
+    _selectedCategory = widget.todoData?.category;
     _status = widget.todoData?.isDone ?? false;
   }
 
@@ -88,59 +84,68 @@ class _TodoSheetState extends State<TodoSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return ShadSheet(
-      constraints: BoxConstraints(
-        minWidth: 520,
-        maxWidth: MediaQuery.of(context).size.width / 2,
-      ),
-      title: widget.taskType == TaskType.daily
-          ? Text(isCreate ? 'Create Todo Daily' : 'Detail Todo Daily')
-          : Text(isCreate ? 'Create Todo Productivity' : 'Detail Todo Productivity'),
-      actions: isCreate
-          ? [
-              ShadButton(
-                size: ShadButtonSize.sm,
-                child: const Text('Cancel'),
-                onPressed: () => Navigator.of(context).pop(),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            child: SingleChildScrollView(
+              child: TodoForm(
+                tabsType: widget.tabsType,
+                listCategory: widget.listCategory,
+                taskType: widget.taskType,
+                status: _status,
+                selectedCategory: _selectedCategory,
+                onCategoryChanged: (c) => setState(() => _selectedCategory = c),
+                titleController: _titleController,
+                noteController: _noteController,
+                dateController: _dateController,
+                timeController: _timeController,
               ),
-              ShadButton(
-                size: ShadButtonSize.sm,
-                onPressed: _onSave,
-                child: const Text('Create'),
-              ),
-            ]
-          : [
-              Visibility(
-                visible: !(widget.todoData?.isDone ?? false),
-                child: ShadButton(
-                  size: ShadButtonSize.sm,
-                  child: const Text('Cancel'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-              Visibility(
-                visible: !(widget.todoData?.isDone ?? false),
-                child: ShadButton(
-                  size: ShadButtonSize.sm,
-                  onPressed: () {
-                    debugPrint('Update button pressed');
-                    _onSave();
-                  },
-                  child: const Text('Update'),
-                ),
-              ),
-            ],
-      child: TodoForm(
-        tabsType: widget.tabsType,
-        listCategory: widget.listCategory,
-        taskType: widget.taskType,
-        status: _status,
-        selectedCategory: _selectedCategory,
-        onCategoryChanged: (c) => setState(() => _selectedCategory = c),
-        titleController: _titleController,
-        noteController: _noteController,
-        dateController: _dateController,
-        timeController: _timeController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: isCreate
+                  ? [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: _onSave,
+                        child: const Text('Create'),
+                      ),
+                    ]
+                  : [
+                      Visibility(
+                        visible: (widget.todoData?.isDone == false) && (widget.tabsType != TabsType.history),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('Cancel'),
+                            ),
+                            const SizedBox(width: 8),
+                            ElevatedButton(
+                              onPressed: () {
+                                debugPrint('Update button pressed');
+                                _onSave();
+                              },
+                              child: const Text('Update'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+            ),
+          ),
+        ],
       ),
     );
   }
