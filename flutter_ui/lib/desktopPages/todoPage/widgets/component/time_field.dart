@@ -9,14 +9,22 @@ class TimeField extends StatefulWidget {
   });
 
   @override
-  State<TimeField> createState() => _TimeBoxInputState();
+  State<TimeField> createState() => _TimeFieldState();
 }
 
-class _TimeBoxInputState extends State<TimeField> {
+class _TimeFieldState extends State<TimeField> {
   final hourController = TextEditingController();
   final minuteController = TextEditingController();
   final focusKeyboardHour = FocusNode();
   final focusKeyboardMinute = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _syncFromController();
+    hourController.addListener(_updateMainController);
+    minuteController.addListener(_updateMainController);
+  }
 
   @override
   void didUpdateWidget(TimeField oldWidget) {
@@ -32,14 +40,6 @@ class _TimeBoxInputState extends State<TimeField> {
         minuteController.text = parts[1].padLeft(2, '0');
       }
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _syncFromController();
-    hourController.addListener(_updateMainController);
-    minuteController.addListener(_updateMainController);
   }
 
   void _updateMainController() {
@@ -59,6 +59,9 @@ class _TimeBoxInputState extends State<TimeField> {
     int curr = _parse(ctrl.text, min, max);
     int newVal = (curr + step).clamp(min, max);
     ctrl.text = newVal.toString().padLeft(2, '0');
+    ctrl.selection = TextSelection.fromPosition(
+      TextPosition(offset: ctrl.text.length),
+    );
   }
 
   @override
@@ -77,7 +80,6 @@ class _TimeBoxInputState extends State<TimeField> {
     required int max,
     required void Function() onUp,
     required void Function() onDown,
-    required String align,
   }) {
     return RawKeyboardListener(
       focusNode: keyboardFocusNode,
@@ -90,11 +92,9 @@ class _TimeBoxInputState extends State<TimeField> {
           }
         }
       },
-      // child: Text('d'),
-
       child: TextField(
         controller: controller,
-        textAlign: align == 'left' ? TextAlign.start : TextAlign.end,
+        textAlign: TextAlign.center,
         maxLength: 2,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -123,26 +123,25 @@ class _TimeBoxInputState extends State<TimeField> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: 8,
       children: [
-        Expanded(
+        SizedBox(
+          width: 40,
           child: _buildField(
             controller: hourController,
             keyboardFocusNode: focusKeyboardHour,
             hint: "HH",
-            align: 'right',
             max: 23,
             onUp: () => _adjust(hourController, 1, 0, 23),
             onDown: () => _adjust(hourController, -1, 0, 23),
           ),
         ),
         Text(':', style: TextStyle(fontWeight: FontWeight.w900, color: Colors.black)),
-        Expanded(
+        SizedBox(
+          width: 40,
           child: _buildField(
             controller: minuteController,
             keyboardFocusNode: focusKeyboardMinute,
             hint: "MM",
-            align: 'left',
             max: 59,
             onUp: () => _adjust(minuteController, 1, 0, 59),
             onDown: () => _adjust(minuteController, -1, 0, 59),
@@ -157,7 +156,6 @@ class _TimeBoxInputState extends State<TimeField> {
     return Focus(
       child: Builder(builder: (context) {
         final hasFocus = Focus.of(context).hasFocus;
-
         return AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
