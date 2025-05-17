@@ -32,78 +32,65 @@ class _TablePageState extends State<TablePage> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
-                child: DataTable(
-                  dividerThickness: 0.2,
-                  showCheckboxColumn: false,
-                  columns: const [
-                    DataColumn(label: Text('Date', style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('Title', style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('Category', style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(label: Text('Time', style: TextStyle(fontWeight: FontWeight.bold))),
-                    DataColumn(
-                      label: Text('Note', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ),
-                  ],
-                  rows: widget.data
-                      .map(
-                        (todo) => DataRow(
-                          onSelectChanged: (selected) {
-                            showSheet(
-                              context: context,
-                              side: SheetSide.right,
-                              builder: (context) => TodoSheet.update(
-                                tabsType: TabsType.history,
-                                todoData: todo,
-                                listCategory: [],
-                                taskType: null,
-                                onSave: null,
-                              ),
-                            );
-                          },
-                          cells: [
-                            DataCell(
-                              Text(
-                                DateFormat('dd MMM yyyy').format(todo.date!),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                todo.title!,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width,
+                  ),
+                  child: DataTable(
+                    dividerThickness: 0.2,
+                    showCheckboxColumn: false,
+                    columns: const [
+                      DataColumn(label: Text('Date', style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(label: Text('Title', style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(label: Text('Category', style: TextStyle(fontWeight: FontWeight.bold))),
+                      DataColumn(label: Text('Time', style: TextStyle(fontWeight: FontWeight.bold))),
+                    ],
+                    rows: widget.data
+                        .map(
+                          (todo) => DataRow(
+                            onSelectChanged: (selected) {
+                              showSheet(
+                                context: context,
+                                side: SheetSide.right,
+                                builder: (context) => TodoSheet.detail(
+                                  todoData: todo,
+                                  tabsType: TabsType.history,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                todo.category ?? '',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                (todo.time is DateTime && todo.time != null)
-                                    ? DateFormat('HH:mm').format(todo.time as DateTime)
-                                    : (todo.time?.toString() ?? ''),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            DataCell(ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 200),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  todo.note ?? '',
+                              );
+                            },
+                            cells: [
+                              DataCell(
+                                Text(
+                                  DateFormat('dd MMM yyyy').format(todo.date!),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            )),
-                          ],
-                        ),
-                      )
-                      .toList(),
+                              DataCell(
+                                Text(
+                                  todo.title!,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  todo.category ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              DataCell(
+                                Text(
+                                  (todo.time ?? ''),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
             ),

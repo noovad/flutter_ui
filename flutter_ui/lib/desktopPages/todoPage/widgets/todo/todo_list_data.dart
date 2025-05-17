@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
@@ -31,13 +30,29 @@ class TodoListData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget appCard({required Widget child, Color? color, double? height}) {
+      return SizedBox(
+        height: height,
+        width: double.infinity,
+        child: Card(
+          elevation: 4,
+          shadowColor: Colors.grey,
+          color: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: child,
+        ),
+      );
+    }
+
     return Expanded(
       child: Column(
         spacing: 12,
         children: [
           Padding(
             padding: AppPadding.h12,
-            child: AppCard(
+            child: appCard(
               height: 50,
               child: InkWell(
                 onTap: () => showSheet(

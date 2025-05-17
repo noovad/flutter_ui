@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ThemeData appThemeData() {
   return ThemeData(
     brightness: Brightness.light,
-    fontFamily: 'Roboto',
+    fontFamily: 'Poppins',
     scaffoldBackgroundColor: Colors.white,
     splashColor: Colors.transparent,
     highlightColor: Colors.transparent,
@@ -48,16 +48,13 @@ ThemeData appThemeData() {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(color: Colors.grey),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(6),
-        borderSide: const BorderSide(color: Color(0xFF800000)),
-      ),
+      border: InputBorder.none,
+      enabledBorder: InputBorder.none,
+      focusedBorder: InputBorder.none,
+      disabledBorder: InputBorder.none,
+      hintStyle: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
     ),
-    iconTheme: const IconThemeData(color: Colors.black87),
+    iconTheme: const IconThemeData(color: Colors.black),
     dividerColor: Colors.grey.shade300,
   );
 }

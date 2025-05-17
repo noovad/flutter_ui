@@ -34,8 +34,22 @@ class MyWidget extends StatelessWidget {
             'note: ${todo.note}, '
             'category: ${todo.category}',
           );
+          SnackBar(
+            content: Text(
+              'Todo saved: ${todo.title}',
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.green,
+          );
         },
         onSaveNote: (note) {
+          SnackBar(
+            content: Text(
+              'Note saved: ${note.title}',
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.green,
+          );
           debugPrint(
             '🏠 Parent got note → '
             'id: ${note.id}, '

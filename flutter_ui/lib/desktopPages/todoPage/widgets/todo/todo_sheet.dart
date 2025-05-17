@@ -3,7 +3,7 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
 
-enum TodoSheetType { create, update }
+enum TodoSheetType { create, update, detail }
 
 enum TaskType { daily, productivity }
 
@@ -13,13 +13,13 @@ class TodoSheet extends StatefulWidget {
   final TaskType? taskType;
   final TodoCardData? todoData;
   final ValueChanged<TodoCardData>? onSave;
-  final List<String> listCategory;
+  final List<String>? listCategory;
 
   const TodoSheet.create({
     super.key,
-    required this.onSave,
     required this.tabsType,
     required this.taskType,
+    required this.onSave,
     required this.listCategory,
   })  : type = TodoSheetType.create,
         todoData = null;
@@ -27,11 +27,20 @@ class TodoSheet extends StatefulWidget {
   const TodoSheet.update({
     super.key,
     required this.todoData,
-    required this.taskType,
-    required this.listCategory,
     required this.tabsType,
     required this.onSave,
-  }) : type = null;
+    required this.taskType,
+    required this.listCategory,
+  }) : type = TodoSheetType.update;
+
+  const TodoSheet.detail({
+    super.key,
+    required this.todoData,
+    required this.tabsType,
+  })  : type = TodoSheetType.detail,
+        taskType = null,
+        listCategory = null,
+        onSave = null;
 
   @override
   State<TodoSheet> createState() => _TodoSheetState();
@@ -46,6 +55,8 @@ class _TodoSheetState extends State<TodoSheet> {
   late bool _status;
 
   bool get isCreate => widget.type == TodoSheetType.create;
+  bool get isUpdate => widget.type == TodoSheetType.update;
+  bool get isDetail => widget.type == TodoSheetType.detail;
 
   @override
   void initState() {
@@ -55,17 +66,7 @@ class _TodoSheetState extends State<TodoSheet> {
     _dateController =
         widget.todoData?.date != null ? TextEditingController(text: widget.todoData!.date.toString()) : TextEditingController();
     _timeController = widget.todoData?.time != null ? TextEditingController(text: widget.todoData!.time) : TextEditingController();
-    _selectedCategory = widget.todoData?.category;
     _status = widget.todoData?.isDone ?? false;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _titleController.dispose();
-    _noteController.dispose();
-    _dateController.dispose();
-    _timeController.dispose();
   }
 
   void _onSave() {
@@ -83,6 +84,15 @@ class _TodoSheetState extends State<TodoSheet> {
   }
 
   @override
+  void dispose() {
+    _titleController.dispose();
+    _noteController.dispose();
+    _dateController.dispose();
+    _timeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -93,25 +103,26 @@ class _TodoSheetState extends State<TodoSheet> {
           Flexible(
             child: SingleChildScrollView(
               child: TodoForm(
-                tabsType: widget.tabsType,
-                listCategory: widget.listCategory,
+                tabsType: widget.tabsType!,
                 taskType: widget.taskType,
-                status: _status,
-                selectedCategory: _selectedCategory,
-                onCategoryChanged: (c) => setState(() => _selectedCategory = c),
                 titleController: _titleController,
                 noteController: _noteController,
                 dateController: _dateController,
                 timeController: _timeController,
+                status: _status,
+                listCategory: widget.listCategory ?? [],
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: isCreate
-                  ? [
+              children: [
+                Visibility(
+                  visible: isCreate,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
                       ElevatedButton(
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text('Cancel'),
@@ -121,28 +132,35 @@ class _TodoSheetState extends State<TodoSheet> {
                         onPressed: _onSave,
                         child: const Text('Create'),
                       ),
-                    ]
-                  : [
-                      Visibility(
-                        visible: (widget.todoData?.isDone == false) && (widget.tabsType != TabsType.history),
-                        child: Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('Cancel'),
-                            ),
-                            const SizedBox(width: 8),
-                            ElevatedButton(
-                              onPressed: () {
-                                debugPrint('Update button pressed');
-                                _onSave();
-                              },
-                              child: const Text('Update'),
-                            ),
-                          ],
-                        ),
+                    ],
+                  ),
+                ),
+                Visibility(
+                  visible: isUpdate && !_status,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('Cancel'),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          debugPrint('Update button pressed');
+                          final snackBar = SnackBar(
+                            content: Text(
+                                'Updating: ${_titleController.text}, Note: ${_noteController.text}, Date: ${_dateController.text}, Time: ${_timeController.text}'),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          _onSave();
+                        },
+                        child: const Text('Update'),
                       ),
                     ],
+                  ),
+                )
+              ],
             ),
           ),
         ],

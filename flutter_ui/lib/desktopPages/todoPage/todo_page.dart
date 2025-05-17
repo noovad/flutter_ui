@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_section.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/summary_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_tabs.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
-import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 
 class TodoPage extends StatelessWidget {
@@ -54,19 +51,20 @@ class TodoPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            width: 700,
-            child: Column(
-              spacing: AppSizes.dimen16,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SummarySection(dailyActivities: dailyActivities),
-                Expanded(
-                  child: NoteSection(notes: notes, categories: noteCategories, onSave: onSaveNote, onDelete: onDeleteNote),
-                ),
-              ],
-            ),
-          ),
+          // Dummy dropdown for demonstration
+          // SizedBox(
+          //   width: 800,
+          //   child: Column(
+          //     spacing: AppSizes.dimen16,
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     children: [
+          //       SummarySection(dailyActivities: dailyActivities),
+          //       Expanded(
+          //         child: NoteSection(notes: notes, categories: noteCategories, onSave: onSaveNote, onDelete: onDeleteNote),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

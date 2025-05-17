@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_dropdown.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_text_field.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 
@@ -55,17 +54,17 @@ class NoteFormState extends State<NoteForm> {
               return null;
             },
           ),
-          AppDropdown(
-            items: widget.categories,
-            selectedItem: null,
-            onChanged: (value) {
-              setState(() {
-                currentCategory = value ?? '';
-              });
-              widget.onCategoryChanged(value ?? '');
-            },
-            label: 'Category',
-          ),
+          // AppDropdown(
+          //   items: widget.categories,
+          //   selectedItem: null,
+          //   onChanged: (value) {
+          //     setState(() {
+          //       currentCategory = value ?? '';
+          //     });
+          //     widget.onCategoryChanged(value ?? '');
+          //   },
+          //   label: 'Category',
+          // ),
           AppTextField(
             controller: widget.contentController,
             validator: (value) {
