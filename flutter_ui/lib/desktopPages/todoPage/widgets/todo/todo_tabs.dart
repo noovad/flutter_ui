@@ -78,6 +78,9 @@ class TodoTabs extends StatelessWidget {
                 TablePage(
                   data: todoHistory,
                 ),
+                TablePage(
+                  data: todoHistory,
+                ),
               ],
             ),
           ),

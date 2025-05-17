@@ -61,13 +61,6 @@ class _TodoFormState extends State<TodoForm> {
           TimeField(
             controller: widget.timeController,
           ),
-          DatePickerDialog(
-            firstDate: DateTime(2023),
-            lastDate: DateTime(DateTime.now().year + 1),
-            initialDate: widget.dateController.text.isNotEmpty ? DateTime.parse(widget.dateController.text) : DateTime.now(),
-            initialCalendarMode: DatePickerMode.day,
-            initialEntryMode: DatePickerEntryMode.calendarOnly,
-          ),
           DateField(
             controller: widget.dateController,
           ),

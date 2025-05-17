@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
+import 'package:intl/intl.dart';
 
 enum TodoSheetType { create, update, detail }
 
@@ -73,9 +74,8 @@ class _TodoSheetState extends State<TodoSheet> {
     final todo = TodoCardData(
       id: widget.todoData?.id,
       title: _titleController.text,
-      isDone: false,
-      date: DateTime.parse(_dateController.text),
-      category: _selectedCategory,
+      date: DateFormat('MMM d, yyyy').parse(_dateController.text),
+      category: _selectedCategory ?? widget.todoData?.category,
       time: _timeController.text,
       note: _noteController.text,
     );
