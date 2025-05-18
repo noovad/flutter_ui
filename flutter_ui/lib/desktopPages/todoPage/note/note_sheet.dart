@@ -31,7 +31,7 @@ class NoteSheet extends StatefulWidget {
 class _NoteSheetState extends State<NoteSheet> {
   late final TextEditingController _titleController;
   late final TextEditingController _contentController;
-  late String _selectedCategory;
+  late final TextEditingController _categoryController;
 
   bool get isCreate => widget.type == TodoSheetType.create;
 
@@ -40,13 +40,14 @@ class _NoteSheetState extends State<NoteSheet> {
     super.initState();
     _titleController = TextEditingController(text: widget.note?.title ?? '');
     _contentController = TextEditingController(text: widget.note?.content ?? '');
-    _selectedCategory = widget.note?.category ?? 'None';
+    _categoryController = TextEditingController(text: widget.note?.category ?? '');
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _contentController.dispose();
+    _categoryController.dispose();
     super.dispose();
   }
 
@@ -55,7 +56,7 @@ class _NoteSheetState extends State<NoteSheet> {
       id: isCreate ? null : widget.note?.id,
       title: _titleController.text.trim(),
       content: _contentController.text.trim(),
-      category: _selectedCategory,
+      category: _categoryController.text.trim(),
     );
 
     widget.onSave?.call(note);
@@ -76,9 +77,8 @@ class _NoteSheetState extends State<NoteSheet> {
               child: NoteForm(
                 titleController: _titleController,
                 contentController: _contentController,
-                selectedCategory: _selectedCategory,
-                onCategoryChanged: (c) => setState(() => _selectedCategory = c),
                 categories: widget.categories,
+                categoryController: _categoryController,
               ),
             ),
           ),

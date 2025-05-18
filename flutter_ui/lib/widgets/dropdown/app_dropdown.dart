@@ -128,6 +128,7 @@ class _AppDropdownState extends State<AppDropdown> {
           controller: widget.controller,
           label: widget.label,
           hint: widget.hint,
+          readOnly: true,
         ),
       ),
     );

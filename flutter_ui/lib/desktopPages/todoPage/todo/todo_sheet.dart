@@ -92,6 +92,7 @@ class _TodoSheetState extends State<TodoSheet> {
     _noteController.dispose();
     _dateController.dispose();
     _timeController.dispose();
+    _categoryController.dispose();
     super.dispose();
   }
 
