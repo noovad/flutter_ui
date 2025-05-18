@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/calender_card.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/summary_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/summary/calender_card.dart';
+import 'package:flutter_ui/desktopPages/todoPage/summary/summary_section.dart';
 
 class Calender extends StatelessWidget {
   final int daysInMonth;

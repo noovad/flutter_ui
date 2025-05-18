@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_text_field.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/date_field.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/time_field.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
+import 'package:flutter_ui/widgets/appField/app_field.dart';
+import 'package:flutter_ui/widgets/appField/date_field.dart';
+import 'package:flutter_ui/widgets/dropdown/app_dropdown.dart';
+import 'package:flutter_ui/widgets/appField/time_field.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 
 class TodoForm extends StatefulWidget {
@@ -13,9 +14,9 @@ class TodoForm extends StatefulWidget {
   final TextEditingController noteController;
   final TextEditingController dateController;
   final TextEditingController timeController;
+  final TextEditingController categoryController;
   final bool status;
   final List<String> listCategory;
-  final String? selectedCategory;
 
   const TodoForm({
     super.key,
@@ -27,7 +28,7 @@ class TodoForm extends StatefulWidget {
     required this.timeController,
     required this.status,
     required this.listCategory,
-    this.selectedCategory,
+    required this.categoryController,
   });
 
   @override
@@ -36,8 +37,6 @@ class TodoForm extends StatefulWidget {
 
 class _TodoFormState extends State<TodoForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class _TodoFormState extends State<TodoForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSizes.dimen24,
         children: [
-          AppTextField(
+          AppField(
             controller: widget.titleController,
             label: "Title",
             hint: "Enter title",
@@ -60,13 +59,20 @@ class _TodoFormState extends State<TodoForm> {
               return null;
             },
           ),
+          AppDropdown(
+            controller: widget.categoryController,
+            items: widget.listCategory,
+            label: "Category",
+            hint: "Select category",
+            enable: !widget.status,
+          ),
           TimeField(
             controller: widget.timeController,
           ),
           DateField(
             controller: widget.dateController,
           ),
-          AppTextField(
+          AppField(
             controller: widget.noteController,
             label: "Notes",
             hint: "Enter notes",

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/summary/calender.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/month_nav.dart';
+import 'package:flutter_ui/desktopPages/todoPage/summary/calender.dart';
+import 'package:flutter_ui/widgets/appNav/month_nav.dart';
 
 class SummarySection extends StatefulWidget {
   final List<DailyActivity> dailyActivities;

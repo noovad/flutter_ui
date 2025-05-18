@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_form.dart';
+import 'package:flutter_ui/desktopPages/todoPage/note/note_form.dart';
 
 enum TodoSheetType { create, update }
 

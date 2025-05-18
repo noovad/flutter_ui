@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
+import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/note/note_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
 class NoteCard extends StatefulWidget {

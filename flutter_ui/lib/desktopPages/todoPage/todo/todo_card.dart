@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_sheet.dart';
+import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_sheet.dart';
 
 class TodoCard extends StatefulWidget {
   final TabsType tabsType;

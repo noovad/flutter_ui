@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_list_data.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_sheet.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_list_data.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_sheet.dart';
 
 enum TabsType { today, upcoming, history, auto }
 

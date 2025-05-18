@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/component/app_text_field.dart';
+import 'package:flutter_ui/widgets/appField/app_field.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
+import 'package:flutter_ui/widgets/dropdown/app_dropdown.dart';
 
 class NoteForm extends StatefulWidget {
   final TextEditingController titleController;
@@ -43,7 +44,7 @@ class NoteFormState extends State<NoteForm> {
       child: Column(
         spacing: AppSizes.dimen16,
         children: [
-          AppTextField(
+          AppField(
             controller: widget.titleController,
             label: 'Title',
             hint: 'Enter note title',
@@ -54,18 +55,12 @@ class NoteFormState extends State<NoteForm> {
               return null;
             },
           ),
-          // AppDropdown(
-          //   items: widget.categories,
-          //   selectedItem: null,
-          //   onChanged: (value) {
-          //     setState(() {
-          //       currentCategory = value ?? '';
-          //     });
-          //     widget.onCategoryChanged(value ?? '');
-          //   },
-          //   label: 'Category',
-          // ),
-          AppTextField(
+          AppDropdown(
+            controller: widget.titleController,
+            items: widget.categories,
+            label: 'Category',
+          ),
+          AppField(
             controller: widget.contentController,
             validator: (value) {
               if (value == null || value.isEmpty) {

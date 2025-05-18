@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
+class AppField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final String hint;
-  final String? Function(String?)? validator;
+  final bool readOnly;
+  final bool enabled;
   final int? minLines;
   final int? maxLines;
-  final bool enabled;
+  final String? Function(String?)? validator;
+  final Widget? child;
 
-  const AppTextField({
-    super.key,
-    required this.controller,
-    required this.label,
-    required this.hint,
-    this.validator,
-    this.minLines,
-    this.maxLines,
-    this.enabled = true,
-  });
+  const AppField(
+      {super.key,
+      required this.controller,
+      required this.label,
+      required this.hint,
+      this.enabled = true,
+      this.minLines,
+      this.maxLines,
+      this.validator,
+      this.readOnly = false,
+      this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,6 @@ class AppTextField extends StatelessWidget {
       fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
       color: Colors.red,
     );
-
     return Focus(
       child: Builder(
         builder: (context) {
@@ -55,33 +57,43 @@ class AppTextField extends StatelessWidget {
                       )
                     ],
             ),
-            child: TextFormField(
-              controller: controller,
-              validator: validator,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              minLines: minLines,
-              maxLines: maxLines,
-              enabled: enabled,
-              style: baseTextStyle,
-              decoration: InputDecoration(
-                labelText: label,
-                hintText: hint,
-                hintStyle: baseTextStyle?.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w400,
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-                errorStyle: errorTextStyle,
-                labelStyle: const TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ),
+            child: child != null
+                ? child!
+                : defaultChild(
+                    baseTextStyle,
+                    errorTextStyle,
+                  ),
           );
         },
+      ),
+    );
+  }
+
+  TextFormField defaultChild(TextStyle? baseTextStyle, TextStyle errorTextStyle) {
+    return TextFormField(
+      controller: controller,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      style: baseTextStyle,
+      readOnly: readOnly,
+      validator: validator,
+      minLines: minLines,
+      maxLines: maxLines,
+      enabled: enabled,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        hintStyle: baseTextStyle?.copyWith(
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        isDense: true,
+        contentPadding: EdgeInsets.zero,
+        errorStyle: errorTextStyle,
+        labelStyle: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.normal,
+        ),
       ),
     );
   }

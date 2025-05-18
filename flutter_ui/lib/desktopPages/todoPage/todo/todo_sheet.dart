@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_section.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/todo/todo_form.dart';
-import 'package:flutter_ui/desktopPages/todoPage/widgets/utils.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
+import 'package:flutter_ui/desktopPages/todoPage/todo/todo_form.dart';
+import 'package:flutter_ui/shared/utils.dart';
 import 'package:intl/intl.dart';
 
 enum TodoSheetType { create, update, detail }
@@ -53,7 +53,7 @@ class _TodoSheetState extends State<TodoSheet> {
   late final TextEditingController _noteController;
   late final TextEditingController _dateController;
   late final TextEditingController _timeController;
-  late String? _selectedCategory;
+  late final TextEditingController _categoryController;
   late bool _status;
 
   bool get isCreate => widget.type == TodoSheetType.create;
@@ -68,6 +68,8 @@ class _TodoSheetState extends State<TodoSheet> {
     _dateController =
         widget.todoData?.date != null ? TextEditingController(text: ddMmmYyyy(widget.todoData!.date!)) : TextEditingController();
     _timeController = widget.todoData?.time != null ? TextEditingController(text: widget.todoData!.time) : TextEditingController();
+    _categoryController =
+        widget.todoData?.category != null ? TextEditingController(text: widget.todoData!.category) : TextEditingController();
     _status = widget.todoData?.isDone ?? false;
   }
 
@@ -76,7 +78,7 @@ class _TodoSheetState extends State<TodoSheet> {
       id: widget.todoData?.id,
       title: _titleController.text,
       date: DateFormat('dd MMMM yyyy').parse(_dateController.text),
-      category: _selectedCategory ?? widget.todoData?.category,
+      category: _categoryController.text,
       time: _timeController.text,
       note: _noteController.text,
     );
@@ -110,6 +112,7 @@ class _TodoSheetState extends State<TodoSheet> {
                 noteController: _noteController,
                 dateController: _dateController,
                 timeController: _timeController,
+                categoryController: _categoryController,
                 status: _status,
                 listCategory: widget.listCategory ?? [],
               ),
