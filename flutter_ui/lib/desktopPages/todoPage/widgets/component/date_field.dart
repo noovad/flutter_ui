@@ -57,24 +57,26 @@ class _CalendarFieldState extends State<DateField> {
                 child: Theme(
                   data: appThemeData(),
                   child: CalendarDatePicker(
-                      initialDate: widget.controller.text.isNotEmpty ? DateFormat('MMM dd, yyyy').parse(widget.controller.text) : null,
-                      firstDate: DateTime(2024),
-                      lastDate: DateTime(DateTime.now().year + 1),
-                      onDateChanged: (selectedDate) {
-                        final isDayOrMonthChanged =
-                            _prevDate != null && (_prevDate!.day != selectedDate.day || _prevDate!.month != selectedDate.month);
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2024),
+                    lastDate: DateTime(DateTime.now().year + 1),
+                    onDateChanged: (selectedDate) {
+                      final isDayOrMonthChanged =
+                          _prevDate != null && (_prevDate!.day != selectedDate.day || _prevDate!.month != selectedDate.month);
 
-                        if (isDayOrMonthChanged) {
-                          _removeOverlay(); // hanya tutup overlay jika tanggal atau bulan berubah
-                        }
+                      if (isDayOrMonthChanged) {
+                        _removeOverlay();
+                      }
+                      debugPrint("Selected Date: $selectedDate");
 
-                        widget.controller.text = formatDate(selectedDate);
-                        widget.controller.selection = TextSelection.fromPosition(
-                          TextPosition(offset: widget.controller.text.length),
-                        );
+                      widget.controller.text = DateFormat('dd MMMM yyyy').format(selectedDate);
+                      widget.controller.selection = TextSelection.fromPosition(
+                        TextPosition(offset: widget.controller.text.length),
+                      );
 
-                        _prevDate = selectedDate;
-                      }),
+                      _prevDate = selectedDate;
+                    },
+                  ),
                 ),
               ),
             ),

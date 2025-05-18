@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
 
-String formatDate(DateTime date) {
-  return DateFormat('MMM dd, yyyy').format(date);
+String ddMmmYyyy(DateTime date) {
+  return DateFormat('dd MMM yyyy').format(date);
 }
