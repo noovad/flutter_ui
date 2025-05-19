@@ -23,11 +23,11 @@ class _TablePageState extends State<TablePage> {
     return SizedBox(
       height: MediaQuery.of(context).size.height - 104,
       child: Column(
+        spacing: 16,
         children: [
           MonthNav(
             displayedDate: ValueNotifier<DateTime>(DateTime.now()),
           ),
-          const SizedBox(height: 16),
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,

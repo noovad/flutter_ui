@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/widgets/appField/app_field.dart';
-import 'package:flutter_ui/widgets/appField/date_field.dart';
+import 'package:flutter_ui/widgets/appField/app_text_field.dart';
+import 'package:flutter_ui/widgets/appField/app_date_field.dart';
 import 'package:flutter_ui/widgets/dropdown/app_dropdown.dart';
-import 'package:flutter_ui/widgets/appField/time_field.dart';
+import 'package:flutter_ui/widgets/appField/app_time_field.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
@@ -17,6 +17,9 @@ class TodoForm extends StatefulWidget {
   final TextEditingController categoryController;
   final bool status;
   final List<String> listCategory;
+  final FormFieldValidator<String>? titleValidator;
+  final FormFieldValidator<String>? dateValidator;
+  final FormFieldValidator<String>? noteValidator;
 
   const TodoForm({
     super.key,
@@ -29,6 +32,9 @@ class TodoForm extends StatefulWidget {
     required this.status,
     required this.listCategory,
     required this.categoryController,
+    this.titleValidator,
+    this.dateValidator,
+    this.noteValidator,
   });
 
   @override
@@ -47,17 +53,12 @@ class _TodoFormState extends State<TodoForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSizes.dimen24,
         children: [
-          AppField(
+          AppTextField(
             controller: widget.titleController,
             label: "Title",
             hint: "Enter title",
             enabled: !widget.status,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Title is required';
-              }
-              return null;
-            },
+            onChanged: (yow){},
           ),
           AppDropdown(
             controller: widget.categoryController,
@@ -66,19 +67,20 @@ class _TodoFormState extends State<TodoForm> {
             hint: "Select category",
             enable: !widget.status,
           ),
-          TimeField(
+          AppTimeField(
             controller: widget.timeController,
           ),
-          DateField(
+          AppDateField(
             controller: widget.dateController,
           ),
-          AppField(
+          AppTextField(
             controller: widget.noteController,
             label: "Notes",
             hint: "Enter notes",
             maxLines: 5,
             minLines: 3,
             enabled: !widget.status,
+            onChanged: (yow){},
           ),
         ],
       ),

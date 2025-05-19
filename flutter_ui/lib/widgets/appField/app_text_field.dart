@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 
-class AppField extends StatelessWidget {
+class AppTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final String hint;
   final bool readOnly;
   final bool enabled;
+  final Function(String) onChanged;
+  final bool obscureText;
   final int? minLines;
   final int? maxLines;
-  final String? Function(String?)? validator;
+  final String? errorText;
   final Widget? child;
 
-  const AppField(
-      {super.key,
-      required this.controller,
-      required this.label,
-      required this.hint,
-      this.enabled = true,
-      this.minLines,
-      this.maxLines,
-      this.validator,
-      this.readOnly = false,
-      this.child});
+  const AppTextField({
+    super.key,
+    required this.controller,
+    required this.label,
+    required this.hint,
+    required this.onChanged,
+    this.enabled = true,
+    this.readOnly = false,
+    this.obscureText = false,
+    this.minLines,
+    this.maxLines,
+    this.errorText,
+    this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,21 +46,8 @@ class AppField extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               boxShadow: hasFocus
-                  ? [
-                      BoxShadow(
-                        color: Colors.red.withOpacity(0.2),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      )
-                    ]
-                  : [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.4),
-                        blurRadius: 4,
-                        spreadRadius: 1,
-                        offset: const Offset(0, 2),
-                      )
-                    ],
+                  ? [BoxShadow(color: Colors.red.withOpacity(0.2), blurRadius: 8, offset: const Offset(0, 4))]
+                  : [BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 4, spreadRadius: 1, offset: const Offset(0, 2))],
             ),
             child: child != null
                 ? child!
@@ -75,11 +67,12 @@ class AppField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: baseTextStyle,
       readOnly: readOnly,
-      validator: validator,
       minLines: minLines,
       maxLines: maxLines,
       enabled: enabled,
+      obscureText: obscureText,
       decoration: InputDecoration(
+        errorText: errorText,
         labelText: label,
         hintText: hint,
         hintStyle: baseTextStyle?.copyWith(
@@ -95,6 +88,7 @@ class AppField extends StatelessWidget {
           fontWeight: FontWeight.normal,
         ),
       ),
+      onChanged: onChanged,
     );
   }
 }

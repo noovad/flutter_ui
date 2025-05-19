@@ -38,12 +38,12 @@ class _SummarySectionState extends State<SummarySection> {
         return Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+            spacing: 12,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               MonthNav(
                 displayedDate: displayedDate,
               ),
-              const SizedBox(height: 12),
               Calender(daysInMonth: daysInMonth, startDay: startDay, widget: widget, date: date),
             ],
           ),

@@ -19,6 +19,10 @@ class TodoPage extends StatelessWidget {
   final ValueChanged<Note> onSaveNote;
   final ValueChanged<Note> onDeleteNote;
   final ValueChanged<TodoCardData> onUpdateStatus;
+  final Function(String) titleOnChanged;
+  final Function(String) contentOnChanged;
+  final String? titleErrorText;
+  final String? contentErrorText;
 
   const TodoPage({
     super.key,
@@ -33,12 +37,16 @@ class TodoPage extends StatelessWidget {
     required this.onSaveNote,
     required this.onDeleteNote,
     required this.onUpdateStatus,
+    required this.titleOnChanged,
+    required this.contentOnChanged,
+    this.titleErrorText,
+    this.contentErrorText,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: appThemeData(),
+      theme: AppTheme.lightTheme(),
       home: Row(
         children: [
           Expanded(
@@ -58,11 +66,19 @@ class TodoPage extends StatelessWidget {
             width: 800,
             child: Column(
               spacing: AppSizes.dimen16,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SummarySection(dailyActivities: dailyActivities),
                 Expanded(
-                  child: NoteSection(notes: notes, categories: noteCategories, onSave: onSaveNote, onDelete: onDeleteNote),
+                  child: NoteSection(
+                    notes: notes,
+                    categories: noteCategories,
+                    onSave: onSaveNote,
+                    onDelete: onDeleteNote,
+                    titleErrorText: titleErrorText,
+                    contentErrorText: contentErrorText,
+                    titleOnChanged: titleOnChanged,
+                    contentOnChanged: contentOnChanged,
+                  ),
                 ),
               ],
             ),

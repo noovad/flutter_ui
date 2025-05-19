@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_form.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/utils.dart';
 import 'package:intl/intl.dart';
 
@@ -132,7 +133,7 @@ class _TodoSheetState extends State<TodoSheet> {
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text('Cancel'),
                       ),
-                      const SizedBox(width: 8),
+                      AppSpaces.w8,
                       ElevatedButton(
                         onPressed: _onSave,
                         child: const Text('Create'),
@@ -149,7 +150,7 @@ class _TodoSheetState extends State<TodoSheet> {
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text('Cancel'),
                       ),
-                      const SizedBox(width: 8),
+                      AppSpaces.w8,
                       ElevatedButton(
                         onPressed: () {
                           debugPrint('Update button pressed');

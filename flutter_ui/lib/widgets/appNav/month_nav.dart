@@ -21,21 +21,21 @@ class MonthNav extends StatelessWidget {
       builder: (context, date, _) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.end,
+          spacing: 8,
           children: [
             IconButton(
               onPressed: () => _changeMonth(-1),
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(Icons.chevron_left, size: 18),
               style: IconButton.styleFrom(
                 backgroundColor: Colors.black,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                padding: const EdgeInsets.all(8),
-                minimumSize: const Size(36, 36),
+                padding: const EdgeInsets.all(4),
+                minimumSize: const Size(28, 28),
               ),
               color: Colors.white,
             ),
-            const SizedBox(width: 12),
             SizedBox(
               width: 140,
               child: Center(
@@ -47,17 +47,16 @@ class MonthNav extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
             IconButton(
               onPressed: () => _changeMonth(1),
-              icon: const Icon(Icons.chevron_right),
+              icon: const Icon(Icons.chevron_right, size: 18),
               style: IconButton.styleFrom(
                 backgroundColor: Colors.black,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                padding: const EdgeInsets.all(8),
-                minimumSize: const Size(36, 36),
+                padding: const EdgeInsets.all(4),
+                minimumSize: const Size(28, 28),
               ),
               color: Colors.white,
             ),

@@ -22,9 +22,11 @@ class TodoTabs extends StatelessWidget {
     required this.onDeleteTodo,
     required this.onUpdateStatus,
   });
+  
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      animationDuration: const Duration(milliseconds: 500),
       length: 4,
       child: Column(
         children: [

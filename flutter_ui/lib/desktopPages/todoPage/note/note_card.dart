@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
@@ -9,6 +10,10 @@ class NoteCard extends StatefulWidget {
   final ValueChanged<Note> onDelete;
   final List<String> categories;
   final ValueChanged<Note> onSave;
+  final Function(String) titleOnChanged;
+  final Function(String) contentOnChanged;
+  final String? titleErrorText;
+  final String? contentErrorText;
 
   const NoteCard({
     super.key,
@@ -16,6 +21,10 @@ class NoteCard extends StatefulWidget {
     required this.categories,
     required this.onSave,
     required this.onDelete,
+    required this.titleOnChanged,
+    required this.contentOnChanged,
+    this.titleErrorText,
+    this.contentErrorText,
   });
 
   @override
@@ -29,10 +38,12 @@ class _NoteCardState extends State<NoteCard> {
     showSheet(
       side: SheetSide.left,
       context: context,
-      builder: (_) => NoteSheet.update(
+      builder: (_) => NoteSheet(
         note: widget.note,
         categories: widget.categories,
         onSave: widget.onSave,
+        titleOnChanged: widget.titleOnChanged,
+        contentOnChanged: widget.contentOnChanged,
       ),
     );
   }
@@ -61,6 +72,7 @@ class _NoteCardState extends State<NoteCard> {
           child: Padding(
             padding: AppPadding.all12,
             child: Column(
+              spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -99,20 +111,18 @@ class _NoteCardState extends State<NoteCard> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
                 Expanded(
                   child: Text(
                     widget.note.content!,
                     style: const TextStyle(fontSize: 14),
                   ),
                 ),
-                const SizedBox(height: 8),
                 Visibility(
                   visible: widget.note.category != null,
                   child: Row(
                     children: [
                       const Icon(Icons.label_outline, size: 14, color: Colors.grey),
-                      const SizedBox(width: 4),
+                      AppSpaces.w4,
                       Text(
                         widget.note.category ?? '',
                         style: const TextStyle(fontSize: 12, color: Colors.grey),

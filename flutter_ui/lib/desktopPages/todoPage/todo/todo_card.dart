@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
@@ -91,7 +92,7 @@ class _AppCardState extends State<TodoCard> {
                     activeColor: Colors.red,
                   ),
                 ),
-                const SizedBox(width: 12),
+                AppSpaces.w12,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,19 +108,19 @@ class _AppCardState extends State<TodoCard> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
+                      AppSpaces.w4,
                       if (widget.data.category != null || widget.data.time != null)
                         Row(
                           children: [
                             if (widget.data.category != null) ...[
                               Icon(Icons.label_outline, size: 16, color: Colors.grey[600]),
-                              const SizedBox(width: 4),
+                              AppSpaces.w4,
                               Text(widget.data.category!, style: TextStyle(color: Colors.grey[700])),
-                              const SizedBox(width: 16),
+                              AppSpaces.w16,
                             ],
                             if (widget.data.time != null) ...[
                               Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
-                              const SizedBox(width: 4),
+                              AppSpaces.w4,
                               Text(
                                 widget.data.time!,
                                 style: TextStyle(

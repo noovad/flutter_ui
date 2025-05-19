@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/themes/app_text_style.dart';
 
 class CalenderCard extends StatelessWidget {
@@ -25,9 +26,7 @@ class CalenderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      shadowColor: Colors.grey,
-      // todo: add color to the card
-      // color: _getDayCardColor(isSunday),
+      shadowColor: isSunday ? Colors.red : Colors.grey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
@@ -64,13 +63,13 @@ class CalenderCard extends StatelessWidget {
                     message: 'Gym',
                     child: Icon(Icons.fitness_center, size: 18),
                   ),
-                if (hasGym && hasCardio) const SizedBox(width: 4),
+                if (hasGym && hasCardio) AppSpaces.w4,
                 if (calorieControlled)
                   const Tooltip(
                     message: 'Calorie Controlled',
                     child: Icon(Icons.restaurant, size: 18),
                   ),
-                if (hasCardio && calorieControlled) const SizedBox(width: 4),
+                if (hasCardio && calorieControlled) AppSpaces.w4,
                 if (hasCardio)
                   const Tooltip(
                     message: 'Cardio',
@@ -94,6 +93,4 @@ class CalenderCard extends StatelessWidget {
       ),
     );
   }
-
-  // Color _getDayCardColor(bool isSunday) => isSunday ? const Color(0xFF222222) : null;
 }

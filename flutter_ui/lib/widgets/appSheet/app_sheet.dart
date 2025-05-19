@@ -7,7 +7,7 @@ Future<T?> showSheet<T>({
   required WidgetBuilder builder,
   SheetSide side = SheetSide.right,
   double? width,
-  Duration duration = const Duration(milliseconds: 300),
+  Duration duration = const Duration(milliseconds: 500),
 }) {
   final isLeft = side == SheetSide.left;
   final ThemeData parentTheme = Theme.of(context);

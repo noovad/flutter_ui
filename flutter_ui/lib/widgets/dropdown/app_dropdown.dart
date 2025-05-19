@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/widgets/appField/app_field.dart';
-import 'package:flutter_ui/shared/themes/app_theme_data.dart';
+import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
 class AppDropdown extends StatefulWidget {
   final TextEditingController controller;
@@ -8,11 +7,15 @@ class AppDropdown extends StatefulWidget {
   final String label;
   final String? selected;
   final String hint;
+  final Function(String)? onChanged;
   final bool enable;
+  final String? labelUnselected;
 
   const AppDropdown({
-    required this.controller,
     super.key,
+    required this.controller,
+    this.labelUnselected,
+    this.onChanged,
     required this.items,
     required this.label,
     this.selected,
@@ -74,39 +77,36 @@ class _AppDropdownState extends State<AppDropdown> {
         borderRadius: BorderRadius.circular(8),
       ),
       color: Colors.white,
-      child: Theme(
-        data: appThemeData(),
-        child: ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          separatorBuilder: (context, index) => const Divider(
-            height: 1,
-            color: Colors.grey,
-          ),
-          itemCount: widget.items.length + 1,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return ListTile(
-                dense: true,
-                leading: const Icon(Icons.clear, size: 16),
-                title: const Text('Unselect'),
-                onTap: () {
-                  widget.controller.clear();
-                  _removeOverlay();
-                },
-              );
-            }
+      child: ListView.separated(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        separatorBuilder: (context, index) => const Divider(
+          height: 1,
+          color: Colors.grey,
+        ),
+        itemCount: widget.items.length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
             return ListTile(
               dense: true,
-              leading: const Icon(Icons.label_outline, size: 16),
-              title: Text(widget.items[index - 1]),
+              leading: const Icon(Icons.clear, size: 16),
+              title: widget.labelUnselected != null ? Text(widget.labelUnselected!) : const Text('Clear'),
               onTap: () {
-                widget.controller.text = widget.items[index - 1];
+                widget.controller.clear();
                 _removeOverlay();
               },
             );
-          },
-        ),
+          }
+          return ListTile(
+            dense: true,
+            leading: const Icon(Icons.label_outline, size: 16),
+            title: Text(widget.items[index - 1]),
+            onTap: () {
+              widget.controller.text = widget.items[index - 1];
+              _removeOverlay();
+            },
+          );
+        },
       ),
     );
   }
@@ -124,11 +124,12 @@ class _AppDropdownState extends State<AppDropdown> {
       },
       child: CompositedTransformTarget(
         link: _layerLink,
-        child: AppField(
+        child: AppTextField(
           controller: widget.controller,
           label: widget.label,
           hint: widget.hint,
           readOnly: true,
+          onChanged: widget.onChanged ?? (value) {},
         ),
       ),
     );

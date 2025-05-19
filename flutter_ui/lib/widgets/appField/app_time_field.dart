@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ui/widgets/appField/app_field.dart';
+import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
-class TimeField extends StatefulWidget {
+class AppTimeField extends StatefulWidget {
   final TextEditingController controller;
-  const TimeField({
+  final String? label;
+  final String? hintHour;
+  final String? hintMinute;
+  final Function(String)? onChanged;
+  final String? errorText;
+
+  const AppTimeField({
     super.key,
     required this.controller,
+    this.label,
+    this.hintHour,
+    this.hintMinute,
+    this.onChanged,
+    this.errorText,
   });
 
   @override
-  State<TimeField> createState() => _TimeFieldState();
+  State<AppTimeField> createState() => _TimeFieldState();
 }
 
-class _TimeFieldState extends State<TimeField> {
+class _TimeFieldState extends State<AppTimeField> {
   final hourController = TextEditingController();
   final minuteController = TextEditingController();
   final focusKeyboardHour = FocusNode();
@@ -28,7 +39,7 @@ class _TimeFieldState extends State<TimeField> {
   }
 
   @override
-  void didUpdateWidget(TimeField oldWidget) {
+  void didUpdateWidget(AppTimeField oldWidget) {
     super.didUpdateWidget(oldWidget);
     _syncFromController();
   }
@@ -130,7 +141,7 @@ class _TimeFieldState extends State<TimeField> {
           child: _buildField(
             controller: hourController,
             keyboardFocusNode: focusKeyboardHour,
-            hint: "HH",
+            hint: widget.hintHour ?? "HH",
             max: 23,
             onUp: () => _adjust(hourController, 1, 0, 23),
             onDown: () => _adjust(hourController, -1, 0, 23),
@@ -142,7 +153,7 @@ class _TimeFieldState extends State<TimeField> {
           child: _buildField(
             controller: minuteController,
             keyboardFocusNode: focusKeyboardMinute,
-            hint: "MM",
+            hint: widget.hintMinute ?? "MM",
             max: 59,
             onUp: () => _adjust(minuteController, 1, 0, 59),
             onDown: () => _adjust(minuteController, -1, 0, 59),
@@ -154,10 +165,12 @@ class _TimeFieldState extends State<TimeField> {
 
   @override
   Widget build(BuildContext context) {
-    return AppField(
+    return AppTextField(
       controller: widget.controller,
-      label: "Time",
+      label: widget.label ?? "Time",
       hint: "",
+      onChanged: widget.onChanged ?? (value) {},
+      errorText: widget.errorText,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

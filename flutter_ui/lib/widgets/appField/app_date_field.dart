@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/widgets/appField/app_field.dart';
 import 'package:flutter_ui/shared/utils.dart';
-import 'package:flutter_ui/shared/themes/app_theme_data.dart';
+import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
-class DateField extends StatefulWidget {
+class AppDateField extends StatefulWidget {
   final TextEditingController controller;
+  final Function(String)? onChanged;
 
-  const DateField({super.key, required this.controller});
+  const AppDateField({
+    super.key,
+    required this.controller,
+    this.onChanged,
+  });
 
   @override
-  State<DateField> createState() => _CalendarFieldState();
+  State<AppDateField> createState() => _CalendarFieldState();
 }
 
-class _CalendarFieldState extends State<DateField> {
+class _CalendarFieldState extends State<AppDateField> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
   DateTime? _prevDate;
@@ -63,26 +67,23 @@ class _CalendarFieldState extends State<DateField> {
         borderRadius: BorderRadius.circular(8),
       ),
       color: Colors.white,
-      child: Theme(
-        data: appThemeData(),
-        child: CalendarDatePicker(
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2024),
-          lastDate: DateTime(DateTime.now().year + 1),
-          onDateChanged: (selectedDate) {
-            final isDayOrMonthChanged = _prevDate != null && (_prevDate!.day != selectedDate.day || _prevDate!.month != selectedDate.month);
+      child: CalendarDatePicker(
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2024),
+        lastDate: DateTime(DateTime.now().year + 1),
+        onDateChanged: (selectedDate) {
+          final isDayOrMonthChanged = _prevDate != null && (_prevDate!.day != selectedDate.day || _prevDate!.month != selectedDate.month);
 
-            if (isDayOrMonthChanged) {
-              _removeOverlay();
-            }
-            widget.controller.text = ddMmmYyyy(selectedDate);
-            widget.controller.selection = TextSelection.fromPosition(
-              TextPosition(offset: widget.controller.text.length),
-            );
+          if (isDayOrMonthChanged) {
+            _removeOverlay();
+          }
+          widget.controller.text = ddMmmYyyy(selectedDate);
+          widget.controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: widget.controller.text.length),
+          );
 
-            _prevDate = selectedDate;
-          },
-        ),
+          _prevDate = selectedDate;
+        },
       ),
     );
   }
@@ -100,11 +101,12 @@ class _CalendarFieldState extends State<DateField> {
       },
       child: CompositedTransformTarget(
         link: _layerLink,
-        child: AppField(
+        child: AppTextField(
           controller: widget.controller,
           label: 'Date',
           hint: 'dd mmm yyyy',
           readOnly: true,
+          onChanged: widget.onChanged ?? (value) {},
         ),
       ),
     );

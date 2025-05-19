@@ -10,6 +10,10 @@ class NoteSection extends StatelessWidget {
   final List<String> categories;
   final ValueChanged<Note> onSave;
   final ValueChanged<Note> onDelete;
+  final Function(String) titleOnChanged;
+  final Function(String) contentOnChanged;
+  final String? titleErrorText;
+  final String? contentErrorText;
 
   const NoteSection({
     super.key,
@@ -17,6 +21,10 @@ class NoteSection extends StatelessWidget {
     required this.categories,
     required this.onSave,
     required this.onDelete,
+    required this.titleOnChanged,
+    required this.contentOnChanged,
+    this.titleErrorText,
+    this.contentErrorText,
   });
 
   @override
@@ -40,6 +48,8 @@ class NoteSection extends StatelessWidget {
             categories: categories,
             onDelete: onDelete,
             onSave: onSave,
+            titleOnChanged: titleOnChanged,
+            contentOnChanged: contentOnChanged,
           );
         },
       ),
@@ -54,9 +64,14 @@ class NoteSection extends StatelessWidget {
         onTap: () => showSheet(
           side: SheetSide.left,
           context: context,
-          builder: (_) => NoteSheet.create(
+          builder: (_) => NoteSheet(
+            isCreate: true,
             categories: categories,
             onSave: onSave,
+            titleErrorText: titleErrorText,
+            contentErrorText: contentErrorText,
+            titleOnChanged: titleOnChanged,
+            contentOnChanged: contentOnChanged,
           ),
         ),
         child: Padding(

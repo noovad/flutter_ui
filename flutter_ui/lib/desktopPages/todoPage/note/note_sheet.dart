@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_form.dart';
-
-enum TodoSheetType { create, update }
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
 class NoteSheet extends StatefulWidget {
-  final TodoSheetType? type;
   final Note? note;
   final List<String> categories;
+  final bool isCreate;
+  final String? titleErrorText;
+  final String? contentErrorText;
   final ValueChanged<Note>? onSave;
+  final Function(String) titleOnChanged;
+  final Function(String) contentOnChanged;
 
-  const NoteSheet.create({
+  const NoteSheet({
     super.key,
     required this.categories,
-    required this.onSave,
-  })  : type = TodoSheetType.create,
-        note = null;
-
-  const NoteSheet.update({
-    super.key,
-    required this.note,
-    required this.categories,
-    required this.onSave,
-  }) : type = null;
+    required this.titleOnChanged,
+    required this.contentOnChanged,
+    this.note,
+    this.isCreate = false,
+    this.titleErrorText,
+    this.contentErrorText,
+    this.onSave,
+  });
 
   @override
   State<NoteSheet> createState() => _NoteSheetState();
@@ -32,8 +33,6 @@ class _NoteSheetState extends State<NoteSheet> {
   late final TextEditingController _titleController;
   late final TextEditingController _contentController;
   late final TextEditingController _categoryController;
-
-  bool get isCreate => widget.type == TodoSheetType.create;
 
   @override
   void initState() {
@@ -53,7 +52,7 @@ class _NoteSheetState extends State<NoteSheet> {
 
   void _handleSave() {
     final note = Note(
-      id: isCreate ? null : widget.note?.id,
+      id: widget.isCreate ? null : widget.note?.id,
       title: _titleController.text.trim(),
       content: _contentController.text.trim(),
       category: _categoryController.text.trim(),
@@ -64,8 +63,6 @@ class _NoteSheetState extends State<NoteSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final isCreate = widget.type == TodoSheetType.create;
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -79,6 +76,10 @@ class _NoteSheetState extends State<NoteSheet> {
                 contentController: _contentController,
                 categories: widget.categories,
                 categoryController: _categoryController,
+                titleErrorText: widget.titleErrorText,
+                contentErrorText: widget.contentErrorText,
+                titleOnChanged: widget.titleOnChanged,
+                contentOnChanged: widget.contentOnChanged,
               ),
             ),
           ),
@@ -86,15 +87,18 @@ class _NoteSheetState extends State<NoteSheet> {
             padding: const EdgeInsets.only(top: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: isCreate
+              children: widget.isCreate
                   ? [
                       ElevatedButton(
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text('Cancel'),
                       ),
-                      const SizedBox(width: 8),
+                      AppSpaces.w8,
                       ElevatedButton(
-                        onPressed: _handleSave,
+                        onPressed: () {
+                          _handleSave();
+                          Navigator.of(context).pop();
+                        },
                         child: const Text('Create'),
                       ),
                     ]
@@ -103,12 +107,9 @@ class _NoteSheetState extends State<NoteSheet> {
                         onPressed: () => Navigator.of(context).pop(),
                         child: const Text('Cancel'),
                       ),
-                      const SizedBox(width: 8),
+                      AppSpaces.w8,
                       ElevatedButton(
-                        onPressed: () {
-                          debugPrint('Update note pressed');
-                          _handleSave();
-                        },
+                        onPressed: _handleSave,
                         child: const Text('Update'),
                       ),
                     ],
