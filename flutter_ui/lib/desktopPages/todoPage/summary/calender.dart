@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/desktopPages/todoPage/summary/calender_card.dart';
+import 'package:flutter_ui/widgets/appCard/daily_summary_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/summary/summary_section.dart';
 
 class Calender extends StatelessWidget {
@@ -46,7 +46,7 @@ class Calender extends StatelessWidget {
         final sholatCount = currentDayActivities.isNotEmpty ? currentDayActivities.first.sholat.toString() : "";
         final hasCalorieControlled = currentDayActivities.any((a) => a.calorieControlled);
 
-        return CalenderCard(
+        return DailySummaryCard(
           sholatCount: sholatCount,
           amount: amount,
           hasCoding: hasCoding,

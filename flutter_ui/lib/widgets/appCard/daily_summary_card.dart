@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/themes/app_text_style.dart';
 
-class CalenderCard extends StatelessWidget {
+class DailySummaryCard extends StatelessWidget {
   final String sholatCount;
   final int? amount;
   final bool hasCoding;
@@ -11,7 +11,7 @@ class CalenderCard extends StatelessWidget {
   final bool isSunday;
   final bool calorieControlled;
 
-  const CalenderCard({
+  const DailySummaryCard({
     super.key,
     required this.sholatCount,
     required this.amount,
