@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_form.dart';
+import 'package:flutter_ui/shared/sizes/app_padding.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
 class NoteSheet extends StatefulWidget {
@@ -64,59 +65,52 @@ class _NoteSheetState extends State<NoteSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: AppPadding.all16,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Flexible(
             child: SingleChildScrollView(
-              child: NoteForm(
-                titleController: _titleController,
-                contentController: _contentController,
-                categories: widget.categories,
-                categoryController: _categoryController,
-                titleErrorText: widget.titleErrorText,
-                contentErrorText: widget.contentErrorText,
-                titleOnChanged: widget.titleOnChanged,
-                contentOnChanged: widget.contentOnChanged,
-              ),
+              child: formSection(),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: widget.isCreate
-                  ? [
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Cancel'),
-                      ),
-                      AppSpaces.w8,
-                      ElevatedButton(
-                        onPressed: () {
-                          _handleSave();
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Create'),
-                      ),
-                    ]
-                  : [
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Cancel'),
-                      ),
-                      AppSpaces.w8,
-                      ElevatedButton(
-                        onPressed: _handleSave,
-                        child: const Text('Update'),
-                      ),
-                    ],
-            ),
+            child: buttonSection(context),
           ),
         ],
       ),
+    );
+  }
+
+  NoteForm formSection() {
+    return NoteForm(
+      titleController: _titleController,
+      contentController: _contentController,
+      categories: widget.categories,
+      categoryController: _categoryController,
+      titleErrorText: widget.titleErrorText,
+      contentErrorText: widget.contentErrorText,
+      titleOnChanged: widget.titleOnChanged,
+      contentOnChanged: widget.contentOnChanged,
+    );
+  }
+
+  Row buttonSection(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        AppSpaces.w8,
+        ElevatedButton(
+          onPressed: _handleSave,
+          child: Text(widget.isCreate ? 'Create' : 'Update'),
+        ),
+      ],
     );
   }
 }
