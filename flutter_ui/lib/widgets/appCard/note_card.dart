@@ -1,30 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
-import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
 class NoteCard extends StatefulWidget {
   final Note note;
+  final ValueChanged<Note> onUpdate;
   final ValueChanged<Note> onDelete;
-  final List<String> categories;
-  final ValueChanged<Note> onSave;
-  final Function(String) titleOnChanged;
-  final Function(String) contentOnChanged;
-  final String? titleErrorText;
-  final String? contentErrorText;
+  final Function()? onTap;
 
   const NoteCard({
     super.key,
+    required this.onUpdate,
     required this.note,
-    required this.categories,
-    required this.onSave,
     required this.onDelete,
-    required this.titleOnChanged,
-    required this.contentOnChanged,
-    this.titleErrorText,
-    this.contentErrorText,
+    this.onTap,
   });
 
   @override
@@ -34,27 +24,13 @@ class NoteCard extends StatefulWidget {
 class _NoteCardState extends State<NoteCard> {
   bool _isHovered = false;
 
-  void _openNoteSheet() {
-    showSheet(
-      side: SheetSide.left,
-      context: context,
-      builder: (_) => NoteSheet(
-        note: widget.note,
-        categories: widget.categories,
-        onSave: widget.onSave,
-        titleOnChanged: widget.titleOnChanged,
-        contentOnChanged: widget.contentOnChanged,
-      ),
-    );
-  }
-
   void _togglePin() {
     final Note updatedNote = Note(
       id: widget.note.id,
       isPinned: !widget.note.isPinned,
     );
 
-    widget.onSave(updatedNote);
+    widget.onUpdate(updatedNote);
   }
 
   @override
@@ -67,7 +43,7 @@ class _NoteCardState extends State<NoteCard> {
         shadowColor: Colors.grey,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         child: InkWell(
-          onTap: _openNoteSheet,
+          onTap: widget.onTap,
           borderRadius: BorderRadius.circular(8),
           child: Padding(
             padding: AppPadding.all12,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/desktopPages/todoPage/note/note_card.dart';
+import 'package:flutter_ui/widgets/appCard/note_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
@@ -45,11 +45,19 @@ class NoteSection extends StatelessWidget {
           final note = notes[index - 1];
           return NoteCard(
             note: note,
-            categories: categories,
             onDelete: onDelete,
-            onSave: onSave,
-            titleOnChanged: titleOnChanged,
-            contentOnChanged: contentOnChanged,
+            onUpdate: (updatedNote) {},
+            onTap: () => showSheet(
+              side: SheetSide.left,
+              context: context,
+              builder: (_) => NoteSheet(
+                note: note,
+                categories: categories,
+                onSave: onSave,
+                titleOnChanged: titleOnChanged,
+                contentOnChanged: contentOnChanged,
+              ),
+            ),
           );
         },
       ),
