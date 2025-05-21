@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String label;
-  final String hint;
+  final String? hint;
   final bool readOnly;
   final bool enabled;
-  final Function(String) onChanged;
+  final Function(String)? onChanged;
   final bool obscureText;
   final int? minLines;
   final int? maxLines;
@@ -15,10 +15,10 @@ class AppTextField extends StatelessWidget {
 
   const AppTextField({
     super.key,
-    required this.controller,
     required this.label,
-    required this.hint,
-    required this.onChanged,
+    this.onChanged,
+    this.hint = '',
+    this.controller,
     this.enabled = true,
     this.readOnly = false,
     this.obscureText = false,
@@ -46,8 +46,19 @@ class AppTextField extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
               boxShadow: hasFocus
-                  ? [BoxShadow(color: Colors.red.withOpacity(0.2), blurRadius: 8, offset: const Offset(0, 4))]
-                  : [BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 4, spreadRadius: 1, offset: const Offset(0, 2))],
+                  ? [
+                      BoxShadow(
+                          color: Colors.red.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4))
+                    ]
+                  : [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.4),
+                          blurRadius: 4,
+                          spreadRadius: 1,
+                          offset: const Offset(0, 2))
+                    ],
             ),
             child: child != null
                 ? child!
@@ -61,7 +72,8 @@ class AppTextField extends StatelessWidget {
     );
   }
 
-  TextFormField defaultChild(TextStyle? baseTextStyle, TextStyle errorTextStyle) {
+  TextFormField defaultChild(
+      TextStyle? baseTextStyle, TextStyle errorTextStyle) {
     return TextFormField(
       controller: controller,
       autovalidateMode: AutovalidateMode.onUserInteraction,

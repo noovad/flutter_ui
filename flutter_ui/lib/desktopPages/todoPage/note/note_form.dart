@@ -37,16 +37,20 @@ class NoteFormState extends State<NoteForm> {
       spacing: AppSizes.dimen16,
       children: [
         AppTextField(
-          controller: widget.titleController,
           onChanged: widget.titleOnChanged,
           label: 'Title',
           hint: 'Enter note title',
           errorText: widget.titleErrorText,
         ),
         AppDropdown(
-          controller: widget.categoryController,
           items: widget.categories,
-          label: 'Category',
+          label: "Category",
+          hint: "Select category",
+          // enable: !widget.,
+          selected: 'work',
+          onChanged: (value) {
+            debugPrint(value);
+          },
         ),
         AppTextField(
           controller: widget.contentController,

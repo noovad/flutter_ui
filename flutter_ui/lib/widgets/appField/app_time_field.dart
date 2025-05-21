@@ -166,7 +166,6 @@ class _TimeFieldState extends State<AppTimeField> {
   @override
   Widget build(BuildContext context) {
     return AppTextField(
-      controller: widget.controller,
       label: widget.label ?? "Time",
       hint: "",
       onChanged: widget.onChanged ?? (value) {},

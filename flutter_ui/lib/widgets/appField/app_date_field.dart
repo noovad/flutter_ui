@@ -102,7 +102,6 @@ class _CalendarFieldState extends State<AppDateField> {
       child: CompositedTransformTarget(
         link: _layerLink,
         child: AppTextField(
-          controller: widget.controller,
           label: 'Date',
           hint: 'dd mmm yyyy',
           readOnly: true,

@@ -54,18 +54,20 @@ class _TodoFormState extends State<TodoForm> {
         spacing: AppSizes.dimen24,
         children: [
           AppTextField(
-            controller: widget.titleController,
             label: "Title",
             hint: "Enter title",
             enabled: !widget.status,
-            onChanged: (yow){},
+            onChanged: (yow) {},
           ),
           AppDropdown(
-            controller: widget.categoryController,
             items: widget.listCategory,
             label: "Category",
             hint: "Select category",
             enable: !widget.status,
+            selected: 'work',
+            onChanged: (value) {
+              debugPrint(value);
+            },
           ),
           AppTimeField(
             controller: widget.timeController,
@@ -74,13 +76,12 @@ class _TodoFormState extends State<TodoForm> {
             controller: widget.dateController,
           ),
           AppTextField(
-            controller: widget.noteController,
             label: "Notes",
             hint: "Enter notes",
             maxLines: 5,
             minLines: 3,
             enabled: !widget.status,
-            onChanged: (yow){},
+            onChanged: (yow) {},
           ),
         ],
       ),
