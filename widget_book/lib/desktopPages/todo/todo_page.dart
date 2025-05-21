@@ -63,7 +63,7 @@ class MyWidget extends StatelessWidget {
         debugPrint('🏠 Parent got todo to delete → ${todo.id}');
       },
       onDeleteNote: (note) {
-        debugPrint('🏠 Parent got note to delete → ${note.id}');
+        debugPrint('🏠 Parent got note to delete → $note');
       },
       titleErrorText: 'Title is required',
       contentErrorText: 'Content is required',

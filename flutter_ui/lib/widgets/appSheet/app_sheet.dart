@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum SheetSide { left, right }
 
-Future<T?> showSheet<T>({
+Future<T?> appSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   SheetSide side = SheetSide.right,

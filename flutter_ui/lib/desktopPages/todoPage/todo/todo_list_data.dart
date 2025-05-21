@@ -55,7 +55,7 @@ class TodoListData extends StatelessWidget {
             child: appCard(
               height: 50,
               child: InkWell(
-                onTap: () => showSheet(
+                onTap: () => appSheet(
                   side: SheetSide.right,
                   context: context,
                   builder: (context) => TodoSheet.create(
@@ -91,7 +91,7 @@ class TodoListData extends StatelessWidget {
                     onUpdateStatus: onUpdateStatus,
                     onDelete: onDelete,
                     leading: leading,
-                    ontap: () => showSheet(
+                    ontap: () => appSheet(
                       context: context,
                       side: SheetSide.right,
                       builder: (context) => TodoSheet.update(

@@ -49,7 +49,7 @@ class _TablePageState extends State<TablePage> {
                         .map(
                           (todo) => DataRow(
                             onSelectChanged: (selected) {
-                              showSheet(
+                              appSheet(
                                 context: context,
                                 side: SheetSide.right,
                                 builder: (context) => TodoSheet.detail(

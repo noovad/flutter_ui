@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
-import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
 class NoteCard extends StatefulWidget {
-  final Note note;
-  final ValueChanged<Note> onUpdate;
-  final ValueChanged<Note> onDelete;
+  final String noteId;
+  final String noteTitle;
+  final String noteContent;
+  final String? noteCategory;
+  final bool isPinned;
+  final ValueChanged<String> onUpdate;
+  final ValueChanged<String> onDelete;
   final Function()? onTap;
 
   const NoteCard({
     super.key,
+    required this.noteId,
+    required this.noteTitle,
+    required this.noteContent,
     required this.onUpdate,
-    required this.note,
     required this.onDelete,
+    this.isPinned = false,
     this.onTap,
+    this.noteCategory,
   });
 
   @override
@@ -23,15 +30,6 @@ class NoteCard extends StatefulWidget {
 
 class _NoteCardState extends State<NoteCard> {
   bool _isHovered = false;
-
-  void _togglePin() {
-    final Note updatedNote = Note(
-      id: widget.note.id,
-      isPinned: !widget.note.isPinned,
-    );
-
-    widget.onUpdate(updatedNote);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +46,6 @@ class _NoteCardState extends State<NoteCard> {
           child: Padding(
             padding: AppPadding.all12,
             child: Column(
-              spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -56,7 +53,7 @@ class _NoteCardState extends State<NoteCard> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.note.title!,
+                        widget.noteTitle,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -66,61 +63,57 @@ class _NoteCardState extends State<NoteCard> {
                       ),
                     ),
                     Visibility(
-                      visible: !widget.note.isPinned && _isHovered,
+                      visible: !widget.isPinned && _isHovered,
                       child: InkWell(
-                        onTap: () {
-                          _togglePin();
-                        },
+                        onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: Icon(Icons.push_pin, size: 16, color: Colors.grey),
+                        child: const Icon(Icons.push_pin, size: 16, color: Colors.grey),
                       ),
                     ),
                     Visibility(
-                      visible: widget.note.isPinned,
+                      visible: widget.isPinned,
                       child: InkWell(
-                        onTap: () {
-                          _togglePin();
-                        },
+                        onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: Icon(Icons.push_pin, size: 18, color: Colors.red),
+                        child: const Icon(Icons.push_pin, size: 18, color: Colors.red),
                       ),
                     ),
                   ],
                 ),
                 Expanded(
                   child: Text(
-                    widget.note.content!,
+                    widget.noteContent,
                     style: const TextStyle(fontSize: 14),
                   ),
                 ),
-                Visibility(
-                  visible: widget.note.category != null,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.label_outline, size: 14, color: Colors.grey),
-                      AppSpaces.w4,
-                      Text(
-                        widget.note.category ?? '',
-                        style: const TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                      Visibility(
-                        visible: _isHovered,
-                        child: Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              onTap: () => widget.onDelete(widget.note),
-                              child: Icon(
-                                Icons.delete,
-                                size: 14,
-                                color: Colors.grey,
-                              ),
-                            ),
+                Row(
+                  children: [
+                    Visibility(
+                      visible: widget.noteCategory != null,
+                      child: Row(
+                        children: [
+                          const Icon(Icons.label_outline, size: 14, color: Colors.grey),
+                          AppSpaces.w4,
+                          Text(
+                            widget.noteCategory ?? '',
+                            style: const TextStyle(fontSize: 12, color: Colors.grey),
                           ),
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                    Visibility(
+                      visible: _isHovered,
+                      child: InkWell(
+                        onTap: () => widget.onDelete(widget.noteId),
+                        child: const Icon(
+                          Icons.delete,
+                          size: 14,
+                          color: Colors.grey,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

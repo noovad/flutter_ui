@@ -1,3 +1,5 @@
+export '../../widgets/appSheet/app_sheet.dart';
+
 class TodoCardData {
   final String? id;
   final String? title;
@@ -52,6 +54,15 @@ class Note {
     this.category,
     this.isPinned = false,
   });
+
+  Note copyWith({String? title, String? content, bool? isPinned}) {
+    return Note(
+      id: id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      isPinned: isPinned ?? this.isPinned,
+    );
+  }
 }
 
 class DailyActivity {

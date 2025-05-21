@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/widgets/appCard/note_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
@@ -9,7 +8,7 @@ class NoteSection extends StatelessWidget {
   final List<Note> notes;
   final List<String> categories;
   final ValueChanged<Note> onSave;
-  final ValueChanged<Note> onDelete;
+  final ValueChanged<String> onDelete;
   final Function(String) titleOnChanged;
   final Function(String) contentOnChanged;
   final String? titleErrorText;
@@ -44,10 +43,14 @@ class NoteSection extends StatelessWidget {
           }
           final note = notes[index - 1];
           return NoteCard(
-            note: note,
+            noteId: note.id ?? '',
+            noteTitle: note.title ?? '',
+            noteContent: note.content ?? '',
+            noteCategory: note.category,
+            isPinned: note.isPinned,
             onDelete: onDelete,
             onUpdate: (updatedNote) {},
-            onTap: () => showSheet(
+            onTap: () => appSheet(
               side: SheetSide.left,
               context: context,
               builder: (_) => NoteSheet(
@@ -69,7 +72,7 @@ class NoteSection extends StatelessWidget {
       elevation: 4,
       shadowColor: Colors.grey,
       child: InkWell(
-        onTap: () => showSheet(
+        onTap: () => appSheet(
           side: SheetSide.left,
           context: context,
           builder: (_) => NoteSheet(

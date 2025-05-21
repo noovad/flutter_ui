@@ -17,7 +17,7 @@ class TodoPage extends StatelessWidget {
   final ValueChanged<TodoCardData> onSaveTodo;
   final ValueChanged<TodoCardData> onDeleteTodo;
   final ValueChanged<Note> onSaveNote;
-  final ValueChanged<Note> onDeleteNote;
+  final ValueChanged<String> onDeleteNote;
   final ValueChanged<TodoCardData> onUpdateStatus;
   final Function(String) titleOnChanged;
   final Function(String) contentOnChanged;
