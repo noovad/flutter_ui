@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
-class AppDropdown extends StatefulWidget {
-  final List<String> items;
+class DropdownItem<T> {
+  final T id;
   final String label;
-  final String? selected;
+
+  const DropdownItem({required this.id, required this.label});
+}
+
+class AppDropdown<T> extends StatefulWidget {
+  final List<DropdownItem<T>> items;
+  final DropdownItem<T>? selectedItem;
+  final void Function(DropdownItem<T>?)? onChanged;
+  final String label;
   final String hint;
-  final Function(String)? onChanged;
   final bool enable;
   final String? labelUnselected;
 
   const AppDropdown({
     super.key,
-    this.labelUnselected,
-    this.onChanged,
     required this.items,
     required this.label,
-    this.selected,
     this.hint = 'Select...',
     this.enable = true,
+    this.selectedItem,
+    this.labelUnselected,
+    this.onChanged,
   });
 
   @override
-  State<AppDropdown> createState() => _AppDropdownState();
+  State<AppDropdown<T>> createState() => _AppDropdownState<T>();
 }
 
-class _AppDropdownState extends State<AppDropdown> {
-  late TextEditingController controller;
-  String? _currentSelection;
-
+class _AppDropdownState<T> extends State<AppDropdown<T>> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-
-  @override
-  void initState() {
-    super.initState();
-    // Validasi apakah selected ada di items, jika tidak maka null
-    _currentSelection =
-        widget.selected != null && widget.items.contains(widget.selected)
-            ? widget.selected
-            : null;
-
-    controller = TextEditingController(text: _currentSelection ?? '');
-  }
 
   void _removeOverlay() {
     _overlayEntry?.remove();
@@ -52,7 +44,6 @@ class _AppDropdownState extends State<AppDropdown> {
   @override
   void dispose() {
     _removeOverlay();
-    controller.dispose();
     super.dispose();
   }
 
@@ -76,7 +67,7 @@ class _AppDropdownState extends State<AppDropdown> {
             child: CompositedTransformFollower(
               link: _layerLink,
               offset: Offset(0, size.height + 8),
-              child: overlayContent(),
+              child: _buildOverlayContent(),
             ),
           ),
         ],
@@ -84,7 +75,7 @@ class _AppDropdownState extends State<AppDropdown> {
     );
   }
 
-  Material overlayContent() {
+  Material _buildOverlayContent() {
     return Material(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -94,39 +85,39 @@ class _AppDropdownState extends State<AppDropdown> {
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        separatorBuilder: (context, index) => const Divider(
-          height: 1,
-          color: Colors.grey,
-        ),
         itemCount: widget.items.length + 1,
+        separatorBuilder: (_, __) =>
+            const Divider(height: 1, color: Colors.grey),
         itemBuilder: (context, index) {
           if (index == 0) {
             return ListTile(
               dense: true,
-              leading: const Icon(Icons.clear, size: 16),
-              title: widget.labelUnselected != null
-                  ? Text(widget.labelUnselected!)
-                  : const Text('Clear'),
+              trailing: const Icon(Icons.clear, size: 16),
+              title: Text(
+                widget.labelUnselected ?? 'Unselected',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
               onTap: () {
-                controller.clear();
-                _currentSelection = null;
-                widget.onChanged?.call('');
+                widget.onChanged?.call(null);
                 _removeOverlay();
-                setState(() {});
               },
             );
           }
+
           final item = widget.items[index - 1];
           return ListTile(
             dense: true,
-            leading: const Icon(Icons.label_outline, size: 16),
-            title: Text(item),
+            title: Text(
+              item.label,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
-              controller.text = item;
-              _currentSelection = item;
               widget.onChanged?.call(item);
               _removeOverlay();
-              setState(() {});
             },
           );
         },
@@ -136,6 +127,8 @@ class _AppDropdownState extends State<AppDropdown> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedText = widget.selectedItem?.label ?? '';
+
     return Focus(
       onFocusChange: (hasFocus) {
         if (hasFocus && widget.enable) {
@@ -143,20 +136,21 @@ class _AppDropdownState extends State<AppDropdown> {
             _overlayEntry = _createOverlayEntry();
             Overlay.of(context).insert(_overlayEntry!);
           }
-        } else {
-          _removeOverlay();
         }
       },
       child: CompositedTransformTarget(
         link: _layerLink,
         child: AppTextField(
-          controller: controller,
-          label: widget.label,
-          hint: widget.hint,
           readOnly: true,
           enabled: widget.enable,
-          onChanged: (_) {
-            debugPrint('onChanged: $_currentSelection');
+          controller: TextEditingController(text: selectedText),
+          label: widget.label,
+          hint: widget.hint,
+          onTap: () {
+            if (_overlayEntry == null && widget.enable) {
+              _overlayEntry = _createOverlayEntry();
+              Overlay.of(context).insert(_overlayEntry!);
+            }
           },
         ),
       ),

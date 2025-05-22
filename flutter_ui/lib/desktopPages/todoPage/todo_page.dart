@@ -49,25 +49,25 @@ class TodoPage extends StatelessWidget {
       theme: AppTheme.lightTheme(),
       home: Row(
         children: [
-          Expanded(
-            child: Padding(
-              padding: AppPadding.all16,
-              child: TodoTabs(
-                todoCardData: data,
-                todoCategories: todoCategories,
-                todoHistory: todoHistory,
-                onSaveTodo: onSaveTodo,
-                onDeleteTodo: onDeleteTodo,
-                onUpdateStatus: onUpdateStatus,
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: Padding(
+          //     padding: AppPadding.all16,
+          //     child: TodoTabs(
+          //       todoCardData: data,
+          //       todoCategories: todoCategories,
+          //       todoHistory: todoHistory,
+          //       onSaveTodo: onSaveTodo,
+          //       onDeleteTodo: onDeleteTodo,
+          //       onUpdateStatus: onUpdateStatus,
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             width: 800,
             child: Column(
               spacing: AppSizes.dimen16,
               children: [
-                SummarySection(dailyActivities: dailyActivities),
+                // SummarySection(dailyActivities: dailyActivities),
                 Expanded(
                   child: NoteSection(
                     notes: notes,

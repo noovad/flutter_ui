@@ -7,25 +7,29 @@ class AppTextField extends StatelessWidget {
   final bool readOnly;
   final bool enabled;
   final Function(String)? onChanged;
+  final Function()? onTap;
   final bool obscureText;
   final int? minLines;
   final int? maxLines;
   final String? errorText;
   final Widget? child;
+  final String? initialValue;
 
   const AppTextField({
     super.key,
     required this.label,
+    this.controller,
     this.onChanged,
     this.hint = '',
-    this.controller,
     this.enabled = true,
     this.readOnly = false,
+    this.onTap,
     this.obscureText = false,
     this.minLines,
     this.maxLines,
     this.errorText,
     this.child,
+    this.initialValue,
   });
 
   @override
@@ -76,6 +80,7 @@ class AppTextField extends StatelessWidget {
       TextStyle? baseTextStyle, TextStyle errorTextStyle) {
     return TextFormField(
       controller: controller,
+      initialValue: initialValue,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: baseTextStyle,
       readOnly: readOnly,
@@ -83,6 +88,7 @@ class AppTextField extends StatelessWidget {
       maxLines: maxLines,
       enabled: enabled,
       obscureText: obscureText,
+      onTap: onTap,
       decoration: InputDecoration(
         errorText: errorText,
         labelText: label,

@@ -43,17 +43,17 @@ class NoteFormState extends State<NoteForm> {
           errorText: widget.titleErrorText,
         ),
         AppDropdown(
-          items: widget.categories,
+          items: ['work', 'personal', 'other']
+              .map((e) => DropdownItem<String>(id: e, label: e))
+              .toList(),
           label: "Category",
           hint: "Select category",
           // enable: !widget.,
-          selected: 'work',
           onChanged: (value) {
-            debugPrint(value);
+            debugPrint(value.toString());
           },
         ),
         AppTextField(
-          controller: widget.contentController,
           onChanged: widget.contentOnChanged,
           minLines: 5,
           maxLines: 10,
