@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/widgets/appSheet/app_sheet.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/widgets/appCard/todo_card.dart';
+import 'package:flutter_ui/widgets/appCard/task_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_section.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
@@ -86,10 +85,17 @@ class TodoListData extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
-                  child: TodoCard(
-                    data: todoCardData[index],
-                    onUpdateStatus: onUpdateStatus,
-                    onDelete: onDelete,
+                  child: TaskCard(
+                    onUpdateStatus: (test) {
+                      debugPrint("onUpdateStatus");
+                    },
+                    onDelete: (test) {
+                      debugPrint("onUpdateStatus");
+                    },
+                    id: todoCardData[index].id!,
+                    isDone: todoCardData[index].isDone!,
+                    title: todoCardData[index].title!,
+                    time: todoCardData[index].time!,
                     leading: leading,
                     ontap: () => appSheet(
                       context: context,

@@ -44,6 +44,10 @@ abstract class AppTheme {
           shadowColor: Colors.grey,
         ),
       ),
+      // listTileTheme: const ListTileThemeData(
+      //   hoverColor: Colors.blue,
+      //   splashColor: Colors.red,
+      // ),
       tabBarTheme: TabBarTheme(
         labelColor: Colors.black,
         unselectedLabelColor: Colors.black,

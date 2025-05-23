@@ -59,16 +59,19 @@ class _TodoFormState extends State<TodoForm> {
             enabled: !widget.status,
             onChanged: (yow) {},
           ),
-          // AppDropdown(
-          //   items: widget.listCategory,
-          //   label: "Category",
-          //   hint: "Select category",
-          //   enable: !widget.status,
-          //   selected: 'work',
-          //   onChanged: (value) {
-          //     debugPrint(value);
-          //   },
-          // ),
+          AppDropdown(
+            items: [],
+            label: "Category",
+            hint: "Select category",
+            enable: !widget.status,
+            selectedItem: widget.categoryController.text.isNotEmpty
+                ? DropdownItem<String>(
+                    id: widget.categoryController.text,
+                    label: widget.categoryController.text,
+                  )
+                : null,
+            onChanged: (value) {},
+          ),
           AppTimeField(
             controller: widget.timeController,
           ),
