@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
-class TaskCard extends StatefulWidget {
+class AppTaskCard extends StatefulWidget {
   final bool isDone;
   final String title;
   final String? category;
@@ -12,7 +12,7 @@ class TaskCard extends StatefulWidget {
   final Function(bool) onUpdateStatus;
   final Function()? ontap;
 
-  const TaskCard({
+  const AppTaskCard({
     super.key,
     required this.isDone,
     required this.title,
@@ -26,10 +26,10 @@ class TaskCard extends StatefulWidget {
   });
 
   @override
-  State<TaskCard> createState() => _AppCardState();
+  State<AppTaskCard> createState() => _AppCardState();
 }
 
-class _AppCardState extends State<TaskCard> {
+class _AppCardState extends State<AppTaskCard> {
   bool _isHovered = false;
 
   Widget appCard({required Widget child, Color? color, double? height}) {
@@ -60,6 +60,10 @@ class _AppCardState extends State<TaskCard> {
           onTap: widget.ontap,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+              color: Colors.grey,
+              width: 0.25,
+            ),
           ),
           dense: true,
           leading: (widget.leading)
@@ -104,7 +108,7 @@ class _AppCardState extends State<TaskCard> {
                     ),
                   ),
                   Visibility(
-                    visible: widget.time != null,
+                    visible: widget.time != null && widget.time != '',
                     child: Row(
                       children: [
                         Icon(Icons.access_time,

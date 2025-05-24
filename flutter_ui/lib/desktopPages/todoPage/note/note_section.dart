@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/desktopPages/todoPage/type.dart';
-import 'package:flutter_ui/widgets/appCard/note_card.dart';
+import 'package:flutter_ui/widgets/appCard/app_note_card.dart';
 import 'package:flutter_ui/desktopPages/todoPage/note/note_sheet.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
@@ -42,7 +42,7 @@ class NoteSection extends StatelessWidget {
             return createNote(context);
           }
           final note = notes[index - 1];
-          return NoteCard(
+          return AppNoteCard(
             noteId: note.id ?? '',
             noteTitle: note.title ?? '',
             noteContent: note.content ?? '',

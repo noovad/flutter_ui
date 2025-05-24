@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class MonthNav extends StatelessWidget {
+class AppMonthNav extends StatelessWidget {
   final ValueNotifier<DateTime> displayedDate;
 
-  const MonthNav({
+  const AppMonthNav({
     super.key,
     required this.displayedDate,
   });

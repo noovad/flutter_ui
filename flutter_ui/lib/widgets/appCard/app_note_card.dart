@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 
-class NoteCard extends StatefulWidget {
+class AppNoteCard extends StatefulWidget {
   final String noteId;
   final String noteTitle;
   final String noteContent;
@@ -12,7 +12,7 @@ class NoteCard extends StatefulWidget {
   final ValueChanged<String> onDelete;
   final Function()? onTap;
 
-  const NoteCard({
+  const AppNoteCard({
     super.key,
     required this.noteId,
     required this.noteTitle,
@@ -25,10 +25,10 @@ class NoteCard extends StatefulWidget {
   });
 
   @override
-  State<NoteCard> createState() => _NoteCardState();
+  State<AppNoteCard> createState() => _NoteCardState();
 }
 
-class _NoteCardState extends State<NoteCard> {
+class _NoteCardState extends State<AppNoteCard> {
   bool _isHovered = false;
 
   @override
@@ -39,7 +39,12 @@ class _NoteCardState extends State<NoteCard> {
       child: Card(
         elevation: 4,
         shadowColor: Colors.grey,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.grey,
+            width: 0.25,
+          ),
+        ),
         child: InkWell(
           onTap: widget.onTap,
           borderRadius: BorderRadius.circular(8),
@@ -67,7 +72,8 @@ class _NoteCardState extends State<NoteCard> {
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: const Icon(Icons.push_pin, size: 16, color: Colors.grey),
+                        child: const Icon(Icons.push_pin,
+                            size: 16, color: Colors.grey),
                       ),
                     ),
                     Visibility(
@@ -75,7 +81,8 @@ class _NoteCardState extends State<NoteCard> {
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: const Icon(Icons.push_pin, size: 18, color: Colors.red),
+                        child: const Icon(Icons.push_pin,
+                            size: 18, color: Colors.red),
                       ),
                     ),
                   ],
@@ -92,11 +99,13 @@ class _NoteCardState extends State<NoteCard> {
                       visible: widget.noteCategory != null,
                       child: Row(
                         children: [
-                          const Icon(Icons.label_outline, size: 14, color: Colors.grey),
+                          const Icon(Icons.label_outline,
+                              size: 14, color: Colors.grey),
                           AppSpaces.w4,
                           Text(
                             widget.noteCategory ?? '',
-                            style: const TextStyle(fontSize: 12, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.grey),
                           ),
                         ],
                       ),

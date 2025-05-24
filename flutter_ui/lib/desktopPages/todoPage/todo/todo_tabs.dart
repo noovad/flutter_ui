@@ -25,7 +25,8 @@ class TodoTabs extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
+    return 
+    DefaultTabController(
       animationDuration: const Duration(milliseconds: 500),
       length: 4,
       child: Column(
@@ -89,5 +90,6 @@ class TodoTabs extends StatelessWidget {
         ],
       ),
     );
+ 
   }
 }
