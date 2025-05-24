@@ -9,6 +9,7 @@ class AppDateField extends StatefulWidget {
   final String label;
   final String? hint;
   final bool readOnly;
+  final String? errorText;
 
   const AppDateField({
     super.key,
@@ -16,8 +17,9 @@ class AppDateField extends StatefulWidget {
     this.initialDate,
     this.onChanged,
     this.label = 'Date',
-    this.hint = 'dd mmm yyyy',
+    this.hint = '01 Jan 1999',
     this.readOnly = true,
+    this.errorText,
   });
 
   @override
@@ -38,7 +40,7 @@ class _AppDateFieldState extends State<AppDateField> {
   @override
   void initState() {
     super.initState();
-    _selectedDate = widget.initialValue ?? DateTime.now();
+    _selectedDate = widget.initialValue ?? widget.initialDate ?? DateTime.now();
     _textController = TextEditingController(
       text: widget.initialValue != null ? ddMmmYyyy(_selectedDate) : '',
     );
@@ -72,16 +74,16 @@ class _AppDateFieldState extends State<AppDateField> {
               child: CompositedTransformFollower(
                 link: _layerLink,
                 offset: Offset(0, size.height + 8),
-                child: Material(
+                child: Card(
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                   color: Colors.white,
                   child: CalendarDatePicker(
-                    initialDate: widget.initialDate ?? _selectedDate,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
+                    initialDate: _selectedDate,
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2050),
                     onDateChanged: (selectedDate) {
                       setState(() {
                         _selectedDate = selectedDate;
@@ -116,10 +118,7 @@ class _AppDateFieldState extends State<AppDateField> {
         hint: widget.hint,
         readOnly: true,
         onTap: () => _showCalendarOverlay(context),
-        onChanged: (value) {
-          widget.onChanged
-              ?.call(value.isNotEmpty ? DateTime.parse(value) : DateTime.now());
-        },
+        errorText: widget.errorText,
       ),
     );
   }

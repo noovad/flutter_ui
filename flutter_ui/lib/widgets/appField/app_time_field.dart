@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
 class AppTimeField extends StatefulWidget {
-  final TextEditingController controller;
+  final String? initialValue;
   final String? label;
   final String? hintHour;
   final String? hintMinute;
@@ -12,7 +12,7 @@ class AppTimeField extends StatefulWidget {
 
   const AppTimeField({
     super.key,
-    required this.controller,
+    this.initialValue,
     this.label,
     this.hintHour,
     this.hintMinute,
@@ -25,6 +25,7 @@ class AppTimeField extends StatefulWidget {
 }
 
 class _TimeFieldState extends State<AppTimeField> {
+  final controller = TextEditingController();
   final hourController = TextEditingController();
   final minuteController = TextEditingController();
   final focusKeyboardHour = FocusNode();
@@ -38,15 +39,10 @@ class _TimeFieldState extends State<AppTimeField> {
     minuteController.addListener(_updateMainController);
   }
 
-  @override
-  void didUpdateWidget(AppTimeField oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _syncFromController();
-  }
-
   void _syncFromController() {
-    if (widget.controller.text.isNotEmpty) {
-      final parts = widget.controller.text.split(':');
+    if (widget.initialValue != null) {
+      controller.text = widget.initialValue!;
+      final parts = controller.text.split(':');
       if (parts.length == 2) {
         hourController.text = parts[0].padLeft(2, '0');
         minuteController.text = parts[1].padLeft(2, '0');
@@ -57,7 +53,7 @@ class _TimeFieldState extends State<AppTimeField> {
   void _updateMainController() {
     final hour = hourController.text.padLeft(2, '0');
     final minute = minuteController.text.padLeft(2, '0');
-    widget.controller.text = '$hour:$minute';
+    controller.text = '$hour:$minute';
   }
 
   int _parse(String value, int min, int max) {
@@ -86,6 +82,7 @@ class _TimeFieldState extends State<AppTimeField> {
   }
 
   Widget _buildField({
+    required Function(String)? onChanged,
     required TextEditingController controller,
     required FocusNode keyboardFocusNode,
     required String hint,
@@ -126,56 +123,75 @@ class _TimeFieldState extends State<AppTimeField> {
               TextPosition(offset: controller.text.length),
             );
           }
+          if (onChanged != null) {
+            onChanged(value);
+          }
         },
       ),
     );
   }
 
-  Widget _buildTimeFields() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 40,
-          child: _buildField(
-            controller: hourController,
-            keyboardFocusNode: focusKeyboardHour,
-            hint: widget.hintHour ?? "HH",
-            max: 23,
-            onUp: () => _adjust(hourController, 1, 0, 23),
-            onDown: () => _adjust(hourController, -1, 0, 23),
-          ),
-        ),
-        Text(':', style: TextStyle(fontWeight: FontWeight.w900, color: Colors.black)),
-        SizedBox(
-          width: 40,
-          child: _buildField(
-            controller: minuteController,
-            keyboardFocusNode: focusKeyboardMinute,
-            hint: widget.hintMinute ?? "MM",
-            max: 59,
-            onUp: () => _adjust(minuteController, 1, 0, 59),
-            onDown: () => _adjust(minuteController, -1, 0, 59),
-          ),
-        ),
-      ],
+  Widget _buildTimeSegmentField({
+    required TextEditingController controller,
+    required FocusNode focusNode,
+    required String hint,
+    required int maxValue,
+  }) {
+    return SizedBox(
+      width: 40,
+      child: _buildField(
+        controller: controller,
+        keyboardFocusNode: focusNode,
+        hint: hint,
+        max: maxValue,
+        onUp: () => _adjust(controller, 1, 0, maxValue),
+        onDown: () => _adjust(controller, -1, 0, maxValue),
+        onChanged: (value) {
+          if (widget.onChanged != null) {
+            widget.onChanged!(this.controller.text);
+          }
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return AppTextField(
+      controller: controller,
       label: widget.label ?? "Time",
-      hint: "",
-      onChanged: widget.onChanged ?? (value) {},
       errorText: widget.errorText,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Time", style: TextStyle(color: Colors.black, fontSize: 12)),
-          _buildTimeFields(),
+          const Text("Time",
+              style: TextStyle(color: Colors.black, fontSize: 12)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Hour field
+              _buildTimeSegmentField(
+                controller: hourController,
+                focusNode: focusKeyboardHour,
+                hint: widget.hintHour ?? "HH",
+                maxValue: 23,
+              ),
+
+              const Text(':',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w900, color: Colors.black)),
+
+              // Minute field
+              _buildTimeSegmentField(
+                controller: minuteController,
+                focusNode: focusKeyboardMinute,
+                hint: widget.hintMinute ?? "MM",
+                maxValue: 59,
+              ),
+            ],
+          ),
         ],
       ),
     );
