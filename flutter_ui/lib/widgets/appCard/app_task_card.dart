@@ -61,7 +61,7 @@ class _AppCardState extends State<AppTaskCard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
             side: BorderSide(
-              color: Colors.grey,
+              color: Colors.black.withOpacity(0.3),
               width: 0.25,
             ),
           ),

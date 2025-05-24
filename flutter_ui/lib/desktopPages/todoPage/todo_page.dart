@@ -60,27 +60,27 @@ class TodoPage extends StatelessWidget {
             ),
           ),
         ),
-        // SizedBox(
-        //   width: 800,
-        //   child: Column(
-        //     spacing: AppSizes.dimen16,
-        //     children: [
-        //       SummarySection(dailyActivities: dailyActivities),
-        //       Expanded(
-        //         child: NoteSection(
-        //           notes: notes,
-        //           categories: noteCategories,
-        //           onSave: onSaveNote,
-        //           onDelete: onDeleteNote,
-        //           titleErrorText: titleErrorText,
-        //           contentErrorText: contentErrorText,
-        //           titleOnChanged: titleOnChanged,
-        //           contentOnChanged: contentOnChanged,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
+        SizedBox(
+          width: 800,
+          child: Column(
+            spacing: AppSizes.dimen16,
+            children: [
+              SummarySection(dailyActivities: dailyActivities),
+              Expanded(
+                child: NoteSection(
+                  notes: notes,
+                  categories: noteCategories,
+                  onSave: onSaveNote,
+                  onDelete: onDeleteNote,
+                  titleErrorText: titleErrorText,
+                  contentErrorText: contentErrorText,
+                  titleOnChanged: titleOnChanged,
+                  contentOnChanged: contentOnChanged,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

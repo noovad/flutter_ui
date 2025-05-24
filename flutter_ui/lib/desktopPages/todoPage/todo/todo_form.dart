@@ -75,9 +75,9 @@ class _TodoFormState extends State<TodoForm> {
           AppTimeField(
             controller: widget.timeController,
           ),
-          AppDateField(
-            controller: widget.dateController,
-          ),
+          // AppDateField(
+          //   controller: widget.dateController,
+          // ),
           AppTextField(
             label: "Notes",
             hint: "Enter notes",

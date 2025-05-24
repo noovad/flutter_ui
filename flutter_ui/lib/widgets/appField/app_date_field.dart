@@ -3,23 +3,32 @@ import 'package:flutter_ui/shared/utils.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
 class AppDateField extends StatefulWidget {
-  final TextEditingController controller;
-  final Function(String)? onChanged;
+  final DateTime? initialValue;
+  final DateTime? initialDate;
+  final Function(DateTime)? onChanged;
+  final String label;
+  final String? hint;
+  final bool readOnly;
 
   const AppDateField({
     super.key,
-    required this.controller,
+    this.initialValue,
+    this.initialDate,
     this.onChanged,
+    this.label = 'Date',
+    this.hint = 'dd mmm yyyy',
+    this.readOnly = true,
   });
 
   @override
-  State<AppDateField> createState() => _CalendarFieldState();
+  State<AppDateField> createState() => _AppDateFieldState();
 }
 
-class _CalendarFieldState extends State<AppDateField> {
+class _AppDateFieldState extends State<AppDateField> {
   final LayerLink _layerLink = LayerLink();
   OverlayEntry? _overlayEntry;
-  DateTime? _prevDate;
+  late DateTime _selectedDate;
+  late TextEditingController _textController;
 
   void _removeOverlay() {
     _overlayEntry?.remove();
@@ -27,86 +36,90 @@ class _CalendarFieldState extends State<AppDateField> {
   }
 
   @override
-  void dispose() {
-    _removeOverlay();
-    super.dispose();
-  }
-
-  OverlayEntry _createOverlayEntry() {
-    RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final size = renderBox.size;
-
-    return OverlayEntry(
-      builder: (context) => Stack(
-        children: [
-          Positioned.fill(
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () {
-                _removeOverlay();
-              },
-            ),
-          ),
-          Positioned(
-            width: size.width,
-            child: CompositedTransformFollower(
-              link: _layerLink,
-              offset: Offset(0, size.height + 8),
-              child: overlayContent(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Material overlayContent() {
-    return Material(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      color: Colors.white,
-      child: CalendarDatePicker(
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2024),
-        lastDate: DateTime(DateTime.now().year + 1),
-        onDateChanged: (selectedDate) {
-          final isDayOrMonthChanged = _prevDate != null && (_prevDate!.day != selectedDate.day || _prevDate!.month != selectedDate.month);
-
-          if (isDayOrMonthChanged) {
-            _removeOverlay();
-          }
-          widget.controller.text = ddMmmYyyy(selectedDate);
-          widget.controller.selection = TextSelection.fromPosition(
-            TextPosition(offset: widget.controller.text.length),
-          );
-
-          _prevDate = selectedDate;
-        },
-      ),
+  void initState() {
+    super.initState();
+    _selectedDate = widget.initialValue ?? DateTime.now();
+    _textController = TextEditingController(
+      text: widget.initialValue != null ? ddMmmYyyy(_selectedDate) : '',
     );
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Focus(
-      onFocusChange: (hasFocus) {
-        if (hasFocus) {
-          if (_overlayEntry == null) {
-            _overlayEntry = _createOverlayEntry();
-            Overlay.of(context).insert(_overlayEntry!);
-          }
-        }
-      },
-      child: CompositedTransformTarget(
-        link: _layerLink,
-        child: AppTextField(
-          label: 'Date',
-          hint: 'dd mmm yyyy',
-          readOnly: true,
-          onChanged: widget.onChanged ?? (value) {},
+  void dispose() {
+    _removeOverlay();
+    _textController.dispose();
+    super.dispose();
+  }
+
+  void _showCalendarOverlay(BuildContext context) {
+    if (_overlayEntry == null) {
+      RenderBox renderBox = context.findRenderObject() as RenderBox;
+      final size = renderBox.size;
+
+      _overlayEntry = OverlayEntry(
+        builder: (context) => Stack(
+          children: [
+            Positioned.fill(
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  _removeOverlay();
+                },
+              ),
+            ),
+            Positioned(
+              width: size.width,
+              child: CompositedTransformFollower(
+                link: _layerLink,
+                offset: Offset(0, size.height + 8),
+                child: Material(
+                  elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  color: Colors.white,
+                  child: CalendarDatePicker(
+                    initialDate: widget.initialDate ?? _selectedDate,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100),
+                    onDateChanged: (selectedDate) {
+                      setState(() {
+                        _selectedDate = selectedDate;
+                        _textController.text = ddMmmYyyy(selectedDate);
+                      });
+
+                      if (widget.onChanged != null) {
+                        widget.onChanged!(selectedDate);
+                      }
+
+                      _removeOverlay();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+      );
+
+      Overlay.of(context).insert(_overlayEntry!);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CompositedTransformTarget(
+      link: _layerLink,
+      child: AppTextField(
+        controller: _textController,
+        label: widget.label,
+        hint: widget.hint,
+        readOnly: true,
+        onTap: () => _showCalendarOverlay(context),
+        onChanged: (value) {
+          widget.onChanged
+              ?.call(value.isNotEmpty ? DateTime.parse(value) : DateTime.now());
+        },
       ),
     );
   }

@@ -41,7 +41,7 @@ class _NoteCardState extends State<AppNoteCard> {
         shadowColor: Colors.grey,
         shape: RoundedRectangleBorder(
           side: BorderSide(
-            color: Colors.grey,
+            color: Colors.black.withOpacity(0.3),
             width: 0.25,
           ),
         ),

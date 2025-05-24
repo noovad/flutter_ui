@@ -33,7 +33,7 @@ class AppTabs extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                     side: BorderSide(
-                      color: Colors.grey,
+                      color: Colors.black.withOpacity(0.3),
                       width: 0.25,
                     ),
                   ),
@@ -41,8 +41,10 @@ class AppTabs extends StatelessWidget {
                     dividerHeight: 0,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Colors.black,
                     ),
+                    unselectedLabelColor: Colors.black,
+                    labelColor: Colors.white,
                     padding: AppPadding.all8,
                     tabs: tabBar,
                     indicatorSize: TabBarIndicatorSize.tab,
