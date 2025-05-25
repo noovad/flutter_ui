@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 
-class Popover extends StatefulWidget {
-  final Widget child;
+class AppPopOver extends StatefulWidget {
+  final Widget trigger;
   final Widget content;
   final Duration showDelay;
   final EdgeInsets padding;
-  final double elevation;
 
-  const Popover({
+  const AppPopOver({
     super.key,
-    required this.child,
+    required this.trigger,
     required this.content,
     this.showDelay = const Duration(milliseconds: 100),
     this.padding = const EdgeInsets.all(8),
-    this.elevation = 6,
   });
 
   @override
-  State<Popover> createState() => _PopoverState();
+  State<AppPopOver> createState() => _AppPopOverState();
 }
 
-class _PopoverState extends State<Popover> {
+class _AppPopOverState extends State<AppPopOver> {
   final MenuController _controller = MenuController();
   bool _hovering = false;
 
-  void _openPopover() {
+  void _openAppPopOver() {
     Future.delayed(widget.showDelay, () {
       if (mounted && _hovering) _controller.open();
     });
   }
 
-  void _closePopover() {
+  void _closeAppPopOver() {
     Future.delayed(const Duration(milliseconds: 100), () {
       if (mounted && !_hovering) _controller.close();
     });
@@ -40,7 +39,7 @@ class _PopoverState extends State<Popover> {
   Widget build(BuildContext context) {
     return MenuAnchor(
       controller: _controller,
-      alignmentOffset: Offset.zero,
+      alignmentOffset: Offset(0, 8),
       menuChildren: [
         MouseRegion(
           onEnter: (_) {
@@ -48,13 +47,18 @@ class _PopoverState extends State<Popover> {
           },
           onExit: (_) {
             _hovering = false;
-            _closePopover();
+            _closeAppPopOver();
           },
           child: Material(
-            elevation: widget.elevation,
-            borderRadius: BorderRadius.circular(8),
+            elevation: AppSizes.dimen4,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Colors.black.withOpacity(0.3),
+                width: 0.25,
+              ),
+              borderRadius: BorderRadius.circular(8),
+            ),
             clipBehavior: Clip.antiAlias,
-            color: Theme.of(context).colorScheme.surface,
             child: Padding(
               padding: widget.padding,
               child: widget.content,
@@ -66,13 +70,13 @@ class _PopoverState extends State<Popover> {
         return MouseRegion(
           onEnter: (_) {
             _hovering = true;
-            _openPopover();
+            _openAppPopOver();
           },
           onExit: (_) {
             _hovering = false;
-            _closePopover();
+            _closeAppPopOver();
           },
-          child: widget.child,
+          child: widget.trigger,
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/themes/app_theme_data.dart';
-import 'package:flutter_ui/widgets/app_tabs.dart/app_tabs.dart';
+import 'package:flutter_ui/widgets/appTabs/app_tabs.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 final tabs = WidgetbookComponent(

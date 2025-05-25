@@ -5,7 +5,6 @@ import 'package:flutter_ui/desktopPages/todoPage/type.dart';
 import 'package:flutter_ui/desktopPages/todoPage/todo/todo_tabs.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
-import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 
 class TodoPage extends StatelessWidget {
   final TodoData data;

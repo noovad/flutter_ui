@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 import 'package:flutter_ui/shared/sizes/app_sizes.dart';
-import 'package:flutter_ui/widgets/dropdown/app_dropdown.dart';
+import 'package:flutter_ui/widgets/appDropdown/app_dropdown.dart';
 
 class NoteForm extends StatefulWidget {
   final TextEditingController titleController;
