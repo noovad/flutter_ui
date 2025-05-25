@@ -9,6 +9,7 @@ class AppTimeField extends StatefulWidget {
   final String? hintMinute;
   final Function(String)? onChanged;
   final String? errorText;
+  final bool enabled;
 
   const AppTimeField({
     super.key,
@@ -18,6 +19,7 @@ class AppTimeField extends StatefulWidget {
     this.hintMinute,
     this.onChanged,
     this.errorText,
+    this.enabled = true,
   });
 
   @override
@@ -105,6 +107,7 @@ class _TimeFieldState extends State<AppTimeField> {
         controller: controller,
         textAlign: TextAlign.center,
         maxLength: 2,
+        enabled: widget.enabled,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         style: const TextStyle(
@@ -161,6 +164,7 @@ class _TimeFieldState extends State<AppTimeField> {
       controller: controller,
       label: widget.label ?? "Time",
       errorText: widget.errorText,
+      enabled: widget.enabled,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

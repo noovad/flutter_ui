@@ -14,7 +14,7 @@ class AppDropdown<T> extends StatefulWidget {
   final void Function(DropdownItem<T>?)? onChanged;
   final String label;
   final String hint;
-  final bool enable;
+  final bool enabled;
   final String? labelUnselected;
 
   const AppDropdown({
@@ -22,7 +22,7 @@ class AppDropdown<T> extends StatefulWidget {
     required this.items,
     required this.label,
     this.hint = 'Select...',
-    this.enable = true,
+    this.enabled = true,
     this.selectedItem,
     this.labelUnselected,
     this.onChanged,
@@ -131,7 +131,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
 
     return Focus(
       onFocusChange: (hasFocus) {
-        if (hasFocus && widget.enable) {
+        if (hasFocus && widget.enabled) {
           if (_overlayEntry == null) {
             _overlayEntry = _createOverlayEntry();
             Overlay.of(context).insert(_overlayEntry!);
@@ -142,12 +142,12 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
         link: _layerLink,
         child: AppTextField(
           readOnly: true,
-          enabled: widget.enable,
+          enabled: widget.enabled,
           controller: TextEditingController(text: selectedText),
           label: widget.label,
           hint: widget.hint,
           onTap: () {
-            if (_overlayEntry == null && widget.enable) {
+            if (_overlayEntry == null && widget.enabled) {
               _overlayEntry = _createOverlayEntry();
               Overlay.of(context).insert(_overlayEntry!);
             }

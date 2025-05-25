@@ -29,6 +29,10 @@ class AppDailySummaryCard extends StatelessWidget {
       shadowColor: isSunday ? Colors.red : Colors.grey,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
+        side: BorderSide(
+          color: Colors.black.withOpacity(0.3),
+          width: 0.25,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -83,7 +87,7 @@ class AppDailySummaryCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
-                    amount.toString(),
+                    amount == 0 ? '' : amount.toString(),
                     style: AppTextStyle.bodySmall,
                   ),
                 ),

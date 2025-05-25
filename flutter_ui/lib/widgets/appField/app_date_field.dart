@@ -8,8 +8,8 @@ class AppDateField extends StatefulWidget {
   final Function(DateTime)? onChanged;
   final String label;
   final String? hint;
-  final bool readOnly;
   final String? errorText;
+  final bool enabled;
 
   const AppDateField({
     super.key,
@@ -18,7 +18,7 @@ class AppDateField extends StatefulWidget {
     this.onChanged,
     this.label = 'Date',
     this.hint = '01 Jan 1999',
-    this.readOnly = true,
+    this.enabled = true,
     this.errorText,
   });
 
@@ -114,6 +114,7 @@ class _AppDateFieldState extends State<AppDateField> {
       link: _layerLink,
       child: AppTextField(
         controller: _textController,
+        enabled: widget.enabled,
         label: widget.label,
         hint: widget.hint,
         readOnly: true,

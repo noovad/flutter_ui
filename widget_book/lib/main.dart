@@ -16,7 +16,7 @@ class WidgetbookApp extends StatelessWidget {
       directories: [
         WidgetbookComponent(
           name: 'Desktop Pages',
-          useCases: desktopPages,
+          useCases: [],
         ),
         WidgetbookCategory(
           name: 'Widgets',

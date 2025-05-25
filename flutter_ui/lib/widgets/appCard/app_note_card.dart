@@ -40,6 +40,7 @@ class _NoteCardState extends State<AppNoteCard> {
         elevation: 4,
         shadowColor: Colors.grey,
         shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
           side: BorderSide(
             color: Colors.black.withOpacity(0.3),
             width: 0.25,
@@ -73,7 +74,7 @@ class _NoteCardState extends State<AppNoteCard> {
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
                         child: const Icon(Icons.push_pin,
-                            size: 16, color: Colors.grey),
+                            size: 18, color: Colors.red),
                       ),
                     ),
                     Visibility(
@@ -96,7 +97,7 @@ class _NoteCardState extends State<AppNoteCard> {
                 Row(
                   children: [
                     Visibility(
-                      visible: widget.noteCategory != null,
+                      visible: widget.noteCategory != '',
                       child: Row(
                         children: [
                           const Icon(Icons.label_outline,

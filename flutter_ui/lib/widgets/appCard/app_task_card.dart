@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
 class AppTaskCard extends StatefulWidget {
+  final String id;
   final bool isDone;
   final String title;
   final String? category;
   final String? time;
-  final String id;
+  final String? date;
   final bool leading;
-  final Function(String) onDelete;
-  final Function(bool) onUpdateStatus;
+  final Function() onDelete;
+  final Function() onUpdateStatus;
   final Function()? ontap;
 
   const AppTaskCard({
@@ -21,6 +22,7 @@ class AppTaskCard extends StatefulWidget {
     required this.onDelete,
     required this.onUpdateStatus,
     required this.time,
+    this.date,
     this.category,
     this.leading = true,
   });
@@ -69,12 +71,12 @@ class _AppCardState extends State<AppTaskCard> {
           leading: (widget.leading)
               ? (widget.isDone == true)
                   ? IconButton(
-                      onPressed: () => widget.onUpdateStatus(false),
+                      onPressed: () => widget.onUpdateStatus(),
                       icon: const Icon(Icons.check_circle_outline,
                           color: Colors.red),
                     )
                   : IconButton(
-                      onPressed: () => widget.onUpdateStatus(true),
+                      onPressed: () => widget.onUpdateStatus(),
                       icon:
                           const Icon(Icons.circle_outlined, color: Colors.red),
                     )
@@ -123,14 +125,30 @@ class _AppCardState extends State<AppTaskCard> {
                       ],
                     ),
                   ),
+                  Visibility(
+                    visible: widget.date != null && widget.date != '',
+                    child: Row(
+                      children: [
+                        Icon(Icons.calendar_today_outlined,
+                            size: 16, color: Colors.grey[600]),
+                        AppSpaces.w4,
+                        Text(
+                          widget.date ?? '',
+                          style: TextStyle(
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
           ),
           trailing: _isHovered && (widget.isDone == false)
               ? IconButton(
-                  onPressed: () => widget.onDelete(widget.id),
-                  icon: const Icon(Icons.delete),
+                  onPressed: () => widget.onDelete(),
+                  icon: const Icon(Icons.delete_outline),
                 )
               : null,
         ),
