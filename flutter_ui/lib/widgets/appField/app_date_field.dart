@@ -9,7 +9,8 @@ class AppDateField extends StatefulWidget {
   final String label;
   final String? hint;
   final String? errorText;
-  final bool enabled;
+  final bool? isRequired;
+  final bool? enabled;
 
   const AppDateField({
     super.key,
@@ -18,8 +19,9 @@ class AppDateField extends StatefulWidget {
     this.onChanged,
     this.label = 'Date',
     this.hint = '01 Jan 1999',
-    this.enabled = true,
     this.errorText,
+    this.isRequired,
+    this.enabled,
   });
 
   @override
@@ -85,6 +87,11 @@ class _AppDateFieldState extends State<AppDateField> {
                     firstDate: DateTime(2010),
                     lastDate: DateTime(2050),
                     onDateChanged: (selectedDate) {
+                      if (_selectedDate.month != selectedDate.month ||
+                          _selectedDate.day != selectedDate.day) {
+                        _removeOverlay();
+                      }
+
                       setState(() {
                         _selectedDate = selectedDate;
                         _textController.text = ddMmmYyyy(selectedDate);
@@ -93,8 +100,6 @@ class _AppDateFieldState extends State<AppDateField> {
                       if (widget.onChanged != null) {
                         widget.onChanged!(selectedDate);
                       }
-
-                      _removeOverlay();
                     },
                   ),
                 ),
@@ -120,6 +125,7 @@ class _AppDateFieldState extends State<AppDateField> {
         readOnly: true,
         onTap: () => _showCalendarOverlay(context),
         errorText: widget.errorText,
+        isRequired: widget.isRequired,
       ),
     );
   }

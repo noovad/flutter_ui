@@ -5,7 +5,7 @@ class AppTextField extends StatelessWidget {
   final String label;
   final String? hint;
   final bool readOnly;
-  final bool enabled;
+  final bool? enabled;
   final Function(String)? onChanged;
   final Function()? onTap;
   final bool obscureText;
@@ -14,6 +14,7 @@ class AppTextField extends StatelessWidget {
   final String? errorText;
   final Widget? child;
   final String? initialValue;
+  final bool? isRequired;
 
   const AppTextField({
     super.key,
@@ -30,6 +31,7 @@ class AppTextField extends StatelessWidget {
     this.errorText,
     this.child,
     this.initialValue,
+    this.isRequired = false,
   });
 
   @override
@@ -91,7 +93,16 @@ class AppTextField extends StatelessWidget {
       onTap: onTap,
       decoration: InputDecoration(
         errorText: errorText,
-        labelText: label,
+        label: Row(children: [
+          Text(label),
+          Visibility(
+            visible: isRequired!,
+            child: Text(
+              ' *',
+              style: TextStyle(color: Colors.red),
+            ),
+          )
+        ]),
         hintText: hint,
         hintStyle: baseTextStyle?.copyWith(
           color: Colors.grey,

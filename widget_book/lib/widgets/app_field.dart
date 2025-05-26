@@ -15,16 +15,19 @@ final date = WidgetbookComponent(
       builder: (context) => MaterialApp(
         theme: AppTheme.lightTheme(),
         home: Center(
-          child: AppTextField(
-            onChanged: (value) {
-              print(value);
-            },
-            label: "Text Field",
-            hint: "Enter text",
-            initialValue: "Initial text",
-            errorText: "This is an error",
-            readOnly: false,
-            enabled: true,
+          child: SizedBox(
+            width: 300,
+            child: AppTextField(
+              onChanged: (value) {
+                print(value);
+              },
+              label: "Text Field",
+              hint: "Enter text",
+              initialValue: "Initial text",
+              errorText: "This is an error",
+              readOnly: false,
+              enabled: true,
+            ),
           ),
         ),
       ),
@@ -34,11 +37,14 @@ final date = WidgetbookComponent(
       builder: (context) => MaterialApp(
         theme: AppTheme.lightTheme(),
         home: Center(
-          child: AppDateField(
-            onChanged: (value) {
-              print(value);
-            },
-            initialValue: DateTime.now().add(const Duration(days: 5)),
+          child: SizedBox(
+            width: 300,
+            child: AppDateField(
+              onChanged: (value) {
+                print(value);
+              },
+              initialValue: DateTime.now().add(const Duration(days: 5)),
+            ),
           ),
         ),
       ),
@@ -48,15 +54,18 @@ final date = WidgetbookComponent(
       builder: (context) => MaterialApp(
         theme: AppTheme.lightTheme(),
         home: Center(
-          child: AppTimeField(
-            onChanged: (value) {
-              print(value);
-            },
-            label: "Time",
-            hintHour: "HH",
-            hintMinute: "MM",
-            initialValue: "12:30",
-            errorText: "Invalid time format",
+          child: SizedBox(
+            width: 300,
+            child: AppTimeField(
+              onChanged: (value) {
+                print(value);
+              },
+              label: "Time",
+              hintHour: "HH",
+              hintMinute: "MM",
+              initialValue: "12:30",
+              errorText: "Invalid time format",
+            ),
           ),
         ),
       ),

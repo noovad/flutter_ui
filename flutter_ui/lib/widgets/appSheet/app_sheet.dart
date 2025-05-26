@@ -30,18 +30,7 @@ Future<T?> appSheet<T>({
               width: width ?? MediaQuery.of(context).size.width * 0.4,
               height: double.infinity,
               color: parentTheme.canvasColor,
-              child: Column(
-                children: [
-                  Align(
-                    alignment: isLeft ? Alignment.centerRight : Alignment.centerLeft,
-                    child: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ),
-                  Expanded(child: Builder(builder: builder)),
-                ],
-              ),
+              child: Expanded(child: Builder(builder: builder)),
             ),
           ),
         ),
