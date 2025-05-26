@@ -20,7 +20,7 @@ class AppDateField extends StatefulWidget {
     this.label = 'Date',
     this.hint = '01 Jan 1999',
     this.errorText,
-    this.isRequired,
+    this.isRequired = false,
     this.enabled,
   });
 
