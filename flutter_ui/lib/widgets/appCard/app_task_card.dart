@@ -122,6 +122,7 @@ class _AppCardState extends State<AppTaskCard> {
                             color: Colors.grey[700],
                           ),
                         ),
+                        AppSpaces.w16,
                       ],
                     ),
                   ),

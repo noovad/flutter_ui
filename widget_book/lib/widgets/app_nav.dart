@@ -1,4 +1,3 @@
-// ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/themes/app_theme_data.dart';
@@ -16,7 +15,6 @@ final navigation = WidgetbookComponent(
             child: SizedBox(
           width: 300,
           child: AppDateNav(
-            // initialDate: DateTime(2011, 4),
             onChange: (date) => debugPrint('Selected date: $date'),
           ),
         )),

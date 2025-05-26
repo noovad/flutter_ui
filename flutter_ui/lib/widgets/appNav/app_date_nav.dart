@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppDateNav extends StatefulWidget {
-  final DateTime? initialDate;
   final Function(DateTime)? onChange;
+  final MainAxisAlignment mainAxisAlignment;
 
   const AppDateNav({
     super.key,
-    this.initialDate,
     this.onChange,
+    this.mainAxisAlignment = MainAxisAlignment.end,
   });
 
   @override
@@ -22,7 +22,7 @@ class _AppDateNavState extends State<AppDateNav> {
   void initState() {
     super.initState();
     displayedDate =
-        ValueNotifier<DateTime>(widget.initialDate ?? DateTime.now());
+        ValueNotifier<DateTime>(DateTime.now());
 
     if (widget.onChange != null) {
       widget.onChange!(displayedDate.value);
@@ -48,6 +48,7 @@ class _AppDateNavState extends State<AppDateNav> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: widget.mainAxisAlignment,
       children: [
         IconButton(
           onPressed: () => _changeMonth(-1),
