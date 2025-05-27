@@ -4,6 +4,7 @@ import 'package:widget_book/widgets/app_nav.dart';
 import 'package:widget_book/widgets/app_pop_over.dart';
 import 'package:widget_book/widgets/app_shimmer.dart';
 import 'package:widget_book/widgets/app_tabs.dart';
+import 'package:widget_book/widgets/app_toast.dart';
 
 final desktopPages = [];
-final widgets = [tabs, date, popOver, navigation, shimmer, card];
+final widgets = [tabs, date, popOver, navigation, shimmer, card, toast];
