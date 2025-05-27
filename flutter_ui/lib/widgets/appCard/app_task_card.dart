@@ -97,7 +97,7 @@ class _AppCardState extends State<AppTaskCard> {
               Row(
                 children: [
                   Visibility(
-                    visible: widget.category != null,
+                    visible: widget.category != '',
                     child: Row(
                       children: [
                         Icon(Icons.label_outline,
