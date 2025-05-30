@@ -55,10 +55,10 @@ final card = WidgetbookComponent(
                 noteContent: 'This is a dummy note content.',
                 noteId: 'dummy_id',
                 noteTitle: 'Dummy Note',
-                onUpdate: (String value) {
+                onUpdate: (value) {
                   print('Update called with value: $value');
                 },
-                onDelete: (String value) {
+                onDelete: (value) {
                   print('Delete called with value: $value');
                 },
               ),
