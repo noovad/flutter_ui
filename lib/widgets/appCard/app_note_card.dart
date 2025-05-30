@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/sizes/app_padding.dart';
+import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 
 class AppNoteCard extends StatefulWidget {
   final String noteId;
@@ -35,16 +36,18 @@ class _NoteCardState extends State<AppNoteCard> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: Card(
         elevation: 4,
-        shadowColor: Colors.grey,
+        shadowColor: colorScheme.onSurface.withOpacity(0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(
-            color: Colors.black.withOpacity(0.3),
+            color: colorScheme.onSurface.withOpacity(0.3),
             width: 0.25,
           ),
         ),
@@ -62,21 +65,27 @@ class _NoteCardState extends State<AppNoteCard> {
                     Expanded(
                       child: Text(
                         widget.noteTitle,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
+                          color: colorScheme.onBackground,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Visibility(
-                      visible: !widget.isPinned && _isHovered && widget.showIsPinned,
+                      visible:
+                          !widget.isPinned && _isHovered && widget.showIsPinned,
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: const Icon(Icons.push_pin_outlined,
-                            size: 18, color: Colors.red),
+                        child: Icon(
+                          Icons.push_pin_outlined,
+                          size: 18,
+                          color: AppTheme
+                              .bloodRed, // warna custom blood red tetap dipakai
+                        ),
                       ),
                     ),
                     Visibility(
@@ -84,8 +93,11 @@ class _NoteCardState extends State<AppNoteCard> {
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: const Icon(Icons.push_pin,
-                            size: 18, color: Colors.red),
+                        child: Icon(
+                          Icons.push_pin,
+                          size: 18,
+                          color: AppTheme.bloodRed,
+                        ),
                       ),
                     ),
                   ],
@@ -93,7 +105,10 @@ class _NoteCardState extends State<AppNoteCard> {
                 Expanded(
                   child: Text(
                     widget.noteContent,
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: colorScheme.onBackground,
+                    ),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -102,17 +117,21 @@ class _NoteCardState extends State<AppNoteCard> {
                   children: [
                     Expanded(
                       child: Visibility(
-                        visible: widget.noteCategory != '',
+                        visible: widget.noteCategory != null &&
+                            widget.noteCategory != '',
                         child: Row(
                           children: [
-                            const Icon(Icons.label_outline,
-                                size: 14, color: Colors.grey),
+                            Icon(Icons.label_outline,
+                                size: 14,
+                                color: colorScheme.onSurface.withOpacity(0.6)),
                             AppSpaces.w4,
                             Expanded(
                               child: Text(
                                 widget.noteCategory ?? '',
-                                style: const TextStyle(
-                                    fontSize: 12, color: Colors.grey),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color:
+                                        colorScheme.onSurface.withOpacity(0.6)),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -121,15 +140,14 @@ class _NoteCardState extends State<AppNoteCard> {
                         ),
                       ),
                     ),
-                    // const Spacer(),
                     Visibility(
                       visible: _isHovered,
                       child: InkWell(
                         onTap: () => widget.onDelete(widget.noteId),
-                        child: const Icon(
+                        child: Icon(
                           Icons.delete,
                           size: 14,
-                          color: Colors.grey,
+                          color: colorScheme.onSurface.withOpacity(0.6),
                         ),
                       ),
                     ),

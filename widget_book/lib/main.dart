@@ -1,51 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:widget_book/pages.dart';
+import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 import 'package:widgetbook/widgetbook.dart';
+import 'package:widgetbook_annotation/widgetbook_annotation.dart';
+
+import 'main.directories.g.dart';
 
 void main() {
   runApp(const WidgetbookApp());
 }
 
+@App()
 class WidgetbookApp extends StatelessWidget {
   const WidgetbookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      initialRoute: '?path=desktop-pages/todo-page',
-      directories: [
-        WidgetbookComponent(
-          name: 'Desktop Pages',
-          useCases: [],
-        ),
-        WidgetbookCategory(
-          name: 'Widgets',
-          children: widgets,
-        ),
-      ],
-      addons: [
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(
-              name: 'Light',
-              data: ThemeData.light().copyWith(
-                scaffoldBackgroundColor: Colors.white,
-              ),
-            ),
-            WidgetbookTheme(
-              name: 'Dark',
-              data: ThemeData.dark(),
-            ),
-          ],
-        ),
-        DeviceFrameAddon(
-          devices: [
-            Devices.linux.laptop,
-            Devices.ios.iPhoneSE,
-            Devices.ios.iPhone13,
-          ],
-        ),
-      ],
+      initialRoute: '?path=widget/appshimmer/shimmer',
+      themeMode: ThemeMode.light,
+      lightTheme: AppTheme.lightTheme(),
+      directories: directories,
     );
   }
 }

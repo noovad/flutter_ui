@@ -13,8 +13,7 @@ dependencies:
   widgetbook: ^3.11.0
   storybook_flutter: ^0.14.1
   flutter_ui:
-    path: ../flutter_ui
-  formz: ^0.8.0
+    path: ../
 
 dev_dependencies:
   flutter_test:
