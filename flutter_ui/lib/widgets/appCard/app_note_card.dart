@@ -11,6 +11,7 @@ class AppNoteCard extends StatefulWidget {
   final ValueChanged onUpdate;
   final ValueChanged onDelete;
   final Function()? onTap;
+  final bool showIsPinned;
 
   const AppNoteCard({
     super.key,
@@ -19,6 +20,7 @@ class AppNoteCard extends StatefulWidget {
     required this.noteContent,
     required this.onUpdate,
     required this.onDelete,
+    this.showIsPinned = false,
     this.isPinned = false,
     this.onTap,
     this.noteCategory,
@@ -69,7 +71,7 @@ class _NoteCardState extends State<AppNoteCard> {
                       ),
                     ),
                     Visibility(
-                      visible: !widget.isPinned && _isHovered,
+                      visible: !widget.isPinned && _isHovered && widget.showIsPinned,
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),

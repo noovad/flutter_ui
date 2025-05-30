@@ -10,6 +10,7 @@ class AppDailySummaryCard extends StatelessWidget {
   final bool hasCardio;
   final bool isSunday;
   final bool calorieControlled;
+  final bool isToday;
 
   const AppDailySummaryCard({
     super.key,
@@ -20,6 +21,7 @@ class AppDailySummaryCard extends StatelessWidget {
     required this.hasCardio,
     required this.isSunday,
     required this.calorieControlled,
+    required this.isToday,
   });
 
   @override
@@ -30,8 +32,8 @@ class AppDailySummaryCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: Colors.black.withOpacity(0.3),
-          width: 0.25,
+          color: isToday ? Colors.red : Colors.black.withOpacity(0.3),
+          width: isToday ? 1 : 0.25,
         ),
       ),
       child: Padding(
@@ -45,7 +47,7 @@ class AppDailySummaryCard extends StatelessWidget {
                 Tooltip(
                   message: 'Sholat Count',
                   child: Text(
-                    sholatCount.toString(),
+                    sholatCount != '0' ? sholatCount.toString() : '',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
