@@ -8,8 +8,8 @@ class AppNoteCard extends StatefulWidget {
   final String noteContent;
   final String? noteCategory;
   final bool isPinned;
-  final ValueChanged<String> onUpdate;
-  final ValueChanged<String> onDelete;
+  final ValueChanged onUpdate;
+  final ValueChanged onDelete;
   final Function()? onTap;
 
   const AppNoteCard({
@@ -73,7 +73,7 @@ class _NoteCardState extends State<AppNoteCard> {
                       child: InkWell(
                         onTap: () => widget.onUpdate(widget.noteId),
                         borderRadius: BorderRadius.circular(8),
-                        child: const Icon(Icons.push_pin,
+                        child: const Icon(Icons.push_pin_outlined,
                             size: 18, color: Colors.red),
                       ),
                     ),
@@ -92,26 +92,34 @@ class _NoteCardState extends State<AppNoteCard> {
                   child: Text(
                     widget.noteContent,
                     style: const TextStyle(fontSize: 14),
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Row(
                   children: [
-                    Visibility(
-                      visible: widget.noteCategory != '',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.label_outline,
-                              size: 14, color: Colors.grey),
-                          AppSpaces.w4,
-                          Text(
-                            widget.noteCategory ?? '',
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.grey),
-                          ),
-                        ],
+                    Expanded(
+                      child: Visibility(
+                        visible: widget.noteCategory != '',
+                        child: Row(
+                          children: [
+                            const Icon(Icons.label_outline,
+                                size: 14, color: Colors.grey),
+                            AppSpaces.w4,
+                            Expanded(
+                              child: Text(
+                                widget.noteCategory ?? '',
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.grey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const Spacer(),
+                    // const Spacer(),
                     Visibility(
                       visible: _isHovered,
                       child: InkWell(

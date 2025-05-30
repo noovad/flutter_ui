@@ -8,6 +8,7 @@ class AppTaskCard extends StatefulWidget {
   final String? category;
   final String? time;
   final String? date;
+  final bool isOverDue;
   final bool leading;
   final Function() onDelete;
   final Function() onUpdateStatus;
@@ -22,6 +23,7 @@ class AppTaskCard extends StatefulWidget {
     required this.onDelete,
     required this.onUpdateStatus,
     required this.time,
+    this.isOverDue = false,
     this.date,
     this.category,
     this.leading = true,
@@ -57,7 +59,7 @@ class _AppCardState extends State<AppTaskCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: Card(
         elevation: 4,
-        shadowColor: Colors.grey,
+        shadowColor: widget.isOverDue ? Colors.red : Colors.grey,
         child: ListTile(
           onTap: widget.ontap,
           shape: RoundedRectangleBorder(
@@ -91,61 +93,66 @@ class _AppCardState extends State<AppTaskCard> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Visibility(
-                    visible: widget.category != '',
-                    child: Row(
+          subtitle: (widget.category == '' && widget.time == '' ||
+                  (widget.category == '' &&
+                      widget.time == '' &&
+                      widget.date == ''))
+              ? null
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
                       children: [
-                        Icon(Icons.label_outline,
-                            size: 16, color: Colors.grey[600]),
-                        AppSpaces.w4,
-                        Text(widget.category ?? '',
-                            style: TextStyle(color: Colors.grey[700])),
-                        AppSpaces.w16,
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.time != null && widget.time != '',
-                    child: Row(
-                      children: [
-                        Icon(Icons.access_time,
-                            size: 16, color: Colors.grey[600]),
-                        AppSpaces.w4,
-                        Text(
-                          widget.time ?? '',
-                          style: TextStyle(
-                            color: Colors.grey[700],
+                        Visibility(
+                          visible: widget.category != '',
+                          child: Row(
+                            children: [
+                              Icon(Icons.label_outline,
+                                  size: 16, color: Colors.grey[600]),
+                              AppSpaces.w4,
+                              Text(widget.category ?? '',
+                                  style: TextStyle(color: Colors.grey[700])),
+                              AppSpaces.w16,
+                            ],
                           ),
                         ),
-                        AppSpaces.w16,
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: widget.date != null && widget.date != '',
-                    child: Row(
-                      children: [
-                        Icon(Icons.calendar_today_outlined,
-                            size: 16, color: Colors.grey[600]),
-                        AppSpaces.w4,
-                        Text(
-                          widget.date ?? '',
-                          style: TextStyle(
-                            color: Colors.grey[700],
+                        Visibility(
+                          visible: widget.time != null && widget.time != '',
+                          child: Row(
+                            children: [
+                              Icon(Icons.access_time,
+                                  size: 16, color: Colors.grey[600]),
+                              AppSpaces.w4,
+                              Text(
+                                widget.time ?? '',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                              AppSpaces.w16,
+                            ],
+                          ),
+                        ),
+                        Visibility(
+                          visible: widget.date != null && widget.date != '',
+                          child: Row(
+                            children: [
+                              Icon(Icons.calendar_today_outlined,
+                                  size: 16, color: Colors.grey[600]),
+                              AppSpaces.w4,
+                              Text(
+                                widget.date ?? '',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                  ],
+                ),
           trailing: _isHovered && (widget.isDone == false)
               ? IconButton(
                   onPressed: () => widget.onDelete(),

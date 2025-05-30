@@ -30,7 +30,7 @@ Future<T?> appSheet<T>({
               width: width ?? MediaQuery.of(context).size.width * 0.4,
               height: double.infinity,
               color: parentTheme.canvasColor,
-              child: Expanded(child: Builder(builder: builder)),
+              child: Builder(builder: builder),
             ),
           ),
         ),
