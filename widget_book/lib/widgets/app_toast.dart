@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 import 'package:flutter_ui/widgets/appToast/app_simple_toast.dart';

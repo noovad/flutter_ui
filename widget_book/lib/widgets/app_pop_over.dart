@@ -9,7 +9,6 @@ Widget popOverUseCase(BuildContext context) {
     theme: AppTheme.lightTheme(),
     home: Center(
       child: AppPopOver(
-        padding: const EdgeInsets.all(8),
         content: Container(
           padding: const EdgeInsets.all(16),
           child: const Text('This is a dummy popover content.'),

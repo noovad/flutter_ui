@@ -16,7 +16,7 @@ class WidgetbookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Widgetbook.material(
-      initialRoute: '?path=widget/appshimmer/shimmer',
+      initialRoute: '/?path=color-scheme/themedata/color',
       themeMode: ThemeMode.light,
       lightTheme: AppTheme.lightTheme(),
       directories: directories,

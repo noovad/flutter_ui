@@ -13,25 +13,21 @@ enum CardType { summary, note, task }
 
 @UseCase(name: 'Card', type: Card, path: 'Widget')
 Widget appCards(BuildContext context) {
-  // Add a knob to select card type
   final cardType = context.knobs.list<CardType>(
     label: 'Card Type',
     options: CardType.values,
     initialOption: CardType.summary,
   );
 
-  // Wrap with MaterialApp and apply theme
   return MaterialApp(
     theme: AppTheme.lightTheme(),
-    home: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildSelectedCard(cardType, context),
-          const SizedBox(height: 20),
-          _buildSelectedShimmer(cardType),
-        ],
-      ),
+    home: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _buildSelectedCard(cardType, context),
+        const SizedBox(height: 20),
+        _buildSelectedShimmer(cardType),
+      ],
     ),
   );
 }
@@ -47,7 +43,7 @@ Widget _buildSelectedCard(CardType type, BuildContext context) {
           calorieControlled: context.knobs
               .boolean(label: 'Calorie Controlled', initialValue: true),
           sholatCount:
-              context.knobs.string(label: 'Sholat Count', initialValue: ''),
+              context.knobs.string(label: 'Sholat Count', initialValue: '3'),
           hasCoding:
               context.knobs.boolean(label: 'Has Coding', initialValue: true),
           hasGym: context.knobs.boolean(label: 'Has Gym', initialValue: true),
@@ -71,6 +67,10 @@ Widget _buildSelectedCard(CardType type, BuildContext context) {
               .string(label: 'Note Title', initialValue: 'Dummy Note'),
           onUpdate: (value) {},
           onDelete: (value) {},
+          isPinned:
+              context.knobs.boolean(label: 'Is Pinned', initialValue: false),
+          showIsPinned: true,
+          noteCategory: 'Note Category',
         ),
       );
 
@@ -89,6 +89,8 @@ Widget _buildSelectedCard(CardType type, BuildContext context) {
           date: context.knobs.string(label: 'Date', initialValue: '2023-10-01'),
           leading:
               context.knobs.boolean(label: 'Show Leading', initialValue: true),
+          isOverDue:
+              context.knobs.boolean(label: 'Is Overdue', initialValue: false),
           ontap: () {},
           onDelete: () {},
           onUpdateStatus: () {},
