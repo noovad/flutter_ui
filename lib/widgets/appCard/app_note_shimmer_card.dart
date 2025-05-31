@@ -9,15 +9,6 @@ class AppNoteShimmerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
-      shadowColor: Colors.grey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: Colors.black.withOpacity(0.3),
-          width: 0.25,
-        ),
-      ),
       child: Padding(
         padding: AppPadding.all12,
         child: Column(

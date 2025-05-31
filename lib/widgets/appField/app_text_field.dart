@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
@@ -36,10 +38,11 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final baseTextStyle = Theme.of(context).textTheme.bodyLarge;
     final errorTextStyle = TextStyle(
       fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-      color: Colors.red,
+      color: colorScheme.error,
     );
     return Focus(
       child: Builder(
@@ -49,75 +52,64 @@ class AppTextField extends StatelessWidget {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surfaceContainerLowest,
               borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.withOpacity(0.25)),
               boxShadow: hasFocus
                   ? [
                       BoxShadow(
-                          color: Colors.red.withOpacity(0.2),
+                          color: colorScheme.tertiary.withOpacity(0.25),
                           blurRadius: 8,
                           offset: const Offset(0, 4))
                     ]
                   : [
                       BoxShadow(
-                          color: Colors.grey.withOpacity(0.4),
+                          color: colorScheme.shadow.withOpacity(0.3),
                           blurRadius: 4,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 2))
+                          spreadRadius: 0.3,
+                          offset: const Offset(0, 4))
                     ],
             ),
             child: child != null
                 ? child!
-                : defaultChild(
-                    baseTextStyle,
-                    errorTextStyle,
+                : TextFormField(
+                    controller: controller,
+                    initialValue: initialValue,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: baseTextStyle,
+                    readOnly: readOnly,
+                    minLines: minLines,
+                    maxLines: maxLines,
+                    enabled: enabled,
+                    obscureText: obscureText,
+                    onTap: onTap,
+                    decoration: InputDecoration(
+                      errorText: errorText,
+                      label: Row(children: [
+                        Text(label),
+                        Visibility(
+                          visible: isRequired!,
+                          child: Text(
+                            ' *',
+                            style: TextStyle(color: colorScheme.error),
+                          ),
+                        )
+                      ]),
+                      hintText: hint,
+                      hintStyle: baseTextStyle,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      errorStyle: errorTextStyle,
+                      labelStyle: TextStyle(
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    onChanged: onChanged,
                   ),
           );
         },
       ),
-    );
-  }
-
-  TextFormField defaultChild(
-      TextStyle? baseTextStyle, TextStyle errorTextStyle) {
-    return TextFormField(
-      controller: controller,
-      initialValue: initialValue,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: baseTextStyle,
-      readOnly: readOnly,
-      minLines: minLines,
-      maxLines: maxLines,
-      enabled: enabled,
-      obscureText: obscureText,
-      onTap: onTap,
-      decoration: InputDecoration(
-        errorText: errorText,
-        label: Row(children: [
-          Text(label),
-          Visibility(
-            visible: isRequired!,
-            child: Text(
-              ' *',
-              style: TextStyle(color: Colors.red),
-            ),
-          )
-        ]),
-        hintText: hint,
-        hintStyle: baseTextStyle?.copyWith(
-          color: Colors.grey,
-          fontWeight: FontWeight.w400,
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        isDense: true,
-        contentPadding: EdgeInsets.zero,
-        errorStyle: errorTextStyle,
-        labelStyle: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      onChanged: onChanged,
     );
   }
 }

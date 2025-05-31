@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ui/shared/sizes/app_sizes.dart';
 
 class AppPopOver extends StatefulWidget {
   final Widget trigger;
   final Widget content;
   final Duration showDelay;
-  final EdgeInsets padding;
 
   const AppPopOver({
     super.key,
     required this.trigger,
     required this.content,
     this.showDelay = const Duration(milliseconds: 100),
-    this.padding = const EdgeInsets.all(8),
   });
 
   @override
@@ -49,21 +46,7 @@ class _AppPopOverState extends State<AppPopOver> {
             _hovering = false;
             _closeAppPopOver();
           },
-          child: Material(
-            elevation: AppSizes.dimen4,
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                color: Colors.black.withOpacity(0.3),
-                width: 0.25,
-              ),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Padding(
-              padding: widget.padding,
-              child: widget.content,
-            ),
-          ),
+          child: widget.content,
         ),
       ],
       builder: (context, controller, child) {

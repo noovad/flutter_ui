@@ -19,32 +19,26 @@ class AppTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return DefaultTabController(
       animationDuration: const Duration(milliseconds: 500),
       length: length,
       child: Column(
         children: [
           Row(
-            spacing: 8,
             children: [
               Expanded(
                 child: Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(
-                      color: Colors.black.withOpacity(0.3),
-                      width: 0.25,
-                    ),
-                  ),
                   child: TabBar(
                     dividerHeight: 0,
                     indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: Colors.black,
+                      color: colorScheme.primary,
                     ),
-                    unselectedLabelColor: Colors.black,
-                    labelColor: Colors.white,
+                    unselectedLabelColor: colorScheme.primary,
+                    labelColor: colorScheme.onPrimary,
                     padding: AppPadding.all8,
                     tabs: tabBar,
                     indicatorSize: TabBarIndicatorSize.tab,
@@ -55,6 +49,7 @@ class AppTabs extends StatelessWidget {
                   ),
                 ),
               ),
+              AppSpaces.w12,
               tabBarChild ?? const SizedBox(),
             ],
           ),

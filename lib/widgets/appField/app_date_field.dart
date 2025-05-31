@@ -57,6 +57,7 @@ class _AppDateFieldState extends State<AppDateField> {
 
   void _showCalendarOverlay(BuildContext context) {
     if (_overlayEntry == null) {
+      final colorScheme = Theme.of(context).colorScheme;
       RenderBox renderBox = context.findRenderObject() as RenderBox;
       final size = renderBox.size;
 
@@ -81,26 +82,36 @@ class _AppDateFieldState extends State<AppDateField> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  color: Colors.white,
-                  child: CalendarDatePicker(
-                    initialDate: _selectedDate,
-                    firstDate: DateTime(2010),
-                    lastDate: DateTime(2050),
-                    onDateChanged: (selectedDate) {
-                      if (_selectedDate.month != selectedDate.month ||
-                          _selectedDate.day != selectedDate.day) {
-                        _removeOverlay();
-                      }
+                  color: colorScheme.surfaceContainerLow,
+                  shadowColor: colorScheme.shadow,
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: colorScheme.copyWith(
+                        primary: colorScheme
+                            .primary, // Use primary color for selected day
+                      ),
+                    ),
+                    child: CalendarDatePicker(
+                      initialDate: _selectedDate,
+                      firstDate: DateTime(2010),
+                      lastDate: DateTime(2050),
+                      onDateChanged: (selectedDate) {
+                        if (_selectedDate.month != selectedDate.month ||
+                            _selectedDate.day != selectedDate.day) {
+                          _removeOverlay();
+                        }
 
-                      setState(() {
-                        _selectedDate = selectedDate;
-                        _textController.text = ddMmmYyyy(selectedDate);
-                      });
+                        setState(() {
+                          _selectedDate = selectedDate;
+                          _textController.text = ddMmmYyyy(selectedDate);
+                        });
 
-                      if (widget.onChanged != null) {
-                        widget.onChanged!(selectedDate);
-                      }
-                    },
+                        if (widget.onChanged != null) {
+                          widget.onChanged!(selectedDate);
+                        }
+                      },
+                      currentDate: DateTime.now(),
+                    ),
                   ),
                 ),
               ),

@@ -13,16 +13,10 @@ class AppDailySummaryShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      elevation: 4,
-      shadowColor: isSunday ? Colors.red : Colors.grey,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: Colors.black.withOpacity(0.3),
-          width: 0.25,
-        ),
-      ),
+      shadowColor: isSunday ? colorScheme.secondary : colorScheme.shadow,
       child: Padding(
         padding: AppPadding.all8,
         child: Column(

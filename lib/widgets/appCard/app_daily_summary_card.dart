@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
-import 'package:flutter_ui/shared/themes/app_text_style.dart';
 
 class AppDailySummaryCard extends StatelessWidget {
   final String sholatCount;
@@ -26,13 +25,14 @@ class AppDailySummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
-      elevation: 4,
-      shadowColor: isSunday ? Colors.red : Colors.grey,
+      shadowColor: isSunday ? colorScheme.tertiary : colorScheme.shadow,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
         side: BorderSide(
-          color: isToday ? Colors.red : Colors.black.withOpacity(0.3),
+          color: isToday ? colorScheme.tertiary : colorScheme.outline,
           width: isToday ? 1 : 0.25,
         ),
       ),
@@ -54,9 +54,13 @@ class AppDailySummaryCard extends StatelessWidget {
                   ),
                 ),
                 if (hasCoding)
-                  const Tooltip(
+                  Tooltip(
                     message: 'Coding',
-                    child: Icon(Icons.code, color: Colors.red, size: 18),
+                    child: Icon(
+                      Icons.code,
+                      color: colorScheme.tertiary,
+                      size: 18,
+                    ),
                   ),
               ],
             ),
@@ -65,21 +69,30 @@ class AppDailySummaryCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (hasGym)
-                  const Tooltip(
+                  Tooltip(
                     message: 'Gym',
-                    child: Icon(Icons.fitness_center, size: 18),
+                    child: Icon(
+                      Icons.fitness_center,
+                      size: 18,
+                    ),
                   ),
                 if (hasGym && hasCardio) AppSpaces.w4,
                 if (calorieControlled)
-                  const Tooltip(
+                  Tooltip(
                     message: 'Calorie Controlled',
-                    child: Icon(Icons.restaurant, size: 18),
+                    child: Icon(
+                      Icons.restaurant,
+                      size: 18,
+                    ),
                   ),
                 if (hasCardio && calorieControlled) AppSpaces.w4,
                 if (hasCardio)
-                  const Tooltip(
+                  Tooltip(
                     message: 'Cardio',
-                    child: Icon(Icons.favorite, size: 18),
+                    child: Icon(
+                      Icons.favorite,
+                      size: 18,
+                    ),
                   ),
               ],
             ),
@@ -90,7 +103,7 @@ class AppDailySummaryCard extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
                     amount == 0 ? '' : amount.toString(),
-                    style: AppTextStyle.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(),
                   ),
                 ),
               ),

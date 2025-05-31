@@ -41,12 +41,6 @@ class _AppCardState extends State<AppTaskCard> {
       height: height,
       width: double.infinity,
       child: Card(
-        elevation: 4,
-        shadowColor: Colors.grey,
-        color: color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
         child: child,
       ),
     );
@@ -54,33 +48,27 @@ class _AppCardState extends State<AppTaskCard> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: Card(
-        elevation: 4,
-        shadowColor: widget.isOverDue ? Colors.red : Colors.grey,
+        shadowColor: widget.isOverDue ? colorScheme.error : colorScheme.shadow,
         child: ListTile(
           onTap: widget.ontap,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            side: BorderSide(
-              color: Colors.black.withOpacity(0.3),
-              width: 0.25,
-            ),
-          ),
           dense: true,
           leading: (widget.leading)
               ? (widget.isDone == true)
                   ? IconButton(
                       onPressed: () => widget.onUpdateStatus(),
-                      icon: const Icon(Icons.check_circle_outline,
-                          color: Colors.red),
+                      icon: Icon(Icons.check_circle_outline,
+                          color: colorScheme.tertiary),
                     )
                   : IconButton(
                       onPressed: () => widget.onUpdateStatus(),
-                      icon:
-                          const Icon(Icons.circle_outlined, color: Colors.red),
+                      icon: Icon(Icons.circle_outlined,
+                          color: colorScheme.tertiary),
                     )
               : null,
           title: Text(
@@ -88,6 +76,7 @@ class _AppCardState extends State<AppTaskCard> {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
               decoration: widget.isDone ? TextDecoration.lineThrough : null,
             ),
             maxLines: 1,
@@ -108,10 +97,12 @@ class _AppCardState extends State<AppTaskCard> {
                           child: Row(
                             children: [
                               Icon(Icons.label_outline,
-                                  size: 16, color: Colors.grey[600]),
+                                  size: 16,
+                                  color: colorScheme.onSurfaceVariant),
                               AppSpaces.w4,
                               Text(widget.category ?? '',
-                                  style: TextStyle(color: Colors.grey[700])),
+                                  style: TextStyle(
+                                      color: colorScheme.onSurfaceVariant)),
                               AppSpaces.w16,
                             ],
                           ),
@@ -121,12 +112,13 @@ class _AppCardState extends State<AppTaskCard> {
                           child: Row(
                             children: [
                               Icon(Icons.access_time,
-                                  size: 16, color: Colors.grey[600]),
+                                  size: 16,
+                                  color: colorScheme.onSurfaceVariant),
                               AppSpaces.w4,
                               Text(
                                 widget.time ?? '',
                                 style: TextStyle(
-                                  color: Colors.grey[700],
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               AppSpaces.w16,
@@ -138,12 +130,13 @@ class _AppCardState extends State<AppTaskCard> {
                           child: Row(
                             children: [
                               Icon(Icons.calendar_today_outlined,
-                                  size: 16, color: Colors.grey[600]),
+                                  size: 16,
+                                  color: colorScheme.onSurfaceVariant),
                               AppSpaces.w4,
                               Text(
                                 widget.date ?? '',
                                 style: TextStyle(
-                                  color: Colors.grey[700],
+                                  color: colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],
@@ -156,7 +149,8 @@ class _AppCardState extends State<AppTaskCard> {
           trailing: _isHovered && (widget.isDone == false)
               ? IconButton(
                   onPressed: () => widget.onDelete(),
-                  icon: const Icon(Icons.delete_outline),
+                  icon:
+                      Icon(Icons.delete_outline, color: colorScheme.secondary),
                 )
               : null,
         ),

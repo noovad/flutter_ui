@@ -21,8 +21,7 @@ class _AppDateNavState extends State<AppDateNav> {
   @override
   void initState() {
     super.initState();
-    displayedDate =
-        ValueNotifier<DateTime>(DateTime.now());
+    displayedDate = ValueNotifier<DateTime>(DateTime.now());
 
     if (widget.onChange != null) {
       widget.onChange!(displayedDate.value);
@@ -47,21 +46,15 @@ class _AppDateNavState extends State<AppDateNav> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: widget.mainAxisAlignment,
       children: [
         IconButton(
           onPressed: () => _changeMonth(-1),
           icon: const Icon(Icons.chevron_left, size: 18),
-          style: IconButton.styleFrom(
-            backgroundColor: Colors.black,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            padding: const EdgeInsets.all(4),
-            minimumSize: const Size(28, 28),
-          ),
-          color: Colors.white,
+          color: colorScheme.onPrimary,
         ),
         const SizedBox(width: 8),
         ValueListenableBuilder<DateTime>(
@@ -70,12 +63,8 @@ class _AppDateNavState extends State<AppDateNav> {
               return SizedBox(
                 width: 140,
                 child: Center(
-                  child: Text(
-                    DateFormat('MMMM / yyyy').format(date),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                  child: Text(DateFormat('MMMM / yyyy').format(date),
+                      style: Theme.of(context).textTheme.titleMedium),
                 ),
               );
             }),
@@ -83,15 +72,7 @@ class _AppDateNavState extends State<AppDateNav> {
         IconButton(
           onPressed: () => _changeMonth(1),
           icon: const Icon(Icons.chevron_right, size: 18),
-          style: IconButton.styleFrom(
-            backgroundColor: Colors.black,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            padding: const EdgeInsets.all(4),
-            minimumSize: const Size(28, 28),
-          ),
-          color: Colors.white,
+          color: colorScheme.onPrimary,
         ),
       ],
     );

@@ -11,12 +11,12 @@ Future<T?> appSheet<T>({
 }) {
   final isLeft = side == SheetSide.left;
   final ThemeData parentTheme = Theme.of(context);
+  final ColorScheme colorScheme = parentTheme.colorScheme;
 
   return showGeneralDialog<T>(
     context: context,
     barrierDismissible: true,
     barrierLabel: 'SideSheet',
-    barrierColor: Colors.black45,
     transitionDuration: duration,
     pageBuilder: (context, animation, secondaryAnimation) {
       return Align(
@@ -29,7 +29,7 @@ Future<T?> appSheet<T>({
             child: Container(
               width: width ?? MediaQuery.of(context).size.width * 0.4,
               height: double.infinity,
-              color: parentTheme.canvasColor,
+              color: colorScheme.surface,
               child: Builder(builder: builder),
             ),
           ),

@@ -53,12 +53,14 @@ class _AppShimmerState extends State<AppShimmer>
   }
 
   Widget _buildShimmerWidget() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     shimmerShader(Rect bounds) {
       return LinearGradient(
         colors: [
-          Colors.grey.shade300,
-          Colors.grey.shade100,
-          Colors.grey.shade300,
+          colorScheme.surfaceContainerLow,
+          colorScheme.surfaceContainerHighest,
+          colorScheme.surfaceContainerLow,
         ],
         stops: const [0.0, 0.5, 1.0],
         begin: Alignment(-1.0 + 2.0 * _controller.value, 0.0),
@@ -78,7 +80,7 @@ class _AppShimmerState extends State<AppShimmer>
               blendMode: BlendMode.srcIn,
               shaderCallback: shimmerShader,
               child: Container(
-                color: Colors.white,
+                color: colorScheme.surfaceBright,
               ),
             ),
           ),
@@ -95,7 +97,7 @@ class _AppShimmerState extends State<AppShimmer>
               blendMode: BlendMode.srcIn,
               shaderCallback: shimmerShader,
               child: Container(
-                color: Colors.white,
+                color: colorScheme.surfaceBright,
               ),
             ),
           ),

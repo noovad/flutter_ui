@@ -15,11 +15,14 @@ class AppSimpleToast {
     required Widget child,
     ToastPosition position = ToastPosition.bottomCenter,
     Duration duration = const Duration(seconds: 3),
-    Color backgroundColor = Colors.black87,
+    Color? backgroundColor,
     double verticalOffset = 25,
     double horizontalOffset = 25,
   }) {
     final overlay = Overlay.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+
+    backgroundColor ??= colorScheme.inverseSurface;
 
     Alignment alignment = _getAlignment(position);
     EdgeInsets margin = _getMargin(position, verticalOffset, horizontalOffset);
@@ -35,7 +38,7 @@ class AppSimpleToast {
                   child: Container(
                     margin: margin,
                     child: ToastContainer(
-                      backgroundColor: backgroundColor,
+                      backgroundColor: backgroundColor!,
                       child: child,
                     ),
                   ),
@@ -102,6 +105,8 @@ class ToastContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Material(
       color: Colors.transparent,
       child: AnimatedSlide(
@@ -113,15 +118,18 @@ class ToastContainer extends StatelessWidget {
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(8),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
-                color: Colors.black,
+                color: colorScheme.shadow,
                 blurRadius: 10,
-                offset: Offset(0.5, 1),
+                offset: const Offset(0.5, 1),
               ),
             ],
           ),
-          child: child,
+          child: DefaultTextStyle(
+            style: TextStyle(color: colorScheme.onInverseSurface),
+            child: child,
+          ),
         ),
       ),
     );

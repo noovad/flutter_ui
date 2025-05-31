@@ -76,27 +76,31 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   }
 
   Material _buildOverlayContent() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Material(
       elevation: 4.0,
+      shadowColor: colorScheme.shadow,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
       ),
-      color: Colors.white,
+      color: colorScheme.surfaceContainerLow,
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: widget.items.length + 1,
         separatorBuilder: (_, __) =>
-            const Divider(height: 1, color: Colors.grey),
+            Divider(height: 1, color: colorScheme.outline),
         itemBuilder: (context, index) {
           if (index == 0) {
             return ListTile(
               dense: true,
-              trailing: const Icon(Icons.clear, size: 16),
+              trailing: Icon(Icons.clear,
+                  size: 16, color: colorScheme.onSurfaceVariant),
               title: Text(
                 widget.labelUnselected ?? 'Unselected',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: colorScheme.onSurface,
                 ),
               ),
               onTap: () {
@@ -112,7 +116,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
             title: Text(
               item.label,
               style: TextStyle(
-                color: Colors.black,
+                color: colorScheme.onSurface,
               ),
             ),
             onTap: () {

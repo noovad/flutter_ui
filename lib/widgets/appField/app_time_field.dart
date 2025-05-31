@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_ui/shared/themes/app_theme_data.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
 class AppTimeField extends StatefulWidget {
@@ -92,6 +95,8 @@ class _TimeFieldState extends State<AppTimeField> {
     required void Function() onUp,
     required void Function() onDown,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return RawKeyboardListener(
       focusNode: keyboardFocusNode,
       onKey: (RawKeyEvent event) {
@@ -110,13 +115,16 @@ class _TimeFieldState extends State<AppTimeField> {
         enabled: widget.enabled,
         keyboardType: TextInputType.number,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-        style: const TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.bold,
+          color: colorScheme
+              .onSurface, // Use colorScheme instead of AppTheme.charcoal
         ),
         decoration: InputDecoration(
           isDense: true,
           counterText: '',
           hintText: hint,
+          hintStyle: TextStyle(color: AppTheme.mediumGrey),
         ),
         onChanged: (value) {
           if (value.length == 2) {
@@ -169,8 +177,10 @@ class _TimeFieldState extends State<AppTimeField> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Time",
-              style: TextStyle(color: Colors.black, fontSize: 12)),
+          Text(
+            "Time",
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,9 +193,12 @@ class _TimeFieldState extends State<AppTimeField> {
                 maxValue: 23,
               ),
 
-              const Text(':',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900, color: Colors.black)),
+              Text(
+                ':',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
 
               // Minute field
               _buildTimeSegmentField(
