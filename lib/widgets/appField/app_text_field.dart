@@ -96,7 +96,6 @@ class AppTextField extends StatelessWidget {
                         )
                       ]),
                       hintText: hint,
-                      hintStyle: baseTextStyle,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       isDense: true,
                       contentPadding: EdgeInsets.zero,

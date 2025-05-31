@@ -9,25 +9,30 @@ import 'package:flutter_ui/widgets/appCard/app_task_shimmer_card.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
-enum CardType { summary, note, task }
+enum CardType { task, note, summary }
 
 @UseCase(name: 'Card', type: Card, path: 'Widget')
 Widget appCards(BuildContext context) {
   final cardType = context.knobs.list<CardType>(
     label: 'Card Type',
     options: CardType.values,
-    initialOption: CardType.summary,
+    initialOption: CardType.task,
   );
 
   return MaterialApp(
     theme: AppTheme.lightTheme(),
-    home: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildSelectedCard(cardType, context),
-        const SizedBox(height: 20),
-        _buildSelectedShimmer(cardType),
-      ],
+    home: Center(
+      child: SizedBox(
+        width: 500,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildSelectedCard(cardType, context),
+            const SizedBox(height: 20),
+            _buildSelectedShimmer(cardType),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -75,26 +80,21 @@ Widget _buildSelectedCard(CardType type, BuildContext context) {
       );
 
     case CardType.task:
-      return SizedBox(
-        width: 400,
-        height: 75,
-        child: AppTaskCard(
-          id: 'task_id',
-          isDone: context.knobs.boolean(label: 'Is Done', initialValue: false),
-          title: context.knobs
-              .string(label: 'Task Title', initialValue: 'Task Title'),
-          category:
-              context.knobs.string(label: 'Category', initialValue: 'Work'),
-          time: context.knobs.string(label: 'Time', initialValue: '10:00 AM'),
-          date: context.knobs.string(label: 'Date', initialValue: '2023-10-01'),
-          leading:
-              context.knobs.boolean(label: 'Show Leading', initialValue: true),
-          isOverDue:
-              context.knobs.boolean(label: 'Is Overdue', initialValue: false),
-          ontap: () {},
-          onDelete: () {},
-          onUpdateStatus: () {},
-        ),
+      return AppTaskCard(
+        id: 'task_id',
+        isDone: context.knobs.boolean(label: 'Is Done', initialValue: false),
+        title: context.knobs
+            .string(label: 'Task Title', initialValue: 'Task Title'),
+        category: context.knobs.string(label: 'Category', initialValue: 'Work'),
+        time: context.knobs.string(label: 'Time', initialValue: '10:00 AM'),
+        date: context.knobs.string(label: 'Date', initialValue: '2023-10-01'),
+        leading:
+            context.knobs.boolean(label: 'Show Leading', initialValue: true),
+        isOverDue:
+            context.knobs.boolean(label: 'Is Overdue', initialValue: false),
+        ontap: () {},
+        onDelete: () {},
+        onUpdateStatus: () {},
       );
   }
 }
@@ -115,10 +115,6 @@ Widget _buildSelectedShimmer(CardType type) {
       );
 
     case CardType.task:
-      return const SizedBox(
-        width: 400,
-        height: 75,
-        child: AppTaskShimmerCard(),
-      );
+      return AppTaskShimmerCard();
   }
 }

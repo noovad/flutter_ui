@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ui/shared/themes/app_theme_data.dart';
+import 'package:flutter_ui/shared/color/app_colors.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
 class AppTimeField extends StatefulWidget {
@@ -124,7 +124,7 @@ class _TimeFieldState extends State<AppTimeField> {
           isDense: true,
           counterText: '',
           hintText: hint,
-          hintStyle: TextStyle(color: AppTheme.mediumGrey),
+          hintStyle: TextStyle(color: AppColor.mediumGrey),
         ),
         onChanged: (value) {
           if (value.length == 2) {
