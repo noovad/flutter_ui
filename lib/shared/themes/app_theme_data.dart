@@ -61,6 +61,10 @@ abstract class AppTheme {
       brightness: Brightness.light,
       fontFamily: 'Poppins',
       colorScheme: lightColorScheme(),
+      iconTheme: const IconThemeData(
+        color: AppColor.pureBlack,
+        size: 24,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColor.pureBlack,
@@ -79,7 +83,9 @@ abstract class AppTheme {
             borderRadius: BorderRadius.all(Radius.circular(8)),
           ),
           padding: const EdgeInsets.all(4),
-          minimumSize: const Size(28, 28),
+          minimumSize: const Size(24, 24),
+          iconSize: 24,
+          foregroundColor: AppColor.pureWhite,
         ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
@@ -97,8 +103,10 @@ abstract class AppTheme {
       ),
       listTileTheme: ListTileThemeData(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-            side: BorderSide(color: Colors.grey.withOpacity(0.25))),
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: Colors.grey.withOpacity(0.25)),
+        ),
+        dense: true,
       ),
       tabBarTheme: const TabBarTheme(
         overlayColor: MaterialStatePropertyAll(Colors.transparent),

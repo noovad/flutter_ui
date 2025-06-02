@@ -1,10 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
-  final String label;
+  final String? label;
+  final bool? withLabel;
   final String? hint;
   final bool readOnly;
   final bool? enabled;
@@ -20,7 +19,8 @@ class AppTextField extends StatelessWidget {
 
   const AppTextField({
     super.key,
-    required this.label,
+    this.label,
+    this.withLabel = true,
     this.controller,
     this.onChanged,
     this.hint = '',
@@ -44,13 +44,20 @@ class AppTextField extends StatelessWidget {
       fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
       color: colorScheme.error,
     );
+
+    final verticalPadding = withLabel == false ? 8.0 : 12.0;
+
     return Focus(
       child: Builder(
         builder: (context) {
           final hasFocus = Focus.of(context).hasFocus;
           return AnimatedContainer(
             duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding:
+                EdgeInsets.symmetric(horizontal: 16, vertical: verticalPadding),
+            constraints: BoxConstraints(
+              minHeight: withLabel == false ? 36.0 : 48.0,
+            ),
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerLowest,
               borderRadius: BorderRadius.circular(8),
@@ -64,7 +71,7 @@ class AppTextField extends StatelessWidget {
                     ]
                   : [
                       BoxShadow(
-                          color: colorScheme.shadow.withOpacity(0.3),
+                          color: colorScheme.shadow.withOpacity(0.5),
                           blurRadius: 4,
                           spreadRadius: 0.3,
                           offset: const Offset(0, 4))
@@ -85,24 +92,30 @@ class AppTextField extends StatelessWidget {
                     onTap: onTap,
                     decoration: InputDecoration(
                       errorText: errorText,
-                      label: Row(children: [
-                        Text(label),
-                        Visibility(
-                          visible: isRequired!,
-                          child: Text(
-                            ' *',
-                            style: TextStyle(color: colorScheme.error),
-                          ),
-                        )
-                      ]),
+                      label: withLabel == false
+                          ? null
+                          : Row(children: [
+                              Text(label ?? '',
+                                  style: TextStyle(
+                                    color: enabled!
+                                        ? colorScheme.onSurface
+                                        : colorScheme.onSurface
+                                            .withOpacity(0.5),
+                                  )),
+                              Visibility(
+                                visible: isRequired!,
+                                child: Text(
+                                  ' *',
+                                  style: TextStyle(color: colorScheme.error),
+                                ),
+                              )
+                            ]),
                       hintText: hint,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       isDense: true,
                       contentPadding: EdgeInsets.zero,
                       errorStyle: errorTextStyle,
-                      labelStyle: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
+                      isCollapsed: withLabel == false,
                     ),
                     onChanged: onChanged,
                   ),
