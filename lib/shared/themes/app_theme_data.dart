@@ -76,18 +76,6 @@ abstract class AppTheme {
           elevation: 4,
         ),
       ),
-      iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(
-          backgroundColor: AppColor.pureBlack,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          padding: const EdgeInsets.all(4),
-          minimumSize: const Size(24, 24),
-          iconSize: 24,
-          foregroundColor: AppColor.pureWhite,
-        ),
-      ),
       inputDecorationTheme: const InputDecorationTheme(
         border: InputBorder.none,
         enabledBorder: InputBorder.none,

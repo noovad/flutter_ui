@@ -47,15 +47,12 @@ class _AppDateNavState extends State<AppDateNav> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Row(
       mainAxisAlignment: widget.mainAxisAlignment,
       children: [
         IconButton(
           onPressed: () => _changeMonth(-1),
           icon: const Icon(Icons.chevron_left, size: 18),
-          color: colorScheme.onPrimary,
         ),
         AppSpaces.w8,
         ValueListenableBuilder<DateTime>(
@@ -73,7 +70,6 @@ class _AppDateNavState extends State<AppDateNav> {
         IconButton(
           onPressed: () => _changeMonth(1),
           icon: const Icon(Icons.chevron_right, size: 18),
-          color: colorScheme.onPrimary,
         ),
       ],
     );

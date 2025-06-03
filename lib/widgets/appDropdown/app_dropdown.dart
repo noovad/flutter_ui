@@ -19,7 +19,8 @@ class AppDropdown<T> extends StatefulWidget {
   final bool showUnselect;
   final String? labelUnselected;
   final double? minHeight;
-  final T? initialValue;
+  final String? errorText;
+  final bool isRequired;
 
   const AppDropdown({
     super.key,
@@ -33,7 +34,8 @@ class AppDropdown<T> extends StatefulWidget {
     this.labelUnselected,
     this.onChanged,
     this.minHeight,
-    this.initialValue,
+    this.errorText,
+    this.isRequired = false,
   });
 
   @override
@@ -49,7 +51,7 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
   @override
   void initState() {
     super.initState();
-    _currentItem = widget.selectedItem ?? _findInitialItem();
+    _currentItem = widget.selectedItem;
     _controller = TextEditingController(text: _currentItem?.label ?? '');
 
     if (_currentItem != null && widget.onChanged != null) {
@@ -57,30 +59,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     }
   }
 
-  DropdownItem<T>? _findInitialItem() {
-    if (widget.initialValue == null) return null;
-
-    for (var item in widget.items) {
-      if (item.id == widget.initialValue) {
-        return item;
-      }
-    }
-    return null;
-  }
-
   @override
   void didUpdateWidget(AppDropdown<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    if (widget.initialValue != oldWidget.initialValue &&
-        widget.selectedItem == null) {
-      final initialItem = _findInitialItem();
-      if (initialItem != null) {
-        _currentItem = initialItem;
-        _controller.text = initialItem.label;
-        widget.onChanged?.call(initialItem);
-      }
-    }
 
     if (oldWidget.selectedItem?.label != widget.selectedItem?.label) {
       _currentItem = widget.selectedItem;
@@ -104,6 +85,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
+                setState(() {
+                  _isActive = false;
+                });
                 _removeOverlay();
               },
             ),
@@ -159,6 +143,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
                 onTap: () {
                   widget.onChanged?.call(null);
                   _controller.text = '';
+                  setState(() {
+                    _isActive = false;
+                  });
                   _removeOverlay();
                 },
               );
@@ -186,6 +173,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               onTap: () {
                 widget.onChanged?.call(item);
                 _controller.text = item.label;
+                setState(() {
+                  _isActive = false;
+                });
                 _removeOverlay();
               },
             );
@@ -202,12 +192,26 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     super.dispose();
   }
 
+  bool _isActive = false;
+
   @override
   Widget build(BuildContext context) {
+    Icon icon = _isActive
+        ? Icon(
+            Icons.keyboard_arrow_up,
+            size: 24,
+          )
+        : Icon(
+            Icons.keyboard_arrow_down,
+            size: 24,
+          );
     return Focus(
       onFocusChange: (hasFocus) {
         if (hasFocus && widget.enabled) {
           if (_overlayEntry == null) {
+            setState(() {
+              _isActive = true;
+            });
             _overlayEntry = _createOverlayEntry();
             Overlay.of(context).insert(_overlayEntry!);
           }
@@ -228,6 +232,9 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               Overlay.of(context).insert(_overlayEntry!);
             }
           },
+          errorText: widget.errorText,
+          isRequired: widget.isRequired,
+          suffixIcon: icon,
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
@@ -16,6 +17,10 @@ class AppTextField extends StatelessWidget {
   final Widget? child;
   final String? initialValue;
   final bool? isRequired;
+  final String? prefixText;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
+  final Icon? suffixIcon;
 
   const AppTextField({
     super.key,
@@ -34,6 +39,10 @@ class AppTextField extends StatelessWidget {
     this.child,
     this.initialValue,
     this.isRequired = false,
+    this.prefixText,
+    this.keyboardType,
+    this.inputFormatters,
+    this.suffixIcon,
   });
 
   @override
@@ -80,6 +89,8 @@ class AppTextField extends StatelessWidget {
             child: child != null
                 ? child!
                 : TextFormField(
+                    keyboardType: keyboardType,
+                    inputFormatters: inputFormatters,
                     controller: controller,
                     initialValue: initialValue,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -92,16 +103,13 @@ class AppTextField extends StatelessWidget {
                     onTap: onTap,
                     decoration: InputDecoration(
                       errorText: errorText,
+                      prefixText: prefixText,
                       label: withLabel == false
                           ? null
                           : Row(children: [
                               Text(label ?? '',
-                                  style: TextStyle(
-                                    color: enabled!
-                                        ? colorScheme.onSurface
-                                        : colorScheme.onSurface
-                                            .withOpacity(0.5),
-                                  )),
+                                  style:
+                                      TextStyle(color: colorScheme.onSurface)),
                               Visibility(
                                 visible: isRequired!,
                                 child: Text(
@@ -113,9 +121,27 @@ class AppTextField extends StatelessWidget {
                       hintText: hint,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       isDense: true,
-                      contentPadding: EdgeInsets.zero,
+                      contentPadding: withLabel == false
+                          ? EdgeInsets.symmetric(
+                              vertical: 4)
+                          : (suffixIcon != null
+                              ? EdgeInsets.only(right: 40.0)
+                              : EdgeInsets.zero),
                       errorStyle: errorTextStyle,
                       isCollapsed: withLabel == false,
+                      suffixIcon: suffixIcon != null
+                          ? Container(
+                              margin: const EdgeInsets.only(right: 8.0),
+                              alignment: Alignment.center,
+                              width: 24,
+                              height: 24,
+                              child: suffixIcon,
+                            )
+                          : null,
+                      suffixIconConstraints: const BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
                     ),
                     onChanged: onChanged,
                   ),

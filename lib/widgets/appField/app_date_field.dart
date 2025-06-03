@@ -87,8 +87,7 @@ class _AppDateFieldState extends State<AppDateField> {
                   child: Theme(
                     data: Theme.of(context).copyWith(
                       colorScheme: colorScheme.copyWith(
-                        primary: colorScheme
-                            .primary, // Use primary color for selected day
+                        primary: colorScheme.primary,
                       ),
                     ),
                     child: CalendarDatePicker(
