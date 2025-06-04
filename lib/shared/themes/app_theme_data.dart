@@ -76,12 +76,20 @@ abstract class AppTheme {
           elevation: 4,
         ),
       ),
+      dialogTheme: DialogTheme(
+        backgroundColor: AppColor.pureWhite,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: Colors.grey.withOpacity(0.25)),
+        ),
+      ),
       inputDecorationTheme: const InputDecorationTheme(
         border: InputBorder.none,
         enabledBorder: InputBorder.none,
         focusedBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
       ),
+      useMaterial3: true,
       cardTheme: CardTheme(
         elevation: 4,
         shape: RoundedRectangleBorder(
