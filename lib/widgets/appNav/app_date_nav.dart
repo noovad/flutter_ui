@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
+import 'package:flutter_ui/widgets/appButton/app_button.dart';
 import 'package:intl/intl.dart';
 
 class AppDateNav extends StatefulWidget {
@@ -50,9 +51,9 @@ class _AppDateNavState extends State<AppDateNav> {
     return Row(
       mainAxisAlignment: widget.mainAxisAlignment,
       children: [
-        IconButton(
+        AppButton.icon(
           onPressed: () => _changeMonth(-1),
-          icon: const Icon(Icons.chevron_left, size: 18),
+          icon: Icons.chevron_left,
         ),
         AppSpaces.w8,
         ValueListenableBuilder<DateTime>(
@@ -67,9 +68,9 @@ class _AppDateNavState extends State<AppDateNav> {
               );
             }),
         AppSpaces.w8,
-        IconButton(
+        AppButton.icon(
           onPressed: () => _changeMonth(1),
-          icon: const Icon(Icons.chevron_right, size: 18),
+          icon: Icons.chevron_right,
         ),
       ],
     );

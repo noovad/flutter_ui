@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/sizes/app_spaces.dart';
+import 'package:flutter_ui/widgets/appButton/app_button.dart';
 import 'package:intl/intl.dart';
 
 class AppYearNav extends StatefulWidget {
@@ -53,10 +54,9 @@ class _AppYearNavState extends State<AppYearNav> {
     return Row(
       mainAxisAlignment: widget.mainAxisAlignment,
       children: [
-        IconButton(
-          onPressed: () => _changeYear(-1),
-          icon: const Icon(Icons.chevron_left, size: 18),
-        ),
+        AppButton.icon(
+            onPressed: () => _changeYear(-1), icon: Icons.chevron_left),
+        AppSpaces.w8,
         AppSpaces.w8,
         ValueListenableBuilder<DateTime>(
             valueListenable: displayedDate,
@@ -70,10 +70,8 @@ class _AppYearNavState extends State<AppYearNav> {
               );
             }),
         AppSpaces.w8,
-        IconButton(
-          onPressed: () => _changeYear(1),
-          icon: const Icon(Icons.chevron_right, size: 18),
-        ),
+        AppButton.icon(
+            onPressed: () => _changeYear(1), icon: Icons.chevron_right),
       ],
     );
   }

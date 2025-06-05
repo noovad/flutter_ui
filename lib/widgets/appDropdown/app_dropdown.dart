@@ -160,7 +160,8 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
               ),
               dense: true,
               selected: widget.selectedItem?.id == item.id,
-              selectedTileColor: colorScheme.primaryContainer.withOpacity(0.2),
+              selectedTileColor:
+                  colorScheme.primaryContainer.withValues(alpha: 0.2),
               title: Text(
                 item.label,
                 style: TextStyle(

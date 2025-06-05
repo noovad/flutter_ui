@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ui/shared/color/app_colors.dart';
@@ -97,10 +95,10 @@ class _TimeFieldState extends State<AppTimeField> {
   }) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: keyboardFocusNode,
-      onKey: (RawKeyEvent event) {
-        if (event is RawKeyDownEvent) {
+      onKeyEvent: (KeyEvent event) {
+        if (event is KeyDownEvent) {
           if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
             onUp();
           } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {

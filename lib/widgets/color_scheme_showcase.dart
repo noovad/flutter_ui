@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 
 class ColorSchemeShowcase extends StatelessWidget {
@@ -368,7 +366,7 @@ class ColorSchemeShowcase extends StatelessWidget {
                   style: const TextStyle(fontSize: 12),
                 ),
                 Text(
-                  "HEX: #${item.color.value.toRadixString(16).substring(2).toUpperCase()}",
+                  "HEX: #${item.color.toARGB32().toRadixString(16).substring(2).toUpperCase()}",
                   style: const TextStyle(fontSize: 12, fontFamily: "poppins"),
                 ),
               ],

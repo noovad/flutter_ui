@@ -70,17 +70,17 @@ class AppTextField extends StatelessWidget {
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerLowest,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.grey.withOpacity(0.25)),
+              border: Border.all(color: Colors.grey.withValues(alpha: 0.25)),
               boxShadow: hasFocus
                   ? [
                       BoxShadow(
-                          color: colorScheme.tertiary.withOpacity(0.25),
+                          color: colorScheme.tertiary.withValues(alpha: 0.25),
                           blurRadius: 8,
                           offset: const Offset(0, 4))
                     ]
                   : [
                       BoxShadow(
-                          color: colorScheme.shadow.withOpacity(0.5),
+                          color: colorScheme.shadow.withValues(alpha: 0.5),
                           blurRadius: 4,
                           spreadRadius: 0.3,
                           offset: const Offset(0, 4))
@@ -122,8 +122,7 @@ class AppTextField extends StatelessWidget {
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       isDense: true,
                       contentPadding: withLabel == false
-                          ? EdgeInsets.symmetric(
-                              vertical: 4)
+                          ? EdgeInsets.symmetric(vertical: 4)
                           : (suffixIcon != null
                               ? EdgeInsets.only(right: 40.0)
                               : EdgeInsets.zero),

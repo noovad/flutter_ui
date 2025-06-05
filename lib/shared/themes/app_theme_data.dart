@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ui/shared/color/app_colors.dart';
 
@@ -80,7 +78,7 @@ abstract class AppTheme {
         backgroundColor: AppColor.pureWhite,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey.withOpacity(0.25)),
+          side: BorderSide(color: Colors.grey.withValues(alpha: 0.25)),
         ),
       ),
       inputDecorationTheme: const InputDecorationTheme(
@@ -94,18 +92,18 @@ abstract class AppTheme {
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey.withOpacity(0.25)),
+          side: BorderSide(color: Colors.grey.withValues(alpha: 0.25)),
         ),
       ),
       listTileTheme: ListTileThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: Colors.grey.withOpacity(0.25)),
+          side: BorderSide(color: Colors.grey.withValues(alpha: 0.25)),
         ),
         dense: true,
       ),
       tabBarTheme: const TabBarTheme(
-        overlayColor: MaterialStatePropertyAll(Colors.transparent),
+        overlayColor: WidgetStatePropertyAll(Colors.transparent),
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(
