@@ -24,6 +24,7 @@ class AppDialog extends StatelessWidget {
   void _showDialog(BuildContext context) {
     showDialog(
       context: context,
+      useRootNavigator: false,
       builder: (BuildContext context) {
         return AlertDialog(
           content: content,

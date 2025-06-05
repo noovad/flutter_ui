@@ -6,13 +6,11 @@ import 'package:intl/intl.dart';
 class AppYearNav extends StatefulWidget {
   final Function(DateTime)? onChange;
   final MainAxisAlignment mainAxisAlignment;
-  final DateTime? initialDate;
 
   const AppYearNav({
     super.key,
     this.onChange,
     this.mainAxisAlignment = MainAxisAlignment.end,
-    this.initialDate,
   });
 
   @override
@@ -25,12 +23,7 @@ class _AppYearNavState extends State<AppYearNav> {
   @override
   void initState() {
     super.initState();
-    displayedDate =
-        ValueNotifier<DateTime>(widget.initialDate ?? DateTime.now());
-
-    if (widget.onChange != null) {
-      widget.onChange!(displayedDate.value);
-    }
+    displayedDate = ValueNotifier<DateTime>(DateTime.now());
   }
 
   @override

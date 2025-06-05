@@ -24,10 +24,6 @@ class _AppDateNavState extends State<AppDateNav> {
   void initState() {
     super.initState();
     displayedDate = ValueNotifier<DateTime>(DateTime.now());
-
-    if (widget.onChange != null) {
-      widget.onChange!(displayedDate.value);
-    }
   }
 
   @override
