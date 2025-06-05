@@ -16,12 +16,13 @@ class AppNoDataFound extends StatelessWidget {
           Icon(
             Icons.inbox_outlined,
             size: 48,
-            color: Colors.grey,
+            color: Theme.of(context).colorScheme.outline,
           ),
           SizedBox(height: 16),
           Text(
             message ?? 'No data found',
-            style: TextStyle(color: Colors.grey, fontSize: 16),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Theme.of(context).colorScheme.outline, fontSize: 18),
           ),
         ],
       ),
