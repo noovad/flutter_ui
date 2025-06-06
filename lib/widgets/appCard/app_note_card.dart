@@ -132,7 +132,7 @@ class _NoteCardState extends State<AppNoteCard> {
                       child: InkWell(
                         onTap: () => widget.onDelete(widget.noteId),
                         child: Icon(
-                          Icons.delete,
+                          Icons.delete_outline,
                           size: 14,
                           // color: colorScheme.tertiary,
                         ),

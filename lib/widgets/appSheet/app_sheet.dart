@@ -14,6 +14,7 @@ Future<T?> appSheet<T>({
   final ColorScheme colorScheme = parentTheme.colorScheme;
 
   return showGeneralDialog<T>(
+    useRootNavigator: false,
     context: context,
     barrierDismissible: true,
     barrierLabel: 'SideSheet',

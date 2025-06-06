@@ -55,10 +55,12 @@ class AppTabs extends StatelessWidget {
           ),
           AppSpaces.h16,
           Expanded(
-            child: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              clipBehavior: Clip.none,
-              children: tabBarView,
+            child: ClipRect(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                clipBehavior: Clip.hardEdge,
+                children: tabBarView,
+              ),
             ),
           ),
         ],

@@ -55,7 +55,11 @@ class _AppDropdownState<T> extends State<AppDropdown<T>> {
     _controller = TextEditingController(text: _currentItem?.label ?? '');
 
     if (_currentItem != null && widget.onChanged != null) {
-      widget.onChanged!(_currentItem);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          widget.onChanged!(_currentItem);
+        }
+      });
     }
   }
 
