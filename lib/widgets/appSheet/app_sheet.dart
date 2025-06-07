@@ -7,6 +7,7 @@ Future<T?> appSheet<T>({
   required WidgetBuilder builder,
   SheetSide side = SheetSide.right,
   double? width,
+  bool dismissable = true,
   Duration duration = const Duration(milliseconds: 500),
 }) {
   final isLeft = side == SheetSide.left;
@@ -16,7 +17,7 @@ Future<T?> appSheet<T>({
   return showGeneralDialog<T>(
     useRootNavigator: false,
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: dismissable,
     barrierLabel: 'SideSheet',
     transitionDuration: duration,
     pageBuilder: (context, animation, secondaryAnimation) {
