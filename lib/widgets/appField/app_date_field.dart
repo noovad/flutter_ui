@@ -104,8 +104,15 @@ class _AppDateFieldState extends State<AppDateField> {
                     lastDate: DateTime(2050),
                     currentDate: DateTime.now(),
                     onDateChanged: (selectedDate) {
+                      final now = DateTime.now();
+                      final today = DateTime(now.year, now.month, now.day);
+                      final isToday = selectedDate.year == today.year &&
+                          selectedDate.month == today.month &&
+                          selectedDate.day == today.day;
+
                       if (_selectedDate.month != selectedDate.month ||
-                          _selectedDate.day != selectedDate.day) {
+                          _selectedDate.day != selectedDate.day ||
+                          isToday) {
                         _removeOverlay();
                       }
 
