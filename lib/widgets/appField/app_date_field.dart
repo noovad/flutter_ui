@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 import 'package:flutter_ui/shared/utils.dart';
 import 'package:flutter_ui/widgets/appField/app_text_field.dart';
 
@@ -11,6 +12,7 @@ class AppDateField extends StatefulWidget {
   final String? errorText;
   final bool? isRequired;
   final bool? enabled;
+  final bool showTodayButton;
 
   const AppDateField({
     super.key,
@@ -22,6 +24,7 @@ class AppDateField extends StatefulWidget {
     this.errorText,
     this.isRequired = false,
     this.enabled,
+    this.showTodayButton = false,
   });
 
   @override
@@ -49,6 +52,19 @@ class _AppDateFieldState extends State<AppDateField> {
   }
 
   @override
+  void didUpdateWidget(covariant AppDateField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    final newValue = widget.initialValue;
+    if (newValue != null && newValue != _selectedDate) {
+      setState(() {
+        _selectedDate = newValue;
+        _textController.text = ddMmmYyyy(newValue);
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _removeOverlay();
     _textController.dispose();
@@ -67,9 +83,7 @@ class _AppDateFieldState extends State<AppDateField> {
             Positioned.fill(
               child: GestureDetector(
                 behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  _removeOverlay();
-                },
+                onTap: _removeOverlay,
               ),
             ),
             Positioned(
@@ -84,33 +98,24 @@ class _AppDateFieldState extends State<AppDateField> {
                   ),
                   color: colorScheme.surfaceContainerLow,
                   shadowColor: colorScheme.shadow,
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      colorScheme: colorScheme.copyWith(
-                        primary: colorScheme.primary,
-                      ),
-                    ),
-                    child: CalendarDatePicker(
-                      initialDate: _selectedDate,
-                      firstDate: DateTime(2010),
-                      lastDate: DateTime(2050),
-                      onDateChanged: (selectedDate) {
-                        if (_selectedDate.month != selectedDate.month ||
-                            _selectedDate.day != selectedDate.day) {
-                          _removeOverlay();
-                        }
+                  child: CalendarDatePicker(
+                    initialDate: _selectedDate,
+                    firstDate: DateTime(2010),
+                    lastDate: DateTime(2050),
+                    currentDate: DateTime.now(),
+                    onDateChanged: (selectedDate) {
+                      if (_selectedDate.month != selectedDate.month ||
+                          _selectedDate.day != selectedDate.day) {
+                        _removeOverlay();
+                      }
 
-                        setState(() {
-                          _selectedDate = selectedDate;
-                          _textController.text = ddMmmYyyy(selectedDate);
-                        });
+                      setState(() {
+                        _selectedDate = selectedDate;
+                        _textController.text = ddMmmYyyy(selectedDate);
+                      });
 
-                        if (widget.onChanged != null) {
-                          widget.onChanged!(selectedDate);
-                        }
-                      },
-                      currentDate: DateTime.now(),
-                    ),
+                      widget.onChanged?.call(selectedDate);
+                    },
                   ),
                 ),
               ),
@@ -123,19 +128,50 @@ class _AppDateFieldState extends State<AppDateField> {
     }
   }
 
+  void _selectToday() {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    setState(() {
+      _selectedDate = today;
+      _textController.text = ddMmmYyyy(today);
+    });
+
+    widget.onChanged?.call(today);
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: AppTextField(
-        controller: _textController,
-        enabled: widget.enabled,
-        label: widget.label,
-        hint: widget.hint,
-        readOnly: true,
-        onTap: () => _showCalendarOverlay(context),
-        errorText: widget.errorText,
-        isRequired: widget.isRequired,
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: CompositedTransformTarget(
+              link: _layerLink,
+              child: AppTextField(
+                controller: _textController,
+                enabled: widget.enabled,
+                label: widget.label,
+                hint: widget.hint,
+                readOnly: true,
+                onTap: () => _showCalendarOverlay(context),
+                errorText: widget.errorText,
+                isRequired: widget.isRequired,
+              ),
+            ),
+          ),
+          if (widget.showTodayButton) AppSpaces.w8,
+          if (widget.showTodayButton)
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: ElevatedButton(
+                onPressed: _selectToday,
+                child: const Text('Today'),
+              ),
+            ),
+        ],
       ),
     );
   }

@@ -3,24 +3,24 @@ import 'package:flutter_ui/shared/sizes/app_spaces.dart';
 
 class AppDailySummaryCard extends StatelessWidget {
   final String sholatCount;
-  final int? amount;
   final bool hasCoding;
   final bool hasGym;
   final bool hasCardio;
   final bool isSunday;
   final bool calorieControlled;
   final bool isToday;
+  final String? amount;
 
   const AppDailySummaryCard({
     super.key,
     required this.sholatCount,
-    required this.amount,
     required this.hasCoding,
     required this.hasGym,
     required this.hasCardio,
     required this.isSunday,
     required this.calorieControlled,
     required this.isToday,
+    this.amount,
   });
 
   @override
@@ -96,17 +96,16 @@ class AppDailySummaryCard extends StatelessWidget {
                   ),
               ],
             ),
-            if (amount != null)
-              Tooltip(
-                message: 'Expenses (K)',
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text(
-                    amount == 0 ? '' : amount.toString(),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(),
-                  ),
+            Tooltip(
+              message: 'Expenses (K)',
+              child: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(
+                  amount == 0 || amount == null ? '' : amount.toString(),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(),
                 ),
               ),
+            ),
           ],
         ),
       ),

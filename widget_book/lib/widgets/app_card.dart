@@ -44,7 +44,7 @@ Widget _buildSelectedCard(CardType type, BuildContext context) {
         dimension: 90,
         child: AppDailySummaryCard(
           isToday: context.knobs.boolean(label: 'Is Today', initialValue: true),
-          amount: context.knobs.int.input(label: 'Amount', initialValue: 20),
+          amount: context.knobs.int.input(label: 'Amount', initialValue: 20).toString(),
           calorieControlled: context.knobs
               .boolean(label: 'Calorie Controlled', initialValue: true),
           sholatCount:
